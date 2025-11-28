@@ -48,7 +48,7 @@
 - [x] **Responsive Design:** Implemented Mobile Menu.
 - [x] **SEO:** Implemented Dynamic Document Titles.
 
-## 🚀 Phase 6: Advanced Features (Next)
+## 🚀 Phase 6: Advanced Features (Current Focus)
 *Goal: Feature parity with real-world platforms.*
 
 - [x] **Admin Inventory Management:** Allow adding/editing products.
