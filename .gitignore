@@ -7,10 +7,21 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+node_modules/
+
+# Build outputs
 dist
 dist-ssr
+build
 *.local
+
+# Environment variables (NEVER commit real secrets)
+.env
+.env.local
+.env.*.local
+.env.prod
 
 # Editor directories and files
 .vscode/*
@@ -18,6 +29,34 @@ dist-ssr
 .idea
 .DS_Store
 *.suo
+*.swp
+*.swo
+*~
+
+# OS files
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# IDE
+.vscode
+.idea
+*.sublime-workspace
+*.sublime-project
+
+# Server-specific
+server/node_modules/
+server/.env
+server/.env.local
+
+# Test coverage
+coverage
+.nyc_output
+*.lcov
+
+# Misc
+.cache
+dist
 *.ntvs*
 *.njsproj
 *.sln
