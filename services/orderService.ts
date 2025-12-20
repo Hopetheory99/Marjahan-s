@@ -1,30 +1,37 @@
 
+import axios from 'axios';
 import { ORDERS } from '../constants';
 import { Order, OrderStatus } from '../types';
 
-// Simulate API delay
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
 
-// In-memory store for session persistence
 let inMemoryOrders: Order[] = [...ORDERS];
 
 export const orderService = {
   getAll: async (): Promise<Order[]> => {
-    await delay(500);
+    if (API_BASE) {
+      const res = await axios.get(`${API_BASE.replace(/\/$/, '')}/api/orders`);
+      return res.data as Order[];
+    }
     return inMemoryOrders;
   },
 
   updateStatus: async (id: string, status: OrderStatus): Promise<Order> => {
-    await delay(500);
+    if (API_BASE) {
+      const res = await axios.put(`${API_BASE.replace(/\/$/, '')}/api/orders/${id}/status`, { status });
+      return res.data as Order;
+    }
     const index = inMemoryOrders.findIndex(o => o.id === id);
     if (index === -1) throw new Error('Order not found');
-    
     inMemoryOrders[index] = { ...inMemoryOrders[index], status };
     return inMemoryOrders[index];
   },
 
   getById: async (id: string): Promise<Order | undefined> => {
-    await delay(400);
+    if (API_BASE) {
+      const res = await axios.get(`${API_BASE.replace(/\/$/, '')}/api/orders/${id}`);
+      return res.data as Order;
+    }
     return inMemoryOrders.find(o => o.id === id);
   }
 };

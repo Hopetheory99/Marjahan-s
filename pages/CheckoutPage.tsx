@@ -52,13 +52,50 @@ const CheckoutPage: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (isValid()) {
-            // Process Payment...
+        if (!isValid()) {
+            addToast('Please fix the errors in the form.', 'error');
+            return;
+        }
+
+        const apiBase = import.meta.env.VITE_API_BASE_URL;
+        const payload = {
+            cart: cartItems,
+            customer: {
+                email: values.email,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                address: values.address,
+                city: values.city,
+                country: values.country,
+                zip: values.zip
+            }
+        };
+
+        if (apiBase) {
+            // Call the dev server to create a checkout session (dev-only)
+            fetch(`${apiBase.replace(/\/$/, '')}/api/create-checkout-session`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(async (r) => {
+                if (!r.ok) throw new Error('Failed to create session');
+                const data = await r.json();
+                clearCart();
+                addToast('Redirecting to payment...', 'info');
+                // In dev we navigate to the confirmation page as a mock checkout flow
+                if (data && data.sessionUrl) {
+                    navigate(data.sessionUrl);
+                } else {
+                    navigate('/confirmation');
+                }
+            }).catch(() => {
+                addToast('Payment server error. Please try again.', 'error');
+            });
+        } else {
+            // No API server configured: fallback to local flow
             clearCart();
             addToast('Order placed successfully!', 'success');
             navigate('/confirmation');
-        } else {
-            addToast('Please fix the errors in the form.', 'error');
         }
     };
 

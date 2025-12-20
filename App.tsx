@@ -1,5 +1,6 @@
 
 import React, { Suspense, lazy } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
@@ -27,8 +28,10 @@ const PageLoader = () => (
 );
 
 function App() {
+  const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 1000 * 60 * 2 } } });
   return (
     <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <ToastProvider>
           <CartProvider>
@@ -64,6 +67,7 @@ function App() {
           </CartProvider>
         </ToastProvider>
       </AuthProvider>
+      </QueryClientProvider>
     </ErrorBoundary>
   );
 }
