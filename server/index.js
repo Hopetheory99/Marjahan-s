@@ -103,6 +103,32 @@ app.post('/api/orders', (req, res) => {
   res.status(201).json(newOrder);
 });
 
+// Create a mock checkout session (dev-only). This will persist an order and
+// return a session URL that navigates to the confirmation page with order id.
+app.post('/api/create-checkout-session', (req, res) => {
+  try {
+    const orders = readJson(ORDERS_FILE);
+    const { cart, customer } = req.body || {};
+    const total = (cart || []).reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 0), 0);
+    const newOrder = {
+      id: uuidv4(),
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+      cart: cart || [],
+      customer: customer || {},
+      total
+    };
+    orders.push(newOrder);
+    writeJson(ORDERS_FILE, orders);
+
+    // Return a mock session URL that the frontend can navigate to (dev flow)
+    return res.json({ sessionUrl: `/confirmation?orderId=${newOrder.id}`, order: newOrder });
+  } catch (err) {
+    console.error('create-checkout-session error', err);
+    return res.status(500).json({ message: 'Could not create checkout session' });
+  }
+});
+
 app.put('/api/orders/:id/status', (req, res) => {
   const orders = readJson(ORDERS_FILE);
   const idx = orders.findIndex(o => o.id === req.params.id);
