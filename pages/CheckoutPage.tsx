@@ -6,6 +6,7 @@ import { useToast } from '../context/ToastContext';
 import Button from '../components/Button';
 import { useForm } from '../hooks/useForm';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { stripeService } from '../services/stripeService';
 
 interface CheckoutForm {
     email: string;
@@ -72,24 +73,30 @@ const CheckoutPage: React.FC = () => {
         };
 
         if (apiBase) {
-            // Call the dev server to create a checkout session (dev-only)
-            fetch(`${apiBase.replace(/\/$/, '')}/api/create-checkout-session`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).then(async (r) => {
-                if (!r.ok) throw new Error('Failed to create session');
-                const data = await r.json();
+            // Prefer Stripe-backed session creation (dev server route)
+            stripeService.createCheckoutSession(payload).then((data) => {
                 clearCart();
                 addToast('Redirecting to payment...', 'info');
-                // In dev we navigate to the confirmation page as a mock checkout flow
                 if (data && data.sessionUrl) {
                     navigate(data.sessionUrl);
                 } else {
                     navigate('/confirmation');
                 }
             }).catch(() => {
-                addToast('Payment server error. Please try again.', 'error');
+                // Fallback: call legacy endpoint
+                fetch(`${apiBase.replace(/\/$/, '')}/api/create-checkout-session`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).then(async (r) => {
+                    if (!r.ok) throw new Error('Failed to create session');
+                    const data = await r.json();
+                    clearCart();
+                    addToast('Redirecting to payment...', 'info');
+                    if (data && data.sessionUrl) navigate(data.sessionUrl); else navigate('/confirmation');
+                }).catch(() => {
+                    addToast('Payment server error. Please try again.', 'error');
+                });
             });
         } else {
             // No API server configured: fallback to local flow

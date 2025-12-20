@@ -129,6 +129,41 @@ app.post('/api/create-checkout-session', (req, res) => {
   }
 });
 
+// Stripe mock/create-checkout-session endpoint.
+// If STRIPE_SECRET_KEY is provided in env, you should implement real Stripe logic here.
+// For local dev we return a mock session object that the frontend can navigate to.
+app.post('/api/stripe/create-checkout-session', (req, res) => {
+  try {
+    const stripeKey = process.env.STRIPE_SECRET_KEY;
+    const { cart, customer } = req.body || {};
+
+    // If a real stripe key is set, return 501 to indicate integration required.
+    if (stripeKey) {
+      // In a real server you would use the Stripe SDK to create a session here.
+      return res.status(501).json({ message: 'Real Stripe integration not implemented in mock server.' });
+    }
+
+    // Otherwise simulate creating a session and persisting an order.
+    const orders = readJson(ORDERS_FILE);
+    const total = (cart || []).reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 0), 0);
+    const newOrder = {
+      id: uuidv4(),
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+      cart: cart || [],
+      customer: customer || {},
+      total
+    };
+    orders.push(newOrder);
+    writeJson(ORDERS_FILE, orders);
+
+    return res.json({ sessionId: `sess_${newOrder.id}`, sessionUrl: `/confirmation?orderId=${newOrder.id}`, order: newOrder });
+  } catch (err) {
+    console.error('stripe/create-checkout-session error', err);
+    return res.status(500).json({ message: 'Could not create stripe checkout session' });
+  }
+});
+
 app.put('/api/orders/:id/status', (req, res) => {
   const orders = readJson(ORDERS_FILE);
   const idx = orders.findIndex(o => o.id === req.params.id);
