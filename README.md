@@ -55,3 +55,22 @@ npm start
 2. Set `VITE_API_BASE_URL=http://localhost:3000` in `.env.local` to make the frontend call the mock server instead of using in-memory services.
 
 The mock server provides `/api/products`, `/api/orders`, `/api/auth/login`, and `/api/recommendations` endpoints for development and demo purposes.
+
+Stripe notes (dev):
+
+- This repo includes a dev-safe Stripe mock endpoint at `/api/stripe/create-checkout-session` (in the mock server). It returns a `sessionUrl` pointing to the confirmation page and persists an order locally under `server/data/orders.json`.
+- To wire a real Stripe integration, set `STRIPE_SECRET_KEY` in the server environment and implement the real checkout session creation in the server (`server/index.js`) using the official Stripe SDK. Do not expose `STRIPE_SECRET_KEY` to the browser.
+- In the frontend, set `VITE_STRIPE_PUBLISHABLE_KEY` in `.env.local` for client-side Stripe components. The frontend uses `VITE_API_BASE_URL` to call the server endpoints.
+
+Example (local):
+
+```bash
+# in server/.env or your shell environment
+export DEV_ADMIN_PASSWORD=admin123
+export STRIPE_SECRET_KEY=
+
+# in frontend .env.local
+VITE_API_BASE_URL=http://localhost:3000
+VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_key
+```
+
