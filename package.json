@@ -39,7 +39,7 @@
     "prettier": "^3.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.0",
-    "vitest": "^1.2.0",
+    "vitest": "^4.0.16",
     "@testing-library/jest-dom": "^6.0.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
