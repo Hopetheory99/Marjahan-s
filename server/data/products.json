@@ -1,0 +1,22 @@
+[
+  {
+    "id": "p1",
+    "name": "14k Gold Diamond Studs",
+    "description": "Classic diamond studs set in 14k gold.",
+    "price": 299,
+    "images": ["/images/diamond-studs.jpg"],
+    "metal": "Gold",
+    "category": "Earrings",
+    "stock": 20
+  },
+  {
+    "id": "p2",
+    "name": "Pearl Drop Necklace",
+    "description": "Elegantly crafted freshwater pearl necklace.",
+    "price": 149,
+    "images": ["/images/pearl-necklace.jpg"],
+    "metal": "Silver",
+    "category": "Necklaces",
+    "stock": 12
+  }
+]

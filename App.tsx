@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 import React, { Suspense, lazy, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+=======
+
+import React, { Suspense, lazy } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Routes, Route } from 'react-router-dom';
+>>>>>>> 761b4aa0e334fc8c74177e361cd66e69829c60ff
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
@@ -31,7 +38,9 @@ const PageLoader = () => (
 );
 
 function App() {
+  const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 1000 * 60 * 2 } } });
   return (
+<<<<<<< HEAD
     <>
       <StarryBackground />
       <ErrorBoundary>
@@ -141,6 +150,47 @@ function App() {
         </AuthProvider>
       </ErrorBoundary>
     </>
+=======
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ToastProvider>
+          <CartProvider>
+            <Suspense fallback={<PageLoader />}>
+              <ToastContainer />
+              <Routes>
+                {/* Public / Shopper Routes */}
+                <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
+                <Route path="/products" element={<MainLayout><ProductsPage /></MainLayout>} />
+                <Route path="/products/:id" element={<MainLayout><ProductDetailPage /></MainLayout>} />
+                <Route path="/checkout" element={<MainLayout><CheckoutPage /></MainLayout>} />
+                <Route path="/confirmation" element={<MainLayout><OrderConfirmationPage /></MainLayout>} />
+                
+                {/* Auth Route */}
+                <Route path="/login" element={<MainLayout><LoginPage /></MainLayout>} />
+                
+                {/* Protected Admin Routes */}
+                <Route 
+                  path="/admin" 
+                  element={
+                    <ProtectedRoute>
+                      <AdminLayout>
+                        <AdminPage />
+                      </AdminLayout>
+                    </ProtectedRoute>
+                  } 
+                />
+
+                {/* 404 Catch-all */}
+                <Route path="*" element={<MainLayout><NotFoundPage /></MainLayout>} />
+              </Routes>
+            </Suspense>
+          </CartProvider>
+        </ToastProvider>
+      </AuthProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
+>>>>>>> 761b4aa0e334fc8c74177e361cd66e69829c60ff
   );
 }
 

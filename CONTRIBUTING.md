@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Contributing to Marjahan's Jewelry
 
 Thank you for your interest in contributing to Marjahan's Jewelry! This document provides guidelines for contributing.
@@ -64,3 +65,16 @@ Never commit:
 ---
 
 Questions? Open an issue or reach out to the maintainers.
+=======
+# Contributing
+
+Thanks for your interest in contributing to Marjahan's demo app. This is a trimmed contributing guide with basic expectations.
+
+1. Fork and create a feature branch from `main`.
+2. Follow commit message conventions: `feat:`, `fix:`, `chore:`, `docs:`.
+3. Run `npm run lint` and `npm run test` before opening a PR.
+4. Add tests for any new logic and keep changes focused.
+5. Use small PRs and request reviews from maintainers.
+
+Code style is enforced via ESLint and Prettier. Husky runs lint-staged on pre-commit.
+>>>>>>> 761b4aa0e334fc8c74177e361cd66e69829c60ff
