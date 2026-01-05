@@ -1,20 +1,22 @@
-
 import { useState, ChangeEvent } from 'react';
 
 interface ValidationRules {
   required?: boolean;
   pattern?: RegExp;
-  custom?: (value: any) => boolean;
+  custom?: (value: unknown) => boolean;
 }
 
 type Validations<T> = Partial<Record<keyof T, ValidationRules>>;
 type Errors<T> = Partial<Record<keyof T, string>>;
 
-export const useForm = <T extends Record<string, any>>(initialValues: T, validations: Validations<T>) => {
+export const useForm = <T extends Record<string, unknown>>(
+  initialValues: T,
+  validations: Validations<T>,
+) => {
   const [values, setValues] = useState<T>(initialValues);
   const [errors, setErrors] = useState<Errors<T>>({});
 
-  const validate = (field: keyof T, value: any): string => {
+  const validate = (field: keyof T, value: unknown): string => {
     const rules = validations[field];
     if (!rules) return '';
 
@@ -22,7 +24,7 @@ export const useForm = <T extends Record<string, any>>(initialValues: T, validat
       return 'This field is required';
     }
 
-    if (rules.pattern && !rules.pattern.test(value)) {
+    if (rules.pattern && typeof value === 'string' && !rules.pattern.test(value)) {
       return 'Invalid format';
     }
 
@@ -36,10 +38,10 @@ export const useForm = <T extends Record<string, any>>(initialValues: T, validat
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
-    
+
     // Clear error on change
     if (errors[name as keyof T]) {
-        setErrors({ ...errors, [name]: '' });
+      setErrors({ ...errors, [name]: '' });
     }
   };
 

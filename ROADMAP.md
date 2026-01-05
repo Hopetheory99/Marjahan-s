@@ -1,86 +1,136 @@
-
-# 💎 Marjahan's Jewelry - Engineering Master Plan
+# 💎 Marjahan's Jewelry - Engineering Roadmap
 
 **Objective:** Elevate codebase to 10/10 score across Security, Architecture, Quality, and Testing.
-**Usage:** This file tracks the project state. To continue development, paste this file to the AI Agent.
+**Last Updated:** January 2026
 
 ---
 
-## 🚨 Phase 1: Security & Foundation (Critical)
-*Goal: Fix vulnerabilities and establish strict type safety.*
+## ✅ Completed Phases
 
-- [x] **Secure Admin Route:** Implement `AuthContext` and `ProtectedRoute` to prevent unauthorized access.
-- [x] **Strict TypeScript:** Remove `any` types in `ProductsPage` filtering logic.
-- [x] **Input Validation:** Implemented `useForm` hook with validation for Checkout.
-- [x] **Environment Variables:** Created `config.ts` to centralize configuration and remove magic strings.
+### Phase 1: Security & Foundation
 
-## 🏗️ Phase 2: Architecture & State (Scalability)
-*Goal: Decouple data and implement robust state management.*
+- [x] Implement `AuthContext` and `ProtectedRoute` for admin access control
+- [x] Strict TypeScript - remove all `any` types
+- [x] Input validation with `useForm` hook
+- [x] Centralized configuration in `config.ts`
+- [x] Fix mobile menu admin link security (conditional rendering)
 
-- [x] **Service Layer:** Created `services/productService.ts` to simulate async API.
-- [x] **Custom Hooks:** Created `useProducts.ts` to consume services with loading/error states.
-- [x] **Cart Persistence:** Implemented `useLocalStorage` to save Cart state on refresh.
-- [x] **Reducer Pattern:** Refactored `CartContext` to use `cartReducer` for deterministic state logic.
-- [x] **Layout System:** Extracted `MainLayout` and `AdminLayout` from `App.tsx`.
+### Phase 2: Architecture & State
 
-## ⚡ Phase 3: Performance & Optimization
-*Goal: Ensure 60fps and low TTI (Time to Interactive).*
+- [x] Service layer (`productService.ts`, `orderService.ts`)
+- [x] Custom hooks (`useProducts`, `useForm`, `useLocalStorage`)
+- [x] Cart persistence with localStorage
+- [x] Reducer pattern for cart state
+- [x] Layout system (MainLayout, AdminLayout)
 
-- [x] **Image Optimization:** Implement generic `Image` component with `srcset` and lazy loading.
-- [x] **Code Splitting:** Use `React.lazy` and `Suspense` for Route components (especially Admin and Checkout).
-- [x] **Memoization:** Audit `ProductsPage` and `Cart` for unnecessary re-renders (use `useMemo`, `useCallback`).
+### Phase 3: Performance
 
-## 🧪 Phase 4: Testing & Reliability
-*Goal: 0/10 -> 8/10 Test Coverage & Fault Tolerance.*
+- [x] Image optimization with lazy loading
+- [x] Code splitting with React.lazy
+- [x] Memoization audit (useMemo, useCallback)
+- [x] Remove CDN importmap from index.html
 
-- [x] **Fault Tolerance:** Implemented `ErrorBoundary` and `NotFoundPage`.
-- [x] **Unit Tests:** Created `cartReducer.test.ts` to verify critical financial logic.
-- [x] **Integration Tests:** Created `pages/__tests__/ProductsPage.test.tsx` for filtering logic.
-- [x] **E2E Tests:** Created `e2e/checkout.spec.ts` for user flow validation.
-- [x] **Business Logic:** Enforced Stock Limits on Product Detail Page.
+### Phase 4: Testing & Reliability
 
-## 🎨 Phase 5: UI/UX Polish (Luxury Feel)
-*Goal: Enhance animations and responsiveness.*
+- [x] Error Boundary implementation
+- [x] 404 Not Found page
+- [x] Cart reducer unit tests
+- [x] Integration tests for ProductsPage
+- [x] E2E tests for checkout flow
+- [x] Stock limit enforcement
 
-- [x] **Toast Notifications:** Implemented global `ToastProvider` and `Toast` components.
-- [x] **Micro-interactions:** Add CSS transitions/animations for modal slides and button hovers.
-- [x] **A11y Audit:** Ensure all buttons have `aria-label` and forms are keyboard navigable.
-- [x] **Responsive Design:** Implemented Mobile Menu.
-- [x] **SEO:** Implemented Dynamic Document Titles.
+### Phase 5: UI/UX Polish
 
-## 🚀 Phase 6: Advanced Features (Current Focus)
-*Goal: Feature parity with real-world platforms.*
+- [x] Toast notification system
+- [x] Micro-interactions and animations
+- [x] ARIA labels and keyboard navigation
+- [x] Responsive mobile menu
+- [x] Dynamic document titles
 
-- [x] **Admin Inventory Management:** Allow adding/editing products.
-- [x] **Interactive Tables:** Sortable columns and hover effects.
-- [x] **Order Management:** View Details, Update Status.
-- [ ] **Wishlist:** Enable saving items for later.
-- [ ] **Reviews:** Allow users to leave ratings.
+### Phase 6: SEO & Documentation
+
+- [x] robots.txt and sitemap.xml
+- [x] Meta tags and Open Graph
+- [x] JSON-LD structured data
+- [x] Comprehensive README
+- [x] CONTRIBUTING.md
+
+### Phase 7: Feature Enablement
+
+- [x] Wishlist system (WishlistContext, WishlistButton)
+- [x] Stock badges on product cards
+
+### Phase 8: Critical Infrastructure Update (Dec 2024)
+
+- [x] Supabase Migration (Products, Orders)
+- [x] Environment Security (.env)
+- [x] Zod Input Validation
+- [x] GitHub Actions CI/CD
+- [x] React Helmet Async
+
+### Phase 9: Critical Bug Fixes & Build Stabilization (Jan 2026)
+
+- [x] Fix build error in `services/stripeService.ts` (import path correction)
+- [x] Eliminate security vulnerability (client-side API key exposure)
+- [x] Fix React useState import/export issue
+- [x] Clean up `vite.config.ts` syntax and remove unused env loading
+- [x] Verify E2E tests exist (Playwright tests were completed but not documented)
+- [x] Confirm image optimizer already installed and configured
+
+---
+
+## 🚧 In Progress
+
+### Phase 8: Commerce Features
+
+- [x] Reviews & Ratings system
+- [ ] Stripe integration (Payment Intent API)
+- [ ] Order confirmation emails
+
+---
+
+## 📋 Backlog
+
+### Advanced Search
+
+- [ ] Typesense integration for instant search
+- [ ] Faceted filters
+- [ ] Search suggestions
+
+### Analytics
+
+- [ ] Google Analytics 4 integration
+- [ ] Sentry error tracking
+- [ ] Custom event tracking
+
+### DevOps
+
+- [ ] Lighthouse CI checks
+- [ ] Automated deployment
 
 ---
 
 ## 📝 Changelog
-- **[Init]** Created Roadmap and defined phases.
-- **[Sec]** Implemented Client-side Auth Protection for `/admin`.
-- **[Type]** Fixed `any` typing in Product Filters.
-- **[Arch]** Decoupled data fetch into `productService` and `useProducts`.
-- **[Val]** Added form validation to Checkout.
-- **[Conf]** Added `config.ts`.
-- **[Persist]** Added `useLocalStorage` for Cart.
-- **[State]** Refactored Cart to `useReducer`.
-- **[UI]** Added `MainLayout` and `AdminLayout`.
-- **[Perf]** Implemented Code Splitting (React.lazy).
-- **[Perf]** Implemented Image Optimization (Lazy loading + Skeletons).
-- **[Perf]** Optimized Context with memoization.
-- **[UI]** Implemented Global Toast Notification System.
-- **[UI]** Implemented Mobile Menu & Cart Animations.
-- **[A11y]** Added ARIA labels and Keyboard navigation support for Cart.
-- **[Rel]** Added Global Error Boundary.
-- **[Rel]** Added 404 Not Found Page.
-- **[Test]** Added Cart Logic Unit Tests.
-- **[SEO]** Added Dynamic Document Titles.
-- **[Logic]** Added Stock Limit Checks.
-- **[Test]** Added Integration and E2E Test Files.
-- **[Feat]** Implemented Admin CRUD (Add/Edit/Delete).
-- **[UX]** Added Sortable Tables and Admin UI Polish.
-- **[Feat]** Added Order Service and Admin Order Management.
+
+| Date     | Category | Change                                   |
+| -------- | -------- | ---------------------------------------- |
+| Jan 2026 | Build    | Fixed critical build error in stripeService.ts |
+| Jan 2026 | Security | Eliminated client-side API key exposure |
+| Jan 2026 | Build    | Fixed React useState import issue        |
+| Jan 2026 | QA       | Documented existing E2E tests (Playwright) |
+| Dec 2024 | Security | Fixed admin link exposure in mobile menu |
+| Dec 2024 | SEO      | Added robots.txt, sitemap.xml, meta tags |
+| Dec 2024 | Feature  | Implemented Wishlist system              |
+| Dec 2024 | Perf     | Removed CDN importmap                    |
+| Dec 2024 | Docs     | Updated README, added CONTRIBUTING       |
+
+---
+
+## 🎯 Success Metrics
+
+Target scores upon completion:
+
+- **Lighthouse**: 100 (Performance, SEO, Accessibility)
+- **Security**: A+ SSL Labs, no exposed secrets
+- **Load Time**: < 2s on 3G
+- **Error Rate**: < 0.1%

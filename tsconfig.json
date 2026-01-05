@@ -18,6 +18,8 @@
     "moduleDetection": "force",
     "allowJs": true,
     "jsx": "react-jsx",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "paths": {
       "@/*": [
         "./*"
@@ -25,5 +27,11 @@
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  "include": [
+    "src",
+    "**/*.ts",
+    "**/*.tsx",
+    "vite-env.d.ts"
+  ]
 }

@@ -1,0 +1,15 @@
+# Robots.txt for Marjahan's Jewelry
+# https://www.marjahans.com
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /checkout
+Disallow: /confirmation
+Disallow: /profile
+
+# Sitemap location
+Sitemap: https://www.marjahans.com/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

@@ -1,0 +1,83 @@
+﻿
+> copy-of-marjahan's-jewelry-store@0.0.0 build
+> vite build
+
+[36mvite v5.4.21 [32mbuilding for production...[36m[39m
+transforming...
+node.exe : 
+At C:\Program Files\nodejs\npm.ps1:29 char:3
++   & $NODE_EXE $NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:Str 
+   ing) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[1m[33mwarn[39m[22m - Your `content` 
+configuration includes a pattern which looks like 
+it's accidentally matching all of `node_modules` 
+and can cause serious performance issues.
+[1m[33mwarn[39m[22m - Pattern: `./**\*.ts`
+[1m[33mwarn[39m[22m - See our documentation 
+for recommendations:
+[1m[33mwarn[39m[22m - https://tailwindcss.com/
+docs/content-configuration#pattern-recommendations
+[32mΓ£ô[39m 91 modules transformed.
+
+Γ£¿ [vite-plugin-compression]:algorithm=gzip - compressed file successfully: 
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/HomePage-BsiLtw8a.js.gz            5.80kb / gzip: 1.97kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/orderService-CwJJ7IR9.js.gz        1.91kb / gzip: 0.68kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/LoginPage-T7pXHoNr.js.gz           2.03kb / gzip: 0.95kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/CheckoutPage-BRuLutOO.js.gz        21.60kb / gzip: 7.66kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/ProductDetailPage-DGcWigoA.js.gz   11.55kb / gzip: 4.19kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/ProductsPage-DqV43Rfc.js.gz        7.62kb / gzip: 2.45kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/SEO-9aLtAamW.js.gz                 2.78kb / gzip: 1.14kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/ProductCard-rQ6MIhXP.js.gz         1.92kb / gzip: 0.77kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/ProfilePage-CCn3e93P.js.gz         1.42kb / gzip: 0.62kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/WishlistButton-3lcfDU9d.js.gz      1.99kb / gzip: 1.09kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/productService-D6Usx3or.js.gz      4.73kb / gzip: 1.70kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/index.html.gz                             5.35kb / gzip: 1.61kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/WishlistPage-MU95-Qk2.js.gz        2.47kb / gzip: 1.10kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/index-DPTODAyM.css.gz              71.31kb / gzip: 12.72kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/AdminPage-CcyCQXnc.js.gz           72.51kb / gzip: 20.49kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/index-2fC5cKey.js.gz               390.90kb / gzip: 114.01kb
+
+
+
+Γ£¿ [vite-plugin-compression]:algorithm=brotliCompress - compressed file successfully: 
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/LoginPage-T7pXHoNr.js.br           2.03kb / brotliCompress: 0.78kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/HomePage-BsiLtw8a.js.br            5.80kb / brotliCompress: 1.69kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/CheckoutPage-BRuLutOO.js.br        21.60kb / brotliCompress: 6.76kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/ProductDetailPage-DGcWigoA.js.br   11.55kb / brotliCompress: 3.70kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/ProductCard-rQ6MIhXP.js.br         1.92kb / brotliCompress: 0.67kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/orderService-CwJJ7IR9.js.br        1.91kb / brotliCompress: 0.59kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/productService-D6Usx3or.js.br      4.73kb / brotliCompress: 1.46kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/ProductsPage-DqV43Rfc.js.br        7.62kb / brotliCompress: 2.16kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/ProfilePage-CCn3e93P.js.br         1.42kb / brotliCompress: 0.52kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/SEO-9aLtAamW.js.br                 2.78kb / brotliCompress: 0.95kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/WishlistPage-MU95-Qk2.js.br        2.47kb / brotliCompress: 0.95kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/index.html.br                             5.35kb / brotliCompress: 1.24kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/WishlistButton-3lcfDU9d.js.br      1.99kb / brotliCompress: 0.93kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/index-DPTODAyM.css.br              71.31kb / brotliCompress: 10.46kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/AdminPage-CcyCQXnc.js.br           72.51kb / brotliCompress: 17.95kb
+dist/C:/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s/assets/index-2fC5cKey.js.br               390.90kb / brotliCompress: 98.39kb
+
+
+[31mx[39m Build failed in 16.69s
+[31merror during build:
+[31mCould not resolve "../utils/supabaseClient" 
+from "services/stripeService.ts"[31m
+file: [36mC:/Users/fhdib/.gemini/antigravity/scra
+tch/Marjahan-s/services/stripeService.ts[31m
+    at getRollupError (file:///C:/Users/fhdib/.gem
+ini/antigravity/scratch/Marjahan-s/node_modules/ro
+llup/dist/es/shared/parseAst.js:401:41)
+    at error (file:///C:/Users/fhdib/.gemini/antig
+ravity/scratch/Marjahan-s/node_modules/rollup/dist
+/es/shared/parseAst.js:397:42)
+    at ModuleLoader.handleInvalidResolvedId (file:
+///C:/Users/fhdib/.gemini/antigravity/scratch/Marj
+ahan-s/node_modules/rollup/dist/es/shared/node-ent
+ry.js:21590:24)
+    at file:///C:/Users/fhdib/.gemini/antigravity/
+scratch/Marjahan-s/node_modules/rollup/dist/es/sha
+red/node-entry.js:21550:26[39m

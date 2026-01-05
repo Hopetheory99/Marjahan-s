@@ -1,66 +1,149 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Marjahan's Jewelry</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#722F37" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Marjahan's" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+
+    <!-- Primary Meta Tags -->
+    <title>Marjahan's Jewelry - Luxury Rings, Necklaces & Fine Jewelry</title>
+    <meta name="title" content="Marjahan's Jewelry - Luxury Rings, Necklaces & Fine Jewelry" />
+    <meta
+      name="description"
+      content="Discover exquisite handcrafted jewelry at Marjahan's. Shop our collection of luxury rings, necklaces, bracelets, and earrings in gold, silver, and platinum. Where luxury meets affordability."
+    />
+    <meta
+      name="keywords"
+      content="jewelry, luxury jewelry, gold rings, diamond necklace, silver bracelet, platinum earrings, fine jewelry, engagement rings, wedding jewelry"
+    />
+    <meta name="author" content="Marjahan's Jewelry" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.marjahans.com/" />
+    <meta
+      property="og:title"
+      content="Marjahan's Jewelry - Luxury Rings, Necklaces & Fine Jewelry"
+    />
+    <meta
+      property="og:description"
+      content="Discover exquisite handcrafted jewelry at Marjahan's. Shop our collection of luxury rings, necklaces, bracelets, and earrings."
+    />
+    <meta property="og:image" content="https://picsum.photos/id/1074/1200/630" />
+    <meta property="og:site_name" content="Marjahan's Jewelry" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://www.marjahans.com/" />
+    <meta
+      property="twitter:title"
+      content="Marjahan's Jewelry - Luxury Rings, Necklaces & Fine Jewelry"
+    />
+    <meta
+      property="twitter:description"
+      content="Discover exquisite handcrafted jewelry at Marjahan's. Shop our collection of luxury rings, necklaces, bracelets, and earrings."
+    />
+    <meta property="twitter:image" content="https://picsum.photos/id/1074/1200/630" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.marjahans.com/" />
+
+    <!-- Google Analytics 4 -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              'serif': ['Cormorant Garamond', 'serif'],
-              'sans': ['Poppins', 'sans-serif'],
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID', {
+        custom_map: {
+          dimension1: 'user_type',
+          dimension2: 'product_category',
+          metric1: 'cart_value',
+        },
+      });
+    </script>
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://vtmhzdqcnxpkkukkxdsd.supabase.co" />
+    <link rel="preconnect" href="https://www.google-analytics.com" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://vtmhzdqcnxpkkukkxdsd.supabase.co" />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&family=Cinzel:wght@400;500&family=Cormorant+Garamond:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "JewelryStore",
+        "name": "Marjahan's Jewelry",
+        "description": "Luxury jewelry store offering handcrafted rings, necklaces, bracelets, and earrings in gold, silver, and platinum.",
+        "url": "https://www.marjahans.com",
+        "logo": "https://www.marjahans.com/favicon.svg",
+        "priceRange": "$$$",
+        "currenciesAccepted": "USD",
+        "paymentAccepted": ["Credit Card", "Debit Card"],
+        "sameAs": [
+          "https://facebook.com/marjahansjewelry",
+          "https://instagram.com/marjahansjewelry",
+          "https://pinterest.com/marjahansjewelry"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Jewelry Collection",
+          "itemListElement": [
+            {
+              "@type": "OfferCatalog",
+              "name": "Rings",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": { "@type": "Product", "name": "Seraphina Diamond Ring" }
+                }
+              ]
             },
-            colors: {
-              'brand-gold': '#D4AF37',
-              'brand-dark': '#1a1a1a',
-              'brand-light': '#f7f7f7',
+            {
+              "@type": "OfferCatalog",
+              "name": "Necklaces"
             },
-            keyframes: {
-              fadeIn: {
-                '0%': { opacity: '0' },
-                '100%': { opacity: '1' },
-              },
-              slideInRight: {
-                '0%': { transform: 'translateX(100%)' },
-                '100%': { transform: 'translateX(0)' },
-              },
-              slideInDown: {
-                '0%': { opacity: '0', transform: 'translateY(-10px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
-              }
+            {
+              "@type": "OfferCatalog",
+              "name": "Bracelets"
             },
-            animation: {
-              'fade-in': 'fadeIn 0.3s ease-out',
-              'slide-in-right': 'slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-              'slide-in-down': 'slideInDown 0.2s ease-out',
+            {
+              "@type": "OfferCatalog",
+              "name": "Earrings"
             }
-          }
+          ]
         }
       }
     </script>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.1.1/",
-    "react": "https://aistudiocdn.com/react@^19.1.1",
-    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.3",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
-    "uuid": "https://aistudiocdn.com/uuid@^13.0.0",
-    "@testing-library/react": "https://aistudiocdn.com/@testing-library/react@^16.3.0",
-    "@playwright/test": "https://aistudiocdn.com/@playwright/test@^1.57.0"
-  }
-}
-</script>
-</head>
+  </head>
+
   <body class="bg-brand-light text-brand-dark">
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>

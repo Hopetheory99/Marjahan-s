@@ -1,72 +1,133 @@
-
-import { PRODUCTS } from '../constants';
+import { supabase } from './supabaseClient';
 import { Product, MetalType, CategoryType } from '../types';
-
-// Simulate API delay
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-// In-memory store for session persistence
-let inMemoryProducts: Product[] = [...PRODUCTS];
+import { PRODUCTS } from '../constants';
 
 export interface ProductFilters {
   price?: number;
   metals?: MetalType[];
   categories?: CategoryType[];
+  search?: string;
+  sort?: string;
 }
 
 export const productService = {
   getAll: async (filters?: ProductFilters): Promise<Product[]> => {
-    await delay(600); // Simulate network latency
+    try {
+      let query = supabase.from('products').select('*');
 
-    let results = [...inMemoryProducts];
+      if (filters) {
+        if (filters.price !== undefined) {
+          query = query.lte('price', filters.price);
+        }
+        if (filters.metals && filters.metals.length > 0) {
+          query = query.in('metal', filters.metals);
+        }
+        if (filters.categories && filters.categories.length > 0) {
+          query = query.in('category', filters.categories);
+        }
+      }
 
-    if (filters) {
-      if (filters.price !== undefined) {
-        results = results.filter(p => p.price <= filters.price!);
+      const { data, error } = await query;
+      if (error) throw error;
+
+      // If no data from Supabase, fallback to local constants
+      if (!data || data.length === 0) {
+        console.warn('No products from Supabase, using local data');
+        return PRODUCTS;
       }
-      if (filters.metals && filters.metals.length > 0) {
-        results = results.filter(p => filters.metals!.includes(p.metal));
+
+      return data;
+    } catch (error) {
+      console.warn('Supabase unavailable, using local products:', error);
+      // Fallback to local constants
+      let products = [...PRODUCTS];
+
+      if (filters) {
+        if (filters.price !== undefined) {
+          products = products.filter((p) => p.price <= filters.price!);
+        }
+        if (filters.metals && filters.metals.length > 0) {
+          products = products.filter((p) => filters.metals!.includes(p.metal as MetalType));
+        }
+        if (filters.categories && filters.categories.length > 0) {
+          products = products.filter((p) =>
+            filters.categories!.includes(p.category as CategoryType),
+          );
+        }
       }
-      if (filters.categories && filters.categories.length > 0) {
-        results = results.filter(p => filters.categories!.includes(p.category));
-      }
+
+      return products;
     }
-
-    return results;
   },
 
   getById: async (id: string): Promise<Product | undefined> => {
-    await delay(400);
-    return inMemoryProducts.find(p => p.id === id);
+    try {
+      const { data, error } = await supabase.from('products').select('*').eq('id', id).single();
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.warn('Supabase unavailable, using local product:', error);
+      return PRODUCTS.find((p) => p.id === id);
+    }
   },
 
   getFeatured: async (): Promise<Product[]> => {
-    await delay(500);
-    return inMemoryProducts.slice(0, 4);
+    try {
+      const { data, error } = await supabase.from('products').select('*').limit(4);
+      if (error) throw error;
+
+      if (!data || data.length === 0) {
+        console.warn('No featured products from Supabase, using local data');
+        return PRODUCTS.slice(0, 4);
+      }
+
+      return data;
+    } catch (error) {
+      console.warn('Supabase unavailable, using local featured products:', error);
+      return PRODUCTS.slice(0, 4);
+    }
   },
 
   // Admin Methods
   addProduct: async (product: Omit<Product, 'id'>): Promise<Product> => {
-    await delay(500);
-    const newProduct = {
-      ...product,
-      id: Math.random().toString(36).substr(2, 9),
-    };
-    inMemoryProducts.push(newProduct);
-    return newProduct;
+    const { data, error } = await supabase.from('products').insert(product).select().single();
+
+    if (error) throw error;
+    return data;
   },
 
   updateProduct: async (id: string, updates: Partial<Product>): Promise<Product> => {
-    await delay(500);
-    const index = inMemoryProducts.findIndex(p => p.id === id);
-    if (index === -1) throw new Error('Product not found');
-    
-    inMemoryProducts[index] = { ...inMemoryProducts[index], ...updates };
-    return inMemoryProducts[index];
+    const { data, error } = await supabase
+      .from('products')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
   },
 
   deleteProduct: async (id: string): Promise<void> => {
-    await delay(500);
-    inMemoryProducts = inMemoryProducts.filter(p => p.id !== id);
-  }
+    const { error } = await supabase.from('products').delete().eq('id', id);
+
+    if (error) throw error;
+  },
+
+  // Seed Method
+  seedProducts: async (): Promise<void> => {
+    // Check if products exist
+    const { count } = await supabase.from('products').select('*', { count: 'exact', head: true });
+    if (count && count > 0) return; // Already seeded
+
+    // Remove IDs from constants to let Supabase generate UUIDs
+    const productsToInsert = PRODUCTS.map((product) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id, ...rest } = product;
+      return rest;
+    });
+
+    const { error } = await supabase.from('products').insert(productsToInsert);
+    if (error) throw error;
+  },
 };

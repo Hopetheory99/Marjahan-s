@@ -1,0 +1,26 @@
+[
+  {
+    "id": "wish_001",
+    "userId": "user_001",
+    "productId": "prod_007",
+    "createdAt": "2024-10-20T10:00:00Z"
+  },
+  {
+    "id": "wish_002",
+    "userId": "user_001",
+    "productId": "prod_011",
+    "createdAt": "2024-10-21T14:00:00Z"
+  },
+  {
+    "id": "wish_003",
+    "userId": "user_002",
+    "productId": "prod_005",
+    "createdAt": "2024-10-22T09:30:00Z"
+  },
+  {
+    "id": "wish_004",
+    "userId": "user_003",
+    "productId": "prod_001",
+    "createdAt": "2024-10-23T16:00:00Z"
+  }
+]

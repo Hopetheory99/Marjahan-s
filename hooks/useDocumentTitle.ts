@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { CONFIG } from '../config';
 

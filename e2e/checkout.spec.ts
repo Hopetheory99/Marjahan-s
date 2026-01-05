@@ -1,4 +1,3 @@
-
 import { test, expect } from '@playwright/test';
 
 test.describe('Checkout Flow', () => {
@@ -18,7 +17,7 @@ test.describe('Checkout Flow', () => {
     // 4. Add to Cart
     await page.selectOption('select#size', '7');
     await page.click('button:has-text("Add to Cart")');
-    
+
     // 5. Verify Toast
     await expect(page.locator('text=Added 1 Seraphina Diamond Ring to bag')).toBeVisible();
 
@@ -39,7 +38,7 @@ test.describe('Checkout Flow', () => {
     await page.fill('input[name="city"]', 'New York');
     await page.fill('input[name="country"]', 'USA');
     await page.fill('input[name="zip"]', '10001');
-    
+
     // 9. Submit Order
     await page.click('button:has-text("Place Order")');
 
