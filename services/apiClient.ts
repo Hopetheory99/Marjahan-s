@@ -19,9 +19,9 @@ const createApiClient = (): AxiosInstance => {
   const client = axios.create({
     baseURL: apiBase.replace(/\/$/, ''),
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    withCredentials: true // Include cookies (refresh token)
+    withCredentials: true, // Include cookies (refresh token)
   });
 
   // Request interceptor: Add access token
@@ -32,7 +32,7 @@ const createApiClient = (): AxiosInstance => {
       }
       return config;
     },
-    (error) => Promise.reject(error)
+    (error) => Promise.reject(error),
   );
 
   // Response interceptor: Handle token expiry and errors
@@ -57,7 +57,7 @@ const createApiClient = (): AxiosInstance => {
       }
 
       return Promise.reject(error);
-    }
+    },
   );
 
   return client;

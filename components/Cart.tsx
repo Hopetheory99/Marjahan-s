@@ -98,7 +98,11 @@ const Cart: React.FC = () => {
               {cartItems.map((item) => (
                 <div key={item.id} className="flex items-start space-x-4 animate-fade-in">
                   <div className="w-24 h-24 flex-shrink-0 bg-gray-100 rounded overflow-hidden">
-                    <Image src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="flex-grow">
                     <div className="flex justify-between items-start">

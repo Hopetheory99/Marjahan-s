@@ -111,10 +111,11 @@ const Header: React.FC = () => {
       </a>
 
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isScrolled || !isHome
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+          isScrolled || !isHome
             ? 'bg-black/80 backdrop-blur-md shadow-luxury py-3 border-b border-white/10'
             : 'bg-transparent py-5'
-          }`}
+        }`}
         role="banner"
       >
         <div className="container-luxury flex justify-between items-center">
@@ -123,10 +124,11 @@ const Header: React.FC = () => {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               onKeyDown={handleKeyDown}
-              className={`p-2 transition-colors duration-300 rounded focus:outline-none focus:ring-2 focus:ring-brand-gold ${isScrolled || !isHome
+              className={`p-2 transition-colors duration-300 rounded focus:outline-none focus:ring-2 focus:ring-brand-gold ${
+                isScrolled || !isHome
                   ? 'text-brand-charcoal hover:text-brand-burgundy'
                   : 'text-white hover:text-brand-gold'
-                }`}
+              }`}
               aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-navigation"
@@ -139,8 +141,9 @@ const Header: React.FC = () => {
           <div className="flex items-center space-x-12">
             <Link
               to="/"
-              className={`font-display text-xl md:text-2xl tracking-luxury transition-all duration-300 ${isScrolled || !isHome ? 'text-brand-burgundy' : 'text-white'
-                }`}
+              className={`font-display text-xl md:text-2xl tracking-luxury transition-all duration-300 ${
+                isScrolled || !isHome ? 'text-brand-burgundy' : 'text-white'
+              }`}
             >
               MARJAHAN'S
             </Link>
@@ -151,8 +154,9 @@ const Header: React.FC = () => {
                 <Link
                   key={category}
                   to={`/products?category=${category}`}
-                  className={`nav-link-luxury link-underline ${isScrolled || !isHome ? 'text-brand-charcoal' : 'text-white/90'
-                    }`}
+                  className={`nav-link-luxury link-underline ${
+                    isScrolled || !isHome ? 'text-brand-charcoal' : 'text-white/90'
+                  }`}
                 >
                   {category}
                 </Link>
@@ -167,20 +171,22 @@ const Header: React.FC = () => {
                 {isAdmin && (
                   <Link
                     to="/admin"
-                    className={`hidden sm:block text-xs tracking-wider uppercase transition-colors duration-300 ${isScrolled || !isHome
+                    className={`hidden sm:block text-xs tracking-wider uppercase transition-colors duration-300 ${
+                      isScrolled || !isHome
                         ? 'text-brand-charcoal hover:text-brand-burgundy'
                         : 'text-white/90 hover:text-brand-gold'
-                      }`}
+                    }`}
                   >
                     Admin
                   </Link>
                 )}
                 <Link
                   to="/profile"
-                  className={`hidden sm:block text-xs tracking-wider uppercase transition-colors duration-300 ${isScrolled || !isHome
+                  className={`hidden sm:block text-xs tracking-wider uppercase transition-colors duration-300 ${
+                    isScrolled || !isHome
                       ? 'text-brand-charcoal hover:text-brand-burgundy'
                       : 'text-white/90 hover:text-brand-gold'
-                    }`}
+                  }`}
                 >
                   Account
                 </Link>
@@ -188,10 +194,11 @@ const Header: React.FC = () => {
             ) : (
               <Link
                 to="/login"
-                className={`hidden sm:block text-xs tracking-wider uppercase transition-colors duration-300 ${isScrolled || !isHome
+                className={`hidden sm:block text-xs tracking-wider uppercase transition-colors duration-300 ${
+                  isScrolled || !isHome
                     ? 'text-brand-charcoal hover:text-brand-burgundy'
                     : 'text-white/90 hover:text-brand-gold'
-                  }`}
+                }`}
               >
                 Login
               </Link>
@@ -205,10 +212,11 @@ const Header: React.FC = () => {
             {/* Wishlist Icon */}
             <Link
               to="/wishlist"
-              className={`relative p-2 transition-colors duration-300 hidden sm:block ${isScrolled || !isHome
+              className={`relative p-2 transition-colors duration-300 hidden sm:block ${
+                isScrolled || !isHome
                   ? 'text-brand-charcoal hover:text-brand-burgundy'
                   : 'text-white hover:text-brand-gold'
-                }`}
+              }`}
               aria-label="View Wishlist"
             >
               <HeartIcon />
@@ -223,10 +231,11 @@ const Header: React.FC = () => {
             <button
               data-cart-icon
               onClick={openCart}
-              className={`relative p-2 transition-colors duration-300 ${isScrolled || !isHome
+              className={`relative p-2 transition-colors duration-300 ${
+                isScrolled || !isHome
                   ? 'text-brand-charcoal hover:text-brand-burgundy'
                   : 'text-white hover:text-brand-gold'
-                }`}
+              }`}
               aria-label="Open Shopping Cart"
             >
               <ShoppingBagIcon />

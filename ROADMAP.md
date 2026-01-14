@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+
 # 💎 Marjahan's Jewelry - Engineering Roadmap
 
 **Objective:** Elevate codebase to 10/10 score across Security, Architecture, Quality, and Testing.
@@ -41,6 +42,7 @@
 - [x] Stock limit enforcement
 
 ### Phase 5: UI/UX Polish
+
 =======
 
 # 💎 Marjahan's Jewelry - Product Roadmap
@@ -51,7 +53,8 @@
 ---
 
 ## ✅ Phase 1: Security & Foundation (Completed)
-*Goal: Fix vulnerabilities and establish strict type safety.*
+
+_Goal: Fix vulnerabilities and establish strict type safety._
 
 - [x] **Secure Admin Route:** Implement `AuthContext` and `ProtectedRoute` to prevent unauthorized access.
 - [x] **Strict TypeScript:** Remove `any` types in `ProductsPage` filtering logic.
@@ -61,7 +64,8 @@
 - [x] **Auth Persistence:** Migrated from localStorage to sessionStorage (dev) and server-backed login.
 
 ## ✅ Phase 2: Architecture & State (Completed)
-*Goal: Decouple data and implement robust state management.*
+
+_Goal: Decouple data and implement robust state management._
 
 - [x] **Service Layer:** Created API adapters in `services/productService.ts` and `services/orderService.ts` to call backend when available.
 - [x] **Custom Hooks:** Created `useProducts.ts` and `useOrders.ts` using React Query for caching.
@@ -71,7 +75,8 @@
 - [x] **React Query Integration:** Added `@tanstack/react-query` for data fetching, caching, and background updates.
 
 ## ✅ Phase 3: Performance & Optimization (Partially Completed)
-*Goal: Ensure 60fps and low TTI (Time to Interactive).*
+
+_Goal: Ensure 60fps and low TTI (Time to Interactive)._
 
 - [x] **Image Optimization:** Implement generic `Image` component with `srcset` and lazy loading.
 - [x] **Code Splitting:** Use `React.lazy` and `Suspense` for Route components (especially Admin and Checkout).
@@ -81,7 +86,8 @@
 - [ ] **Server-Side Pagination:** Limit product list queries to 20 items per request.
 
 ## ✅ Phase 4: Testing & Reliability (Partially Completed)
-*Goal: Establish testing practices and fault tolerance.*
+
+_Goal: Establish testing practices and fault tolerance._
 
 - [x] **Fault Tolerance:** Implemented `ErrorBoundary` and `NotFoundPage`.
 - [x] **Unit Tests:** Created `context/__tests__/cartReducer.test.ts` and `components/__tests__/ProductCard.test.tsx`.
@@ -91,7 +97,8 @@
 - [ ] **E2E Tests:** Expand Playwright tests to cover full checkout and cart flows.
 
 ## ✅ Phase 5: Backend & API (Partially Completed)
-*Goal: Establish production-ready backend architecture.*
+
+_Goal: Establish production-ready backend architecture._
 
 - [x] **Mock Server:** Created Express.js backend with `/server` folder and endpoints for products, orders, auth, and recommendations.
 - [x] **File-Based Persistence:** Products and orders stored in `server/data/*.json` for local development.
@@ -103,7 +110,8 @@
 - [ ] **Rate Limiting:** Protect endpoints with rate limiting (npm `express-rate-limit`).
 
 ## ✅ Phase 6: Payments & Checkout (Partially Completed)
-*Goal: Enable secure payment processing.*
+
+_Goal: Enable secure payment processing._
 
 - [x] **Stripe Mock Endpoint:** Added `/api/stripe/create-checkout-session` that returns dev sessionUrl.
 - [x] **Client Integration:** Created `services/stripeService.ts` and wired into `CheckoutPage`.
@@ -113,7 +121,8 @@
 - [ ] **Email Confirmation:** Send order confirmation emails via SendGrid/Mailgun.
 
 ## 🔄 Phase 7: AI & Personalization (Next)
-*Goal: Add Gemini-powered recommendations and search.*
+
+_Goal: Add Gemini-powered recommendations and search._
 
 - [x] **Service Stub:** Created `services/geminiService.ts` with safe fallback (mocks when no key).
 - [ ] **Server Proxy:** Implement backend endpoint `/api/recommendations` that calls Gemini (never expose key to browser).
@@ -123,7 +132,8 @@
 - [ ] **Testing:** Unit tests for recommendation logic.
 
 ## ⏳ Phase 8: Analytics & Observability
-*Goal: Monitor user behavior and system health.*
+
+_Goal: Monitor user behavior and system health._
 
 - [ ] **Error Tracking:** Integrate Sentry for error monitoring and alerting.
 - [ ] **Analytics:** Add Plausible or Google Analytics for user behavior tracking.
@@ -132,7 +142,8 @@
 - [ ] **Performance Monitoring:** Web Vitals tracking (Lighthouse, SpeedCurve).
 
 ## 🎯 Phase 9: Scaling & Operations
-*Goal: Prepare for production deployment and multi-region support.*
+
+_Goal: Prepare for production deployment and multi-region support._
 
 - [ ] **Containerization:** Dockerfile and docker-compose for local and cloud deployment.
 - [ ] **CI/CD:** Expanded GitHub Actions with staging/production deployments.
@@ -153,15 +164,15 @@
 
 ## 🚀 Deployment Status
 
-| Component | Status | Priority |
-|-----------|--------|----------|
-| Frontend (React/Vite) | ✅ Ready for Vercel/Netlify | - |
-| Backend (Express Mock) | ✅ Dev only; replace for prod | High |
-| Database | ❌ Not integrated | High |
-| Authentication | ⚠️ Dev-only; needs production auth | Critical |
-| Payments (Stripe) | ⚠️ Mock only; needs real integration | High |
-| AI (Gemini) | ⚠️ Stub only; needs backend proxy | Medium |
-| Monitoring (Sentry) | ❌ Not integrated | Medium |
+| Component              | Status                               | Priority |
+| ---------------------- | ------------------------------------ | -------- |
+| Frontend (React/Vite)  | ✅ Ready for Vercel/Netlify          | -        |
+| Backend (Express Mock) | ✅ Dev only; replace for prod        | High     |
+| Database               | ❌ Not integrated                    | High     |
+| Authentication         | ⚠️ Dev-only; needs production auth   | Critical |
+| Payments (Stripe)      | ⚠️ Mock only; needs real integration | High     |
+| AI (Gemini)            | ⚠️ Stub only; needs backend proxy    | Medium   |
+| Monitoring (Sentry)    | ❌ Not integrated                    | Medium   |
 
 ## 📈 Success Metrics
 
@@ -176,15 +187,16 @@
 
 ## 🔗 Key Files by Phase
 
-| Phase | Key Files |
-|-------|-----------|
-| Security | `context/AuthContext.tsx`, `.env.example`, `.github/workflows/ci.yml` |
-| Backend | `server/index.js`, `services/productService.ts`, `services/orderService.ts` |
-| Payments | `services/stripeService.ts`, `pages/CheckoutPage.tsx` |
-| AI | `services/geminiService.ts` |
-| Testing | `vitest.config.ts`, `context/__tests__/*`, `components/__tests__/*` |
-| Docs | `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md` |
->>>>>>> 761b4aa0e334fc8c74177e361cd66e69829c60ff
+| Phase    | Key Files                                                                   |
+| -------- | --------------------------------------------------------------------------- |
+| Security | `context/AuthContext.tsx`, `.env.example`, `.github/workflows/ci.yml`       |
+| Backend  | `server/index.js`, `services/productService.ts`, `services/orderService.ts` |
+| Payments | `services/stripeService.ts`, `pages/CheckoutPage.tsx`                       |
+| AI       | `services/geminiService.ts`                                                 |
+| Testing  | `vitest.config.ts`, `context/__tests__/*`, `components/__tests__/*`         |
+| Docs     | `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`         |
+
+> > > > > > > 761b4aa0e334fc8c74177e361cd66e69829c60ff
 
 - [x] Toast notification system
 - [x] Micro-interactions and animations
@@ -257,17 +269,17 @@
 
 ## 📝 Changelog
 
-| Date     | Category | Change                                   |
-| -------- | -------- | ---------------------------------------- |
+| Date     | Category | Change                                         |
+| -------- | -------- | ---------------------------------------------- |
 | Jan 2026 | Build    | Fixed critical build error in stripeService.ts |
-| Jan 2026 | Security | Eliminated client-side API key exposure |
-| Jan 2026 | Build    | Fixed React useState import issue        |
-| Jan 2026 | QA       | Documented existing E2E tests (Playwright) |
-| Dec 2024 | Security | Fixed admin link exposure in mobile menu |
-| Dec 2024 | SEO      | Added robots.txt, sitemap.xml, meta tags |
-| Dec 2024 | Feature  | Implemented Wishlist system              |
-| Dec 2024 | Perf     | Removed CDN importmap                    |
-| Dec 2024 | Docs     | Updated README, added CONTRIBUTING       |
+| Jan 2026 | Security | Eliminated client-side API key exposure        |
+| Jan 2026 | Build    | Fixed React useState import issue              |
+| Jan 2026 | QA       | Documented existing E2E tests (Playwright)     |
+| Dec 2024 | Security | Fixed admin link exposure in mobile menu       |
+| Dec 2024 | SEO      | Added robots.txt, sitemap.xml, meta tags       |
+| Dec 2024 | Feature  | Implemented Wishlist system                    |
+| Dec 2024 | Perf     | Removed CDN importmap                          |
+| Dec 2024 | Docs     | Updated README, added CONTRIBUTING             |
 
 ---
 

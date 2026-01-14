@@ -24,6 +24,7 @@
 - **Stock Management** - Real-time stock availability display
 
 <<<<<<< HEAD
+
 ### Admin Dashboard
 
 - **Product Management** - Add, edit, and delete products
@@ -181,6 +182,7 @@ Useful scripts:
 - `npm run build` — production build
 
 Notes:
+
 - Do NOT commit real secrets. Use your hosting platform's secret store in production.
 - The repository contains demo-only implementations for auth and services; see `services/geminiService.ts` for guidance on wiring a secure server-side proxy.
 
@@ -216,4 +218,4 @@ VITE_API_BASE_URL=http://localhost:3000
 VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_key
 ```
 
->>>>>>> 761b4aa0e334fc8c74177e361cd66e69829c60ff
+> > > > > > > 761b4aa0e334fc8c74177e361cd66e69829c60ff

@@ -6,8 +6,8 @@ vi.mock('../../services/apiClient', () => ({
   apiClient: {
     get: vi.fn(),
     put: vi.fn(),
-    post: vi.fn()
-  }
+    post: vi.fn(),
+  },
 }));
 
 import { apiClient } from '../../services/apiClient';
@@ -26,11 +26,13 @@ describe('orderService', () => {
           items: [],
           total: 100,
           status: 'Pending' as const,
-          date: '2024-01-14'
-        }
+          date: '2024-01-14',
+        },
       ];
 
-      (apiClient.get as unknown as ReturnType<typeof vi.fn>).mockResolvedValueOnce({ data: mockOrders });
+      (apiClient.get as unknown as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+        data: mockOrders,
+      });
 
       // Mock VITE_API_BASE_URL to trigger API call
       const result = await orderService.getAll();
@@ -40,7 +42,9 @@ describe('orderService', () => {
     });
 
     it('throws error when API call fails', async () => {
-      (apiClient.get as unknown as ReturnType<typeof vi.fn>).mockRejectedValueOnce(new Error('Network error'));
+      (apiClient.get as unknown as ReturnType<typeof vi.fn>).mockRejectedValueOnce(
+        new Error('Network error'),
+      );
 
       try {
         await orderService.getAll();
@@ -58,10 +62,12 @@ describe('orderService', () => {
         items: [],
         total: 250,
         status: 'Shipped' as const,
-        date: '2024-01-14'
+        date: '2024-01-14',
       };
 
-      (apiClient.get as unknown as ReturnType<typeof vi.fn>).mockResolvedValueOnce({ data: mockOrder });
+      (apiClient.get as unknown as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+        data: mockOrder,
+      });
 
       const result = await orderService.getById('order-1');
 
@@ -71,7 +77,7 @@ describe('orderService', () => {
 
     it('returns undefined for non-existent order in memory', async () => {
       const result = await orderService.getById('non-existent-id');
-      
+
       // When using in-memory, should return undefined if not found
       expect(result === undefined || result.id).toBeDefined();
     });
@@ -85,10 +91,12 @@ describe('orderService', () => {
         items: [],
         total: 100,
         status: 'Delivered' as const,
-        date: '2024-01-14'
+        date: '2024-01-14',
       };
 
-      (apiClient.put as unknown as ReturnType<typeof vi.fn>).mockResolvedValueOnce({ data: mockUpdatedOrder });
+      (apiClient.put as unknown as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+        data: mockUpdatedOrder,
+      });
 
       const result = await orderService.updateStatus('order-1', 'Delivered');
 
@@ -97,7 +105,9 @@ describe('orderService', () => {
     });
 
     it('throws error when updating non-existent order', async () => {
-      (apiClient.put as unknown as ReturnType<typeof vi.fn>).mockRejectedValueOnce(new Error('Order not found'));
+      (apiClient.put as unknown as ReturnType<typeof vi.fn>).mockRejectedValueOnce(
+        new Error('Order not found'),
+      );
 
       try {
         await orderService.updateStatus('non-existent', 'Delivered');

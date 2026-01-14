@@ -115,7 +115,6 @@ class SearchService {
     }
   }
 
-
   /**
    * Fallback search when Typesense is not available
    */
@@ -159,7 +158,7 @@ class SearchService {
       }
 
       if (filters.inStock !== undefined) {
-        results = results.filter((product: any) => (product.stock > 0) === filters.inStock);
+        results = results.filter((product: any) => product.stock > 0 === filters.inStock);
       }
 
       // Apply sorting

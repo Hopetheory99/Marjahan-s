@@ -7,11 +7,11 @@ const { z } = require('zod');
 
 // Auth schemas
 const loginSchema = z.object({
-  password: z.string().min(1, 'Password required')
+  password: z.string().min(1, 'Password required'),
 });
 
 const refreshTokenSchema = z.object({
-  refreshToken: z.string().min(1, 'Refresh token required')
+  refreshToken: z.string().min(1, 'Refresh token required'),
 });
 
 // Product schemas
@@ -23,7 +23,7 @@ const productSchema = z.object({
   category: z.enum(['Rings', 'Necklaces', 'Earrings', 'Bracelets']),
   images: z.array(z.string().url()).min(1),
   sizes: z.array(z.string()).optional(),
-  stock: z.number().int().nonnegative('Stock must be >= 0')
+  stock: z.number().int().nonnegative('Stock must be >= 0'),
 });
 
 const updateProductSchema = productSchema.partial();
@@ -35,7 +35,7 @@ const cartItemSchema = z.object({
   price: z.number().positive(),
   image: z.string().url(),
   quantity: z.number().int().positive(),
-  size: z.string().optional()
+  size: z.string().optional(),
 });
 
 const customerSchema = z.object({
@@ -45,22 +45,22 @@ const customerSchema = z.object({
   address: z.string().min(1),
   city: z.string().min(1),
   country: z.string().min(1),
-  zip: z.string().min(1)
+  zip: z.string().min(1),
 });
 
 const checkoutSchema = z.object({
   cart: z.array(cartItemSchema).min(1, 'Cart cannot be empty'),
-  customer: customerSchema
+  customer: customerSchema,
 });
 
 const updateOrderStatusSchema = z.object({
-  status: z.enum(['Pending', 'Shipped', 'Delivered'])
+  status: z.enum(['Pending', 'Shipped', 'Delivered']),
 });
 
 // Recommendation schema
 const recommendationSchema = z.object({
   userId: z.string().optional(),
-  context: z.string().optional()
+  context: z.string().optional(),
 });
 
 module.exports = {
@@ -70,5 +70,5 @@ module.exports = {
   updateProductSchema,
   checkoutSchema,
   updateOrderStatusSchema,
-  recommendationSchema
+  recommendationSchema,
 };

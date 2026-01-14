@@ -32,7 +32,9 @@ const PageLoader = () => (
 );
 
 function App() {
-  const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 1000 * 60 * 2 } } });
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { staleTime: 1000 * 60 * 2 } },
+  });
   return (
     <>
       <StarryBackground />
@@ -47,31 +49,94 @@ function App() {
                       <ToastContainer />
                       <Routes>
                         {/* Public / Shopper Routes */}
-                        <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
-                        <Route path="/products" element={<MainLayout><ProductsPage /></MainLayout>} />
-                        <Route path="/products/:id" element={<MainLayout><ProductDetailPage /></MainLayout>} />
-                        <Route path="/checkout" element={<MainLayout><CheckoutPage /></MainLayout>} />
-                        <Route path="/confirmation" element={<MainLayout><OrderConfirmationPage /></MainLayout>} />
-                        
+                        <Route
+                          path="/"
+                          element={
+                            <MainLayout>
+                              <HomePage />
+                            </MainLayout>
+                          }
+                        />
+                        <Route
+                          path="/products"
+                          element={
+                            <MainLayout>
+                              <ProductsPage />
+                            </MainLayout>
+                          }
+                        />
+                        <Route
+                          path="/products/:id"
+                          element={
+                            <MainLayout>
+                              <ProductDetailPage />
+                            </MainLayout>
+                          }
+                        />
+                        <Route
+                          path="/checkout"
+                          element={
+                            <MainLayout>
+                              <CheckoutPage />
+                            </MainLayout>
+                          }
+                        />
+                        <Route
+                          path="/confirmation"
+                          element={
+                            <MainLayout>
+                              <OrderConfirmationPage />
+                            </MainLayout>
+                          }
+                        />
+
                         {/* Auth Route */}
-                        <Route path="/login" element={<MainLayout><LoginPage /></MainLayout>} />
-                        <Route path="/profile" element={<MainLayout><ProfilePage /></MainLayout>} />
-                        <Route path="/wishlist" element={<MainLayout><WishlistPage /></MainLayout>} />
-                        
+                        <Route
+                          path="/login"
+                          element={
+                            <MainLayout>
+                              <LoginPage />
+                            </MainLayout>
+                          }
+                        />
+                        <Route
+                          path="/profile"
+                          element={
+                            <MainLayout>
+                              <ProfilePage />
+                            </MainLayout>
+                          }
+                        />
+                        <Route
+                          path="/wishlist"
+                          element={
+                            <MainLayout>
+                              <WishlistPage />
+                            </MainLayout>
+                          }
+                        />
+
                         {/* Protected Admin Routes */}
-                        <Route 
-                          path="/admin" 
+                        <Route
+                          path="/admin"
                           element={
                             <ProtectedRoute>
                               <AdminLayout>
                                 <AdminPage />
                               </AdminLayout>
                             </ProtectedRoute>
-                          } 
+                          }
                         />
 
                         {/* 404 Catch-all */}
-                        <Route path="*" element={<MainLayout><NotFoundPage /></MainLayout>} />
+                        <Route
+                          path="*"
+                          element={
+                            <MainLayout>
+                              <NotFoundPage />
+                            </MainLayout>
+                          }
+                        />
                       </Routes>
                     </Suspense>
                   </CartProvider>

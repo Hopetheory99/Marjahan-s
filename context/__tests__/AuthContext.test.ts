@@ -14,7 +14,8 @@ describe('AuthContext', () => {
   });
 
   it('initializes with unauthenticated state', () => {
-    const wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(AuthProvider, null, children);
+    const wrapper = ({ children }: { children: React.ReactNode }) =>
+      React.createElement(AuthProvider, null, children);
     const { result } = renderHook(() => useAuth(), { wrapper });
 
     expect(result.current.isAuthenticated).toBe(false);
@@ -25,13 +26,14 @@ describe('AuthContext', () => {
   it('successfully logs in with correct password', async () => {
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ 
+      json: async () => ({
         accessToken: 'test-token-123',
-        role: 'admin'
-      })
+        role: 'admin',
+      }),
     });
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(AuthProvider, null, children);
+    const wrapper = ({ children }: { children: React.ReactNode }) =>
+      React.createElement(AuthProvider, null, children);
     const { result } = renderHook(() => useAuth(), { wrapper });
 
     let loginSuccess = false;
@@ -47,10 +49,11 @@ describe('AuthContext', () => {
   it('fails login with incorrect password', async () => {
     mockFetch.mockResolvedValueOnce({
       ok: false,
-      json: async () => ({ message: 'Invalid credentials' })
+      json: async () => ({ message: 'Invalid credentials' }),
     });
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(AuthProvider, null, children);
+    const wrapper = ({ children }: { children: React.ReactNode }) =>
+      React.createElement(AuthProvider, null, children);
     const { result } = renderHook(() => useAuth(), { wrapper });
 
     let loginSuccess = false;
@@ -66,13 +69,14 @@ describe('AuthContext', () => {
   it('logs out successfully', async () => {
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ 
+      json: async () => ({
         accessToken: 'test-token-123',
-        role: 'admin'
-      })
+        role: 'admin',
+      }),
     });
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(AuthProvider, null, children);
+    const wrapper = ({ children }: { children: React.ReactNode }) =>
+      React.createElement(AuthProvider, null, children);
     const { result } = renderHook(() => useAuth(), { wrapper });
 
     // First login
@@ -97,7 +101,8 @@ describe('AuthContext', () => {
   it('handles network errors during login', async () => {
     mockFetch.mockRejectedValueOnce(new Error('Network error'));
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(AuthProvider, null, children);
+    const wrapper = ({ children }: { children: React.ReactNode }) =>
+      React.createElement(AuthProvider, null, children);
     const { result } = renderHook(() => useAuth(), { wrapper });
 
     let loginSuccess = false;
@@ -112,13 +117,14 @@ describe('AuthContext', () => {
   it('refreshes access token when provided new refresh token', async () => {
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ 
+      json: async () => ({
         accessToken: 'new-access-token',
-        role: 'admin'
-      })
+        role: 'admin',
+      }),
     });
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(AuthProvider, null, children);
+    const wrapper = ({ children }: { children: React.ReactNode }) =>
+      React.createElement(AuthProvider, null, children);
     const { result } = renderHook(() => useAuth(), { wrapper });
 
     let refreshSuccess = false;

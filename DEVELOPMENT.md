@@ -1,6 +1,7 @@
 # DEVELOPMENT QUICK START GUIDE
 
 ## Prerequisites
+
 - Node.js >= 18
 - npm >= 9
 
@@ -24,6 +25,7 @@ cd server && npm start
 ## Environment Setup
 
 ### Backend (.env in server/)
+
 ```bash
 cd server
 cat > .env << 'EOF'
@@ -36,6 +38,7 @@ EOF
 ```
 
 ### Frontend (.env.local)
+
 ```bash
 cat > .env.local << 'EOF'
 VITE_API_BASE_URL=http://localhost:3001
@@ -45,6 +48,7 @@ EOF
 ## Common Commands
 
 ### Development
+
 ```bash
 # Start frontend dev server (port 5173)
 npm run dev
@@ -122,12 +126,14 @@ Marjahan-s/
 ## Architecture Decisions
 
 ### Frontend-Backend Communication
+
 - ✅ Uses centralized API client (`services/apiClient.ts`)
 - ✅ All requests go through axios interceptors
 - ✅ Automatic token injection in Authorization header
 - ✅ Automatic token refresh on 401
 
 ### Authentication Flow
+
 1. User logs in via `POST /api/auth/login`
 2. Server returns JWT access token (15 min) + refresh token
 3. Refresh token stored in httpOnly cookie (browser sends automatically)
@@ -136,12 +142,14 @@ Marjahan-s/
 6. On 401, interceptor calls `/api/auth/refresh` to get new access token
 
 ### State Management
+
 - **Auth**: Context API (`AuthContext.tsx`) - global, persisted via server
 - **Cart**: Context API + useReducer (`CartContext.tsx`) - persisted in localStorage
 - **Toast**: Context API (`ToastContext.tsx`) - ephemeral notifications
 - **Async Data**: React Query (`useProducts`, `useOrders` hooks)
 
 ### Error Handling Strategy
+
 1. Server: Global `asyncHandler` wrapper catches all errors
 2. Frontend: Services throw errors, caught by React Query
 3. UI: Error boundaries display fallback UI
@@ -150,16 +158,19 @@ Marjahan-s/
 ## Testing Philosophy
 
 ### Unit Tests
+
 - Located in `__tests__` folders next to source files
 - Test business logic, reducers, utilities in isolation
 - Use Vitest + React Testing Library
 
 ### E2E Tests
+
 - Located in `e2e/` directory
 - Test complete user flows (login → checkout → confirmation)
 - Use Playwright
 
 ### Running Tests
+
 ```bash
 # All tests
 npm run test
@@ -179,37 +190,42 @@ npm run e2e
 ### Add a New API Endpoint
 
 1. Add validation schema in `server/schemas.js`:
+
 ```javascript
 const newResourceSchema = z.object({
   name: z.string().min(1),
-  value: z.number().positive()
+  value: z.number().positive(),
 });
 ```
 
 2. Add route in `server/index.js`:
+
 ```javascript
-app.post('/api/resource',
-  authenticateRequest,  // Add if auth required
+app.post(
+  '/api/resource',
+  authenticateRequest, // Add if auth required
   validate(newResourceSchema),
   asyncHandler(async (req, res) => {
     const { name, value } = req.validatedData;
     // Implementation...
     res.json({ success: true });
-  })
+  }),
 );
 ```
 
 3. Create service method in `services/resourceService.ts`:
+
 ```typescript
 export const resourceService = {
   create: async (data: any) => {
     const res = await apiClient.post('/api/resource', data);
     return res.data;
-  }
+  },
 };
 ```
 
 4. Use in component:
+
 ```typescript
 const handleCreate = async (formData) => {
   try {
@@ -225,16 +241,17 @@ const handleCreate = async (formData) => {
 
 1. Create page component in `pages/MyPage.tsx`
 2. Add route in `App.tsx`:
+
 ```tsx
-<Route 
-  path="/my-route" 
+<Route
+  path="/my-route"
   element={
     <ProtectedRoute>
       <AdminLayout>
         <MyPage />
       </AdminLayout>
     </ProtectedRoute>
-  } 
+  }
 />
 ```
 
@@ -242,6 +259,7 @@ const handleCreate = async (formData) => {
 
 1. Create file next to component: `components/__tests__/MyComponent.test.tsx`
 2. Test logic in isolation:
+
 ```typescript
 import { render, screen } from '@testing-library/react';
 import MyComponent from '../MyComponent';
@@ -257,20 +275,25 @@ describe('MyComponent', () => {
 ## Debugging Tips
 
 ### Frontend
+
 - Open DevTools (F12)
 - Check Network tab for API requests
 - Check Console for errors
 - Check Storage for cookies/localStorage
 
 ### Backend
+
 - Check terminal logs (structured JSON format)
 - Add console.log() wrapped with logger calls:
+
 ```javascript
 logger.debug('Processing order', { orderId, customerId });
 ```
+
 - Use `npm run dev` to see real-time logs
 
 ### API Debugging
+
 - Use Postman/Insomnia to test endpoints
 - Include Bearer token in Authorization header
 - Check response structure matches schema
@@ -278,6 +301,7 @@ logger.debug('Processing order', { orderId, customerId });
 ## Performance Checklist
 
 Before committing:
+
 - [ ] `npm run lint` passes
 - [ ] `npm run format` applied
 - [ ] `npm run test` passes
@@ -287,6 +311,7 @@ Before committing:
 ## Troubleshooting
 
 ### "Cannot find module" errors
+
 ```bash
 # Clear node_modules and reinstall
 rm -rf node_modules package-lock.json
@@ -294,34 +319,39 @@ npm install
 ```
 
 ### TypeScript errors with strict mode
+
 - Check that all function return types are annotated
 - Ensure null/undefined handled properly
 - No implicit `any` types
 
 ### API calls returning 401
+
 - Check token is being sent: DevTools Network tab → Authorization header
 - Check token hasn't expired (15 min)
 - Try logging out and back in
 
 ### CORS errors
+
 - Ensure `CORS_ORIGIN` in server .env includes your frontend URL
 - Check that frontend and backend are running on different ports
 
 ## Environment Variables Reference
 
 ### Backend (server/.env)
-| Variable | Default | Description |
-|----------|---------|-------------|
-| JWT_SECRET | N/A | Secret for signing tokens (required) |
-| JWT_REFRESH_SECRET | N/A | Secret for refresh tokens (required) |
-| ADMIN_PASSWORD | admin123 | Admin login password (change in prod!) |
-| NODE_ENV | development | Environment: development or production |
-| CORS_ORIGIN | localhost | Comma-separated origins allowed |
-| PORT | 3001 | Server port |
+
+| Variable           | Default     | Description                            |
+| ------------------ | ----------- | -------------------------------------- |
+| JWT_SECRET         | N/A         | Secret for signing tokens (required)   |
+| JWT_REFRESH_SECRET | N/A         | Secret for refresh tokens (required)   |
+| ADMIN_PASSWORD     | admin123    | Admin login password (change in prod!) |
+| NODE_ENV           | development | Environment: development or production |
+| CORS_ORIGIN        | localhost   | Comma-separated origins allowed        |
+| PORT               | 3001        | Server port                            |
 
 ### Frontend (.env.local)
-| Variable | Default | Description |
-|----------|---------|-------------|
+
+| Variable          | Default               | Description     |
+| ----------------- | --------------------- | --------------- |
 | VITE_API_BASE_URL | http://localhost:3001 | Backend API URL |
 
 ## Resources

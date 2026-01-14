@@ -12,17 +12,17 @@ const validate = (schema) => {
       req.validatedData = validated;
       next();
     } catch (error) {
-      logger.warn('Request validation failed', { 
-        path: req.path, 
-        errors: error.errors?.map(e => ({ path: e.path.join('.'), message: e.message }))
+      logger.warn('Request validation failed', {
+        path: req.path,
+        errors: error.errors?.map((e) => ({ path: e.path.join('.'), message: e.message })),
       });
-      
+
       return res.status(400).json({
         message: 'Validation failed',
-        errors: error.errors?.map(e => ({
+        errors: error.errors?.map((e) => ({
           field: e.path.join('.'),
-          message: e.message
-        }))
+          message: e.message,
+        })),
       });
     }
   };

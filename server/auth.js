@@ -9,17 +9,13 @@ const logger = require('./logger');
 
 const generateTokens = (userId, role = 'admin') => {
   try {
-    const accessToken = jwt.sign(
-      { userId, role },
-      config.JWT.SECRET,
-      { expiresIn: config.JWT.EXPIRY }
-    );
+    const accessToken = jwt.sign({ userId, role }, config.JWT.SECRET, {
+      expiresIn: config.JWT.EXPIRY,
+    });
 
-    const refreshToken = jwt.sign(
-      { userId, role },
-      config.JWT.REFRESH_SECRET,
-      { expiresIn: config.JWT.REFRESH_EXPIRY }
-    );
+    const refreshToken = jwt.sign({ userId, role }, config.JWT.REFRESH_SECRET, {
+      expiresIn: config.JWT.REFRESH_EXPIRY,
+    });
 
     return { accessToken, refreshToken };
   } catch (error) {
@@ -80,5 +76,5 @@ module.exports = {
   verifyAccessToken,
   verifyRefreshToken,
   authenticateRequest,
-  requireAdmin
+  requireAdmin,
 };

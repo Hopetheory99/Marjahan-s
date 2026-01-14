@@ -8,6 +8,7 @@
 ## Files Modified
 
 ###Changed Files (4):
+
 1. `services/stripeService.ts` - Fixed import path
 2. `vite.config.ts` - Removed API key exposure + simplified config
 3. `MASTER_PLAN.md` - Updated progress tracking
@@ -18,17 +19,19 @@
 ## Git Commands to Execute
 
 ### Step 1: Stage All Changes
+
 ```bash
 git add .
 ```
 
 ### Step 2: Create Commit
+
 ```bash
 git commit -m "fix: critical build and security fixes (Jan 2026)
 
 - Fix build error in services/stripeService.ts (import path correction)
 - Eliminate security vulnerability (remove client-side API key exposure)
-- Fix React useState import/export issue via commonjsOptions  
+- Fix React useState import/export issue via commonjsOptions
 - Simplify vite.config.ts (remove unused env loading)
 - Update MASTER_PLAN.md: mark image optimizer, E2E tests as complete
 - Update ROADMAP.md: add Phase 9 (Critical Bug Fixes)
@@ -43,6 +46,7 @@ Security: API key exposure eliminated"
 ```
 
 ### Step 3: Push to Main Branch
+
 ```bash
 git push origin main
 ```
@@ -54,18 +58,21 @@ git push origin main
 If you see "git is not recognized as a command":
 
 ### Option A: Use Git Bash
+
 1. Open **Git Bash** (if installed)
 2. Navigate to project: `cd "/c/Users/fhdib/.gemini/antigravity/scratch/Marjahan-s"`
 3. Run commands above
 
 ### Option B: Use Visual Studio Code
+
 1. Open VS Code in the project folder
-2. Go to Source Control panel (Ctrl+Shift+G)  
+2. Go to Source Control panel (Ctrl+Shift+G)
 3. Review changes
 4. Enter commit message (from above)
 5. Click "Commit" then "Sync Changes"
 
 ### Option C: Use GitHub Desktop
+
 1. Open GitHub Desktop
 2. Select repository
 3. Review changes in left panel
@@ -82,6 +89,7 @@ If you see "git is not recognized as a command":
 **Subject:** Critical build and security fixes (Jan 2026)
 
 **Key Changes:**
+
 - ✅ Build errors resolved
 - ✅ Security vulnerability patched
 - ✅ Documentation updated
@@ -105,13 +113,13 @@ After pushing, verify on GitHub:
 Fixed critical production blockers identified in January 2026 audit:
 
 ### Build Fixes
-- Corrected import path in services/stripeService.ts 
+- Corrected import path in services/stripeService.ts
   (was ../utils/supabaseClient, now ./supabaseClient)
-- Fixed React useState not exported error by updating 
+- Fixed React useState not exported error by updating
   Vite commonjsOptions to include node_modules
 - Simplified vite.config.ts by removing unused env loading
 
-### Security Fixes  
+### Security Fixes
 - Removed client-side API key exposure from vite.config.ts
 - Eliminated 'define' block that exposed GEMINI_API_KEY to browser
 - Verified no remaining references to process.env.GEMINI_API_KEY
@@ -123,7 +131,7 @@ Fixed critical production blockers identified in January 2026 audit:
   * Updated Phase 3 progress: 50% → 70%
   * Updated Phase 7 progress: 60% → 70%
   * Added "Latest Updates (January 2026)" section
-  
+
 - Updated ROADMAP.md:
   * Added Phase 9: Critical Bug Fixes & Build Stabilization
   * Added January 2026 changelog entries

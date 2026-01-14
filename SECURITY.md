@@ -6,7 +6,8 @@ This document outlines security improvements implemented in Phase 1 and provides
 
 ### Critical Security Fixes Implemented ✅
 
-#### 1. Server-Backed JWT Authentication ✅ 
+#### 1. Server-Backed JWT Authentication ✅
+
 - Moved from client-side sessionStorage to server JWT tokens
 - Access tokens (15 min expiry) stored in memory
 - Refresh tokens (7 day expiry) in httpOnly cookies (not accessible to JavaScript)
@@ -15,7 +16,8 @@ This document outlines security improvements implemented in Phase 1 and provides
 
 **Files**: `server/auth.js`, `context/AuthContext.tsx`, `services/apiClient.ts`
 
-#### 2. Input Validation ✅ 
+#### 2. Input Validation ✅
+
 - Zod schemas for all API payloads (products, orders, auth)
 - Server-side validation on POST/PUT endpoints
 - Structured error responses (400 with field errors)
@@ -24,11 +26,13 @@ This document outlines security improvements implemented in Phase 1 and provides
 **Files**: `server/schemas.js`, `server/middleware.js`
 
 #### 3. Role-Based Access Control (RBAC) ✅
+
 - Server-enforced role validation via `requireAdmin` middleware
 - Admin endpoints protected at router level
 - Token contains role information
 
 **Protected Endpoints**:
+
 - POST `/api/products` - Admin only
 - PUT `/api/products/:id` - Admin only
 - DELETE `/api/products/:id` - Admin only
@@ -36,6 +40,7 @@ This document outlines security improvements implemented in Phase 1 and provides
 - PUT `/api/orders/:id/status` - Admin only
 
 #### 4. Centralized API Client ✅
+
 - Single axios instance with request/response interceptors
 - Automatic token injection via Authorization header
 - Consistent error handling across all services
@@ -44,6 +49,7 @@ This document outlines security improvements implemented in Phase 1 and provides
 **File**: `services/apiClient.ts`
 
 #### 5. Structured Logging ✅
+
 - JSON-formatted logs with timestamp, level, metadata
 - Ready for Sentry/ELK integration
 - Logs include: user action, resource ID, error context
@@ -51,11 +57,13 @@ This document outlines security improvements implemented in Phase 1 and provides
 **File**: `server/logger.js`
 
 #### 6. Global Error Handling ✅
+
 - `asyncHandler` wrapper catches all async errors
 - Consistent 500 response format
 - Full error context for debugging
 
 #### 7. CORS Hardening ✅
+
 - Explicit origin whitelist (localhost during dev)
 - Credential support for cookie-based auth
 - SameSite=strict for CSRF protection
@@ -63,6 +71,7 @@ This document outlines security improvements implemented in Phase 1 and provides
 ## Remaining Security Tasks (Phase 2)
 
 ### High Priority
+
 - [ ] Implement password hashing (bcrypt)
 - [ ] Add rate limiting on `/api/auth/login` (prevent brute force)
 - [ ] Enable TypeScript strict mode in services
@@ -70,6 +79,7 @@ This document outlines security improvements implemented in Phase 1 and provides
 - [ ] Implement request signing for sensitive operations
 
 ### Medium Priority
+
 - [ ] Sentry integration for error tracking
 - [ ] Security headers (CSP, X-Frame-Options, etc.)
 - [ ] Automated OWASP scanning in CI
@@ -77,6 +87,7 @@ This document outlines security improvements implemented in Phase 1 and provides
 - [ ] Audit logging for admin actions
 
 ### Lower Priority
+
 - [ ] Two-factor authentication (2FA)
 - [ ] OAuth2 provider integration
 - [ ] API key management for service accounts
@@ -168,6 +179,7 @@ npm run test
 ## Security Disclosure
 
 If you discover a security vulnerability, please email **security@example.com** with:
+
 - Description of the vulnerability
 - Steps to reproduce
 - Potential impact
@@ -177,12 +189,12 @@ Please do not open public issues for security vulnerabilities.
 
 ## Compliance Status
 
-| Standard | Status | Notes |
-|----------|--------|-------|
-| OWASP Top 10 | 🟡 In Progress | Auth/Validation complete; encryption/logging pending |
-| PCI DSS | 🔴 Not Compliant | Real Stripe integration needed (Phase 2) |
-| GDPR | 🟡 In Progress | Need data export/deletion endpoints |
-| SOC 2 | 🔴 Not Certified | Audit logging and monitoring pending |
+| Standard     | Status           | Notes                                                |
+| ------------ | ---------------- | ---------------------------------------------------- |
+| OWASP Top 10 | 🟡 In Progress   | Auth/Validation complete; encryption/logging pending |
+| PCI DSS      | 🔴 Not Compliant | Real Stripe integration needed (Phase 2)             |
+| GDPR         | 🟡 In Progress   | Need data export/deletion endpoints                  |
+| SOC 2        | 🔴 Not Certified | Audit logging and monitoring pending                 |
 
 ## References
 
