@@ -7,7 +7,16 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+<<<<<<< HEAD
+# Environment variables (keep .env.example)
+.env
+.env.local
+.env.*.local
+!.env.example
+
+=======
 # Dependencies
+>>>>>>> 761b4aa0e334fc8c74177e361cd66e69829c60ff
 node_modules
 node_modules/
 
@@ -57,6 +66,25 @@ coverage
 # Misc
 .cache
 dist
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Test coverage
+coverage/
+.nyc_output/
+
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
 *.ntvs*
 *.njsproj
 *.sln

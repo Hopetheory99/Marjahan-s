@@ -2,13 +2,34 @@ name: CI
 
 on:
   push:
+<<<<<<< HEAD
+    branches: [main]
+  pull_request:
+    branches: [main]
+=======
     branches: [ main ]
   pull_request:
     branches: [ main ]
+>>>>>>> 761b4aa0e334fc8c74177e361cd66e69829c60ff
 
 jobs:
   build:
     runs-on: ubuntu-latest
+<<<<<<< HEAD
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format -- --check
+      - run: npm test
+      - run: npm run build
+=======
     strategy:
       matrix:
         node-version: [20]
@@ -32,3 +53,4 @@ jobs:
 
       - name: Build
         run: npm run build
+>>>>>>> 761b4aa0e334fc8c74177e361cd66e69829c60ff

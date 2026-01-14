@@ -1,6 +1,16 @@
 {
   "semi": true,
+<<<<<<< HEAD
+  "tabWidth": 2,
+  "printWidth": 100,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "jsxSingleQuote": false,
+  "bracketSpacing": true,
+  "endOfLine": "auto"
+=======
   "singleQuote": true,
   "trailingComma": "all",
   "printWidth": 100
+>>>>>>> 761b4aa0e334fc8c74177e361cd66e69829c60ff
 }

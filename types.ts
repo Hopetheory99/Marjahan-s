@@ -1,4 +1,3 @@
-
 export type MetalType = 'Gold' | 'Silver' | 'Platinum';
 export type CategoryType = 'Rings' | 'Necklaces' | 'Earrings' | 'Bracelets';
 
@@ -32,4 +31,11 @@ export interface Order {
   total: number;
   status: OrderStatus;
   date: string;
+}
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  role: 'customer' | 'admin';
+  created_at: string;
 }

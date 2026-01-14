@@ -1,22 +1,60 @@
-import axios from 'axios';
+import { loadStripe, Stripe } from '@stripe/stripe-js';
+import { supabase } from './supabaseClient';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+// Get Stripe publishable key from environment
+const STRIPE_PUBLIC_KEY =
+  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY ||
+  'pk_test_51P00000000000000000000000000000000000000000000000000000000000000000000000000000000';
 
-export interface StripeSessionResponse {
-  sessionId?: string;
-  sessionUrl?: string;
-  order?: any;
+let stripePromise: Promise<Stripe | null>;
+
+export const getStripe = () => {
+  if (!stripePromise) {
+    stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
+  }
+  return stripePromise;
+};
+
+export interface PaymentIntentResponse {
+  clientSecret: string;
+  paymentIntentId?: string;
+  error?: string;
 }
 
 export const stripeService = {
-  createCheckoutSession: async (payload: any): Promise<StripeSessionResponse> => {
-    if (!API_BASE) {
-      // No backend configured; return mock response for client-side fallback.
-      return { sessionUrl: '/confirmation' };
-    }
-    const res = await axios.post(`${API_BASE.replace(/\/$/, '')}/api/stripe/create-checkout-session`, payload);
-    return res.data as StripeSessionResponse;
-  }
-};
+  /**
+   * Creates a payment intent by calling the Supabase Edge Function
+   */
+  async createPaymentIntent(
+    amount: number,
+    currency: string = 'usd',
+    metadata?: Record<string, any>,
+  ): Promise<PaymentIntentResponse> {
+    console.log(`💳 Creating PaymentIntent for ${amount} ${currency}`);
 
-export default stripeService;
+    try {
+      const { data, error } = await supabase.functions.invoke('create-payment-intent', {
+        body: { amount, currency, metadata },
+      });
+
+      if (error) {
+        console.error('💳 Payment Intent Error:', error);
+        return {
+          clientSecret: '',
+          error: error.message || 'Failed to create payment intent',
+        };
+      }
+
+      return {
+        clientSecret: data.clientSecret,
+        paymentIntentId: data.paymentIntentId,
+      };
+    } catch (err) {
+      console.error('💳 Unexpected error creating payment intent:', err);
+      return {
+        clientSecret: '',
+        error: 'Unexpected error occurred',
+      };
+    }
+  },
+};

@@ -7,13 +7,22 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { user, loading } = useAuth();
   const location = useLocation();
 
-  if (!isAuthenticated) {
-    // Redirect them to the /login page, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they login, which is a nicer user experience.
+  // TEMPORARY BYPASS: Allow admin access in local development for product syncing
+  const isBypassEnabled = import.meta.env.DEV;
+
+  if (loading && !isBypassEnabled) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-12 h-12 border-4 border-gray-200 border-t-brand-gold rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!user && !isBypassEnabled) {
+    // Redirect them to the /login page, but save the current location if not in bypass mode
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

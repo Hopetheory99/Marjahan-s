@@ -1,0 +1,34 @@
+[
+  {
+    "id": "cat_rings",
+    "name": "Rings",
+    "slug": "rings",
+    "description": "Elegant rings for every occasion - from engagement to everyday wear",
+    "image": "/images/diamond_ring.png",
+    "productCount": 3
+  },
+  {
+    "id": "cat_necklaces",
+    "name": "Necklaces",
+    "slug": "necklaces",
+    "description": "Beautiful necklaces and pendants to adorn your neckline",
+    "image": "/images/gold_necklace.png",
+    "productCount": 2
+  },
+  {
+    "id": "cat_earrings",
+    "name": "Earrings",
+    "slug": "earrings",
+    "description": "Stunning earrings from studs to statement hoops",
+    "image": "/images/pearl_earrings.png",
+    "productCount": 3
+  },
+  {
+    "id": "cat_bracelets",
+    "name": "Bracelets",
+    "slug": "bracelets",
+    "description": "Exquisite bracelets and cuffs for your wrist",
+    "image": "/images/sapphire_bracelet.png",
+    "productCount": 3
+  }
+]
