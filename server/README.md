@@ -1,5 +1,4 @@
-Marjahan's Mock Server
-======================
+# Marjahan's Mock Server
 
 This mock server is provided for local development and demo purposes only. It exposes simple JSON endpoints and persists data in `server/data/*.json`.
 

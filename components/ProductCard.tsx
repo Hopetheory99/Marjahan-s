@@ -11,6 +11,7 @@ interface ProductCardProps {
   product: Product;
 }
 
+/* eslint-disable react/prop-types */
 const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [animationStartPos, setAnimationStartPos] = useState({ x: 0, y: 0 });
@@ -140,5 +141,8 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
     </>
   );
 });
+/* eslint-enable react/prop-types */
+
+ProductCard.displayName = 'ProductCard';
 
 export default ProductCard;

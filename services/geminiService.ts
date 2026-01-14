@@ -10,10 +10,14 @@ export interface Recommendation {
   reason?: string;
 }
 
+<<<<<<< HEAD
 export const getRecommendations = async (
   userId?: string,
   context?: string,
 ): Promise<Recommendation[]> => {
+=======
+export const getRecommendations = async (): Promise<Recommendation[]> => {
+>>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
   // If there is no configured key, return a deterministic mock so UI remains usable.
   const key = import.meta.env.VITE_GEMINI_API_KEY;
   if (!key) {

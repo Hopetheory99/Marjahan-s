@@ -43,116 +43,130 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+<<<<<<< HEAD
   return (
     <QueryClientProvider client={queryClient}>
+=======
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { staleTime: 1000 * 60 * 2 } },
+  });
+  return (
+    <>
+>>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
       <StarryBackground />
       <ErrorBoundary>
-        <AuthProvider>
-          <AnalyticsProvider>
-            <ToastProvider>
-              <WishlistProvider>
-                <CartProvider>
-                  <Suspense fallback={<PageLoader />}>
-                    <ToastContainer />
-                    <Routes>
-                      {/* Public / Shopper Routes */}
-                      <Route
-                        path="/"
-                        element={
-                          <MainLayout>
-                            <HomePage />
-                          </MainLayout>
-                        }
-                      />
-                      <Route
-                        path="/products"
-                        element={
-                          <MainLayout>
-                            <ProductsPage />
-                          </MainLayout>
-                        }
-                      />
-                      <Route
-                        path="/products/:id"
-                        element={
-                          <MainLayout>
-                            <ProductDetailPage />
-                          </MainLayout>
-                        }
-                      />
-                      <Route
-                        path="/checkout"
-                        element={
-                          <MainLayout>
-                            <CheckoutPage />
-                          </MainLayout>
-                        }
-                      />
-                      <Route
-                        path="/confirmation"
-                        element={
-                          <MainLayout>
-                            <OrderConfirmationPage />
-                          </MainLayout>
-                        }
-                      />
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <AnalyticsProvider>
+              <ToastProvider>
+                <WishlistProvider>
+                  <CartProvider>
+                    <Suspense fallback={<PageLoader />}>
+                      <ToastContainer />
+                      <Routes>
+                        {/* Public / Shopper Routes */}
+                        <Route
+                          path="/"
+                          element={
+                            <MainLayout>
+                              <HomePage />
+                            </MainLayout>
+                          }
+                        />
+                        <Route
+                          path="/products"
+                          element={
+                            <MainLayout>
+                              <ProductsPage />
+                            </MainLayout>
+                          }
+                        />
+                        <Route
+                          path="/products/:id"
+                          element={
+                            <MainLayout>
+                              <ProductDetailPage />
+                            </MainLayout>
+                          }
+                        />
+                        <Route
+                          path="/checkout"
+                          element={
+                            <MainLayout>
+                              <CheckoutPage />
+                            </MainLayout>
+                          }
+                        />
+                        <Route
+                          path="/confirmation"
+                          element={
+                            <MainLayout>
+                              <OrderConfirmationPage />
+                            </MainLayout>
+                          }
+                        />
 
-                      {/* Auth Route */}
-                      <Route
-                        path="/login"
-                        element={
-                          <MainLayout>
-                            <LoginPage />
-                          </MainLayout>
-                        }
-                      />
-                      <Route
-                        path="/profile"
-                        element={
-                          <MainLayout>
-                            <ProfilePage />
-                          </MainLayout>
-                        }
-                      />
-                      <Route
-                        path="/wishlist"
-                        element={
-                          <MainLayout>
-                            <WishlistPage />
-                          </MainLayout>
-                        }
-                      />
+                        {/* Auth Route */}
+                        <Route
+                          path="/login"
+                          element={
+                            <MainLayout>
+                              <LoginPage />
+                            </MainLayout>
+                          }
+                        />
+                        <Route
+                          path="/profile"
+                          element={
+                            <MainLayout>
+                              <ProfilePage />
+                            </MainLayout>
+                          }
+                        />
+                        <Route
+                          path="/wishlist"
+                          element={
+                            <MainLayout>
+                              <WishlistPage />
+                            </MainLayout>
+                          }
+                        />
 
-                      {/* Protected Admin Routes */}
-                      <Route
-                        path="/admin"
-                        element={
-                          <ProtectedRoute>
-                            <AdminLayout>
-                              <AdminPage />
-                            </AdminLayout>
-                          </ProtectedRoute>
-                        }
-                      />
+                        {/* Protected Admin Routes */}
+                        <Route
+                          path="/admin"
+                          element={
+                            <ProtectedRoute>
+                              <AdminLayout>
+                                <AdminPage />
+                              </AdminLayout>
+                            </ProtectedRoute>
+                          }
+                        />
 
-                      {/* 404 Catch-all */}
-                      <Route
-                        path="*"
-                        element={
-                          <MainLayout>
-                            <NotFoundPage />
-                          </MainLayout>
-                        }
-                      />
-                    </Routes>
-                  </Suspense>
-                </CartProvider>
-              </WishlistProvider>
-            </ToastProvider>
-          </AnalyticsProvider>
-        </AuthProvider>
+                        {/* 404 Catch-all */}
+                        <Route
+                          path="*"
+                          element={
+                            <MainLayout>
+                              <NotFoundPage />
+                            </MainLayout>
+                          }
+                        />
+                      </Routes>
+                    </Suspense>
+                  </CartProvider>
+                </WishlistProvider>
+              </ToastProvider>
+            </AnalyticsProvider>
+          </AuthProvider>
+        </QueryClientProvider>
       </ErrorBoundary>
+<<<<<<< HEAD
     </QueryClientProvider>
+=======
+    </>
+>>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
   );
 }
 

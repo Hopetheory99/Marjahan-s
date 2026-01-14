@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+<<<<<<< HEAD
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2022,
@@ -16,10 +17,18 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
+=======
+  env: { browser: true, es2020: true },
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
+>>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
     'plugin:jsx-a11y/recommended',
     'plugin:prettier/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
+<<<<<<< HEAD
   plugins: ['react', 'react-hooks', 'react-refresh', '@typescript-eslint', 'jsx-a11y'],
   settings: { react: { version: 'detect' } },
   rules: {
@@ -28,6 +37,16 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/explicit-function-return-type': 'off',
     'prettier/prettier': 'warn',
+=======
+  parser: '@typescript-eslint/parser',
+  plugins: ['react-refresh'],
+  rules: {
+    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    '@typescript-eslint/no-explicit-any': 'warn',
+    'prettier/prettier': 'warn',
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+>>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
     // Accessibility rules - relaxed for luxury UI where some rules may not apply
     'jsx-a11y/anchor-is-valid': 'warn',
     'jsx-a11y/click-events-have-key-events': 'warn',

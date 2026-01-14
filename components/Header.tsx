@@ -111,9 +111,15 @@ const Header: React.FC = () => {
       </a>
 
       <header
+<<<<<<< HEAD
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled || !isHome
             ? 'bg-black/80 backdrop-blur-sm shadow-lg py-3 border-b border-white/10'
+=======
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+          isScrolled || !isHome
+            ? 'bg-black/80 backdrop-blur-md shadow-luxury py-3 border-b border-white/10'
+>>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
             : 'bg-transparent py-5'
         }`}
         role="banner"
@@ -154,7 +160,13 @@ const Header: React.FC = () => {
                 <Link
                   key={category}
                   to={`/products?category=${category}`}
+<<<<<<< HEAD
                   className={`nav-link ${isScrolled || !isHome ? 'text-gray-300' : 'text-white/90'}`}
+=======
+                  className={`nav-link-luxury link-underline ${
+                    isScrolled || !isHome ? 'text-brand-charcoal' : 'text-white/90'
+                  }`}
+>>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
                 >
                   {category}
                 </Link>

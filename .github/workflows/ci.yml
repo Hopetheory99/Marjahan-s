@@ -2,9 +2,15 @@ name: CI
 
 on:
   push:
+<<<<<<< HEAD
     branches: [ main ]
   pull_request:
     branches: [ main ]
+=======
+    branches: [main]
+  pull_request:
+    branches: [main]
+>>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
 
 jobs:
   build:
@@ -27,7 +33,14 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Format check
+        run: npm run format -- --check
+
       - name: Test
+        run: npm run test
+
+      - name: Build
+        run: npm run build      - name: Test
         run: npm run test
 
       - name: Build

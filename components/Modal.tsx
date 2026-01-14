@@ -28,6 +28,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in"
         onClick={onClose}
+        role="presentation"
+        aria-hidden="true"
       />
 
       {/* Content */}
