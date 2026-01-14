@@ -4,7 +4,7 @@ import { Product, MetalType, CategoryType } from '../types';
 import { PRODUCTS } from '../constants';
 =======
 
-import axios from 'axios';
+import { apiClient } from './apiClient';
 import { PRODUCTS } from '../constants';
 import { Product, MetalType, CategoryType } from '../types';
 >>>>>>> 761b4aa0e334fc8c74177e361cd66e69829c60ff
@@ -111,9 +111,14 @@ export const productService = {
     }
 =======
     if (API_BASE) {
-      const q = toQuery(filters);
-      const res = await axios.get(`${API_BASE.replace(/\/$/, '')}/api/products${q}`);
-      return res.data as Product[];
+      try {
+        const q = toQuery(filters);
+        const res = await apiClient.get(`/api/products${q}`);
+        return res.data as Product[];
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+        throw error;
+      }
     }
 
     // Fallback to in-memory
@@ -128,16 +133,26 @@ export const productService = {
 
   getById: async (id: string): Promise<Product | undefined> => {
     if (API_BASE) {
-      const res = await axios.get(`${API_BASE.replace(/\/$/, '')}/api/products/${id}`);
-      return res.data as Product;
+      try {
+        const res = await apiClient.get(`/api/products/${id}`);
+        return res.data as Product;
+      } catch (error) {
+        console.error(`Failed to fetch product ${id}:`, error);
+        throw error;
+      }
     }
     return inMemoryProducts.find(p => p.id === id);
   },
 
   getFeatured: async (): Promise<Product[]> => {
     if (API_BASE) {
-      const res = await axios.get(`${API_BASE.replace(/\/$/, '')}/api/products/featured`);
-      return res.data as Product[];
+      try {
+        const res = await apiClient.get('/api/products/featured');
+        return res.data as Product[];
+      } catch (error) {
+        console.error('Failed to fetch featured products:', error);
+        throw error;
+      }
     }
     return inMemoryProducts.slice(0, 4);
 >>>>>>> 761b4aa0e334fc8c74177e361cd66e69829c60ff
@@ -188,8 +203,13 @@ export const productService = {
   },
 =======
     if (API_BASE) {
-      const res = await axios.post(`${API_BASE.replace(/\/$/, '')}/api/products`, product);
-      return res.data as Product;
+      try {
+        const res = await apiClient.post('/api/products', product);
+        return res.data as Product;
+      } catch (error) {
+        console.error('Failed to create product:', error);
+        throw error;
+      }
     }
     const newProduct: Product = { ...product, id: Math.random().toString(36).slice(2, 11) } as Product;
     inMemoryProducts.push(newProduct);
@@ -198,8 +218,13 @@ export const productService = {
 
   updateProduct: async (id: string, updates: Partial<Product>): Promise<Product> => {
     if (API_BASE) {
-      const res = await axios.put(`${API_BASE.replace(/\/$/, '')}/api/products/${id}`, updates);
-      return res.data as Product;
+      try {
+        const res = await apiClient.put(`/api/products/${id}`, updates);
+        return res.data as Product;
+      } catch (error) {
+        console.error(`Failed to update product ${id}:`, error);
+        throw error;
+      }
     }
     const index = inMemoryProducts.findIndex(p => p.id === id);
     if (index === -1) throw new Error('Product not found');
@@ -209,7 +234,12 @@ export const productService = {
 
   deleteProduct: async (id: string): Promise<void> => {
     if (API_BASE) {
-      await axios.delete(`${API_BASE.replace(/\/$/, '')}/api/products/${id}`);
+      try {
+        await apiClient.delete(`/api/products/${id}`);
+      } catch (error) {
+        console.error(`Failed to delete product ${id}:`, error);
+        throw error;
+      }
       return;
     }
     inMemoryProducts = inMemoryProducts.filter(p => p.id !== id);
