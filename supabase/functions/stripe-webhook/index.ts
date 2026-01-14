@@ -101,13 +101,15 @@ async function handlePaymentIntentSucceeded(
   console.log(`💳 Processing successful payment: ${paymentIntent.id}`);
 
   try {
+    const orderId = paymentIntent.metadata?.order_id;
     const userId = paymentIntent.metadata?.user_id;
-    if (!userId) {
-      console.error('💳 No user_id in payment intent metadata');
+
+    if (!orderId) {
+      console.error('💳 No order_id in payment intent metadata');
       return;
     }
 
-    // Update order status to 'paid'
+    // Update order status to 'paid' using order_id from metadata
     const { error: updateError } = await supabaseClient
       .from('orders')
       .update({
@@ -115,15 +117,14 @@ async function handlePaymentIntentSucceeded(
         payment_intent_id: paymentIntent.id,
         updated_at: new Date().toISOString(),
       })
-      .eq('user_id', userId)
-      .eq('status', 'pending')
-      .order('created_at', { ascending: false })
-      .limit(1);
+      .eq('id', orderId);
 
     if (updateError) {
       console.error('💳 Error updating order status:', updateError);
       return;
     }
+
+    console.log(`✅ Order ${orderId} marked as paid`);
 
     // Get the updated order for email notification
     const { data: order, error: fetchError } = await supabaseClient
@@ -137,7 +138,7 @@ async function handlePaymentIntentSucceeded(
         )
       `,
       )
-      .eq('payment_intent_id', paymentIntent.id)
+      .eq('id', orderId)
       .single();
 
     if (fetchError || !order) {
@@ -145,10 +146,51 @@ async function handlePaymentIntentSucceeded(
       return;
     }
 
-    // Trigger order confirmation email (this would be handled by a separate service)
-    console.log(`✅ Order ${order.id} marked as paid. Email notification should be sent.`);
+    // Fetch user profile to get email
+    const { data: profile, error: profileError } = await supabaseClient
+      .from('profiles')
+      .select('email')
+      .eq('id', userId)
+      .single();
 
-    // TODO: Trigger email service for order confirmation
+    if (profileError || !profile || !profile.email) {
+      console.error('💳 Error fetching user profile or email missing:', profileError);
+      return;
+    }
+
+    console.log(`📧 Sending order confirmation email to ${profile.email}...`);
+
+    try {
+      const functionsUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/send-order-email`;
+      const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+
+      const emailRes = await fetch(functionsUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${serviceKey}`,
+        },
+        body: JSON.stringify({
+          type: 'order_confirmation',
+          email: profile.email,
+          data: {
+            orderId: order.id,
+            customerName: 'Valued Customer',
+            total: order.total,
+            status: 'paid',
+          },
+        }),
+      });
+
+      if (!emailRes.ok) {
+        const errorText = await emailRes.text();
+        console.error('📧 Failed to call email function:', errorText);
+      } else {
+        console.log('📧 Email function called successfully');
+      }
+    } catch (emailErr) {
+      console.error('📧 Error calling email function:', emailErr);
+    }
   } catch (error) {
     console.error('💳 Error handling payment success:', error);
   }

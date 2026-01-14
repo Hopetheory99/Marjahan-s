@@ -58,12 +58,12 @@
 
 - [x] Admin Dashboard: Order list & Status management
 - [x] Order creation logic (linked to user)
-- [ ] Email notifications on status change
+- [x] Email notifications on status change
 
 ### 2.3. Inventory Management
 
 - [x] Basic Stock display logic
-- [ ] Stock validation before checkout (Server-side)
+- [x] Stock validation before checkout (Server-side) **(Jan 2026)**
 - [ ] Low-stock alerts for admin
 
 ---
@@ -74,7 +74,7 @@
 
 - [x] Install: `vite-plugin-image-optimizer` **(Jan 2026)**
 - [x] Configure automatic AVIF/WebP conversion **(Jan 2026)**
-- [ ] Replace `<img>` with `<picture>` element for art direction
+- [x] Replace `<img>` with `<picture>` element for art direction **(Jan 2026)**
 
 ### 3.2. Bundle & Network Optimization
 
@@ -137,7 +137,7 @@
 - [x] Add comprehensive error handling and logging
 - [x] Create unit tests for email functionality
 - [x] Update environment configuration
-- [ ] Trigger from Supabase Edge Functions (Future enhancement)
+- [x] Trigger from Supabase Edge Functions **(Jan 2026)**
 
 ---
 
@@ -181,6 +181,8 @@
 - [x] **Build Error Fixed:** Corrected import path in `services/stripeService.ts`
 - [x] **Security Vulnerability Eliminated:** Removed client-side API key exposure in `vite.config.ts`
 - [x] **React Import Issue Resolved:** Fixed useState export error via commonjsOptions
+- [x] **Merge Conflicts Resolved:** Deconflicted App.tsx, hooks, and services after main branch pull.
+- [x] **Stock Validation Implemented:** Secure server-side inventory check in payment flow.
 - [x] **Build Success:** Production builds now complete without errors (Exit code 0)
 
 **Status:** Build-ready for deployment. Payment integration ready for testing.

@@ -4,6 +4,10 @@ import './index.css';
 import App from './App';
 import { HashRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { initLogger } from './services/logger';
+
+// Initialize Sentry/Logging
+initLogger();
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

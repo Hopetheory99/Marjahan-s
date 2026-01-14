@@ -1,5 +1,6 @@
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { supabase } from './supabaseClient';
+import { CartItem } from '../types';
 
 // Get Stripe publishable key from environment
 const STRIPE_PUBLIC_KEY =
@@ -26,15 +27,20 @@ export const stripeService = {
    * Creates a payment intent by calling the Supabase Edge Function
    */
   async createPaymentIntent(
-    amount: number,
+    items: CartItem[],
     currency: string = 'usd',
     metadata?: Record<string, any>,
   ): Promise<PaymentIntentResponse> {
-    console.log(`💳 Creating PaymentIntent for ${amount} ${currency}`);
+    // Calculate total amount from items for logging/fallback (server validates true price)
+    const amount = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    console.log(
+      `💳 Creating PaymentIntent for ${items.length} items (Total: ${amount} ${currency})`,
+    );
 
     try {
       const { data, error } = await supabase.functions.invoke('create-payment-intent', {
-        body: { amount, currency, metadata },
+        body: { items, currency, metadata },
       });
 
       if (error) {

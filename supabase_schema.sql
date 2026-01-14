@@ -26,11 +26,10 @@ create table public.products (
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
--- 3. Orders Table
 create table public.orders (
   id uuid default uuid_generate_v4() primary key,
   user_id uuid references auth.users not null,
-  status text check (status in ('pending', 'processing', 'shipped', 'delivered', 'cancelled')) default 'pending',
+  status text check (status in ('pending_payment', 'pending', 'processing', 'paid', 'shipped', 'delivered', 'cancelled', 'failed')) default 'pending_payment',
   total decimal(10,2) not null,
   stripe_payment_id text,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
@@ -75,8 +74,8 @@ alter table public.wishlists enable row level security;
 alter table public.reviews enable row level security;
 
 -- Profiles Policies
-create policy "Public profiles are viewable by everyone." on public.profiles
-  for select using (true);
+create policy "Users can view own profile." on public.profiles
+  for select using (auth.uid() = id);
 
 create policy "Users can insert their own profile." on public.profiles
   for insert with check (auth.uid() = id);

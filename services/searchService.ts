@@ -115,86 +115,48 @@ class SearchService {
     }
   }
 
-
   /**
    * Fallback search when Typesense is not available
    */
   private async fallbackSearch(query: string, filters: any = {}): Promise<SearchResult> {
     try {
-      // Import products data for fallback search
-      const products = await import('../data/products.json');
-      const allProducts = products.default;
+      // Fallback: Use productService to query Supabase directly
+      // This ensures we always get live data even if Typesense is down
+      const { productService } = await import('./productService');
 
-      // Initialize Fuse instance
-      const Fuse = (await import('fuse.js')).default;
-      const fuseOptions = {
-        keys: ['name', 'description', 'category', 'tags'],
-        threshold: 0.3, // Lower is strictly matching, higher is fuzzier
-        includeScore: true,
+      // Map Search filters to ProductService filters
+      const productFilters: any = {
+        search: query,
+        page: filters.page || 1,
+        limit: filters.limit || 20,
       };
 
-      let results: any[] = [];
-
-      // If query exists, use Fuse to search
-      if (query && query.trim().length > 0) {
-        const fuse = new Fuse(allProducts, fuseOptions);
-        const fuseResults = fuse.search(query);
-        results = fuseResults.map((result: any) => result.item);
-      } else {
-        // If no query, return all products
-        results = [...allProducts];
-      }
-
-      // Apply filters
-      if (filters.category) {
-        results = results.filter((product: any) => product.category === filters.category);
-      }
-
-      if (filters.minPrice) {
-        results = results.filter((product: any) => product.price >= filters.minPrice);
-      }
-
       if (filters.maxPrice) {
-        results = results.filter((product: any) => product.price <= filters.maxPrice);
+        productFilters.price = filters.maxPrice;
       }
 
-      if (filters.inStock !== undefined) {
-        results = results.filter((product: any) => (product.stock > 0) === filters.inStock);
+      if (filters.category) {
+        productFilters.categories = [filters.category];
       }
 
-      // Apply sorting
       if (filters.sortBy) {
-        switch (filters.sortBy) {
-          case 'price:asc':
-            results.sort((a: any, b: any) => a.price - b.price);
-            break;
-          case 'price:desc':
-            results.sort((a: any, b: any) => b.price - a.price);
-            break;
-          case 'name:asc':
-            results.sort((a: any, b: any) => a.name.localeCompare(b.name));
-            break;
-          case 'created_at:desc':
-          default:
-            results.sort(
-              (a: any, b: any) =>
-                new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
-            );
-            break;
-        }
+        // Map sort strings
+        const sortMap: Record<string, string> = {
+          'price:asc': 'price-low',
+          'price:desc': 'price-high',
+          'name:asc': 'name',
+          'created_at:desc': 'newest', // productService might default to name if unknown
+        };
+        productFilters.sort = sortMap[filters.sortBy] || filters.sortBy;
       }
 
-      // Apply pagination
-      const limit = filters.limit || 20;
-      const page = filters.page || 1;
-      const startIndex = (page - 1) * limit;
-      const paginatedResults = results.slice(startIndex, startIndex + limit);
+      const { data: results, count } = await productService.getAll(productFilters);
 
       return {
-        hits: paginatedResults,
+        hits: results,
         facets: [],
-        total: results.length,
-        page,
+        total: count,
+        page: productFilters.page,
       };
     } catch (error) {
       console.error('🔍 Fallback search error:', error);

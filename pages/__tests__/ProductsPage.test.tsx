@@ -37,7 +37,7 @@ const mockProducts: Product[] = [
 
 describe('ProductsPage Integration', () => {
   beforeEach(() => {
-    vi.mocked(productService.getAll).mockResolvedValue(mockProducts);
+    vi.mocked(productService.getAll).mockResolvedValue({ data: mockProducts, count: mockProducts.length });
   });
 
   const renderWithProviders = (component: React.ReactElement) => {
@@ -72,7 +72,7 @@ describe('ProductsPage Integration', () => {
     await waitFor(() => screen.getByText('Gold Ring'));
 
     // Mock filtered response for subsequent calls
-    vi.mocked(productService.getAll).mockResolvedValue([mockProducts[0]]);
+    vi.mocked(productService.getAll).mockResolvedValue({ data: [mockProducts[0]], count: 1 });
 
     // Click "Rings" filter
     const ringsCheckbox = screen.getByLabelText('Rings');

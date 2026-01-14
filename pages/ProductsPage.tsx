@@ -120,68 +120,44 @@ const ProductsPage: React.FC = () => {
     categories: initialCategory ? [initialCategory as CategoryType] : [],
     search: '',
     sort: 'name',
+    page: 1,
+    limit: 12,
   });
 
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
-  const { products, loading, error, refetch } = useProducts(filters);
+  // Hook now passes filters directly to server
+  const { data: paginatedData, loading, error, refetch } = useProducts(filters);
 
-  // Client-side search and filtering
-  const filteredProducts = useMemo(() => {
-    if (!products) return [];
-
-    let filtered = [...products];
-
-    // Apply search filter
-    if (filters.search) {
-      const searchLower = filters.search.toLowerCase();
-      filtered = filtered.filter(
-        (product) =>
-          product.name.toLowerCase().includes(searchLower) ||
-          product.description.toLowerCase().includes(searchLower) ||
-          product.category.toLowerCase().includes(searchLower) ||
-          product.metal.toLowerCase().includes(searchLower),
-      );
-    }
-
-    // Apply sorting
-    filtered.sort((a, b) => {
-      switch (filters.sort) {
-        case 'price-low':
-          return a.price - b.price;
-        case 'price-high':
-          return b.price - a.price;
-        case 'name':
-        default:
-          return a.name.localeCompare(b.name);
-      }
-    });
-
-    return filtered;
-  }, [products, filters]);
+  const products = paginatedData?.data || [];
+  const totalCount = paginatedData?.count || 0;
+  const totalPages = Math.ceil(totalCount / (filters.limit || 12));
 
   // Debounce the refetch when filters change
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      refetch(filters);
+      refetch();
     }, 300);
     return () => clearTimeout(timeoutId);
   }, [filters, refetch]);
 
   const handleFilterChange = (action: FilterAction) => {
     setFilters((prev) => {
+      // Reset to page 1 on filter changes
+      const resetPage = { ...prev, page: 1 };
+
       switch (action.type) {
         case 'setPrice':
-          return { ...prev, price: action.value };
+          return { ...resetPage, price: action.value };
         case 'setMetals':
-          return { ...prev, metals: action.value };
+          return { ...resetPage, metals: action.value };
         case 'setCategories':
-          return { ...prev, categories: action.value };
+          return { ...resetPage, categories: action.value };
         case 'setSearch':
-          return { ...prev, search: action.value };
+          return { ...resetPage, search: action.value };
         case 'setSort':
-          return { ...prev, sort: action.value };
+          return { ...resetPage, sort: action.value };
         case 'clearFilters':
           return {
             price: 10000,
@@ -189,11 +165,20 @@ const ProductsPage: React.FC = () => {
             categories: [],
             search: '',
             sort: 'name',
+            page: 1,
+            limit: 12,
           };
         default:
           return prev;
       }
     });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setFilters((prev) => ({ ...prev, page: newPage }));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -236,7 +221,8 @@ const ProductsPage: React.FC = () => {
             <div className="flex-1">
               <SearchBar
                 placeholder="Search for jewelry..."
-                onSearch={(query, results) => {
+                onSearch={(query) => {
+                  setSearchQuery(query);
                   handleFilterChange({ type: 'setSearch', value: query });
                 }}
                 className="w-full"
@@ -255,7 +241,7 @@ const ProductsPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div className="flex items-center gap-4">
               <span className="text-sm text-brand-warm-gray">
-                {filteredProducts.length} piece{filteredProducts.length !== 1 ? 's' : ''}
+                Showing {products.length} of {totalCount} piece{totalCount !== 1 ? 's' : ''}
               </span>
               {hasActiveFilters && (
                 <button
@@ -293,7 +279,7 @@ const ProductsPage: React.FC = () => {
 
           {/* Products Grid */}
           <div className="flex-1">
-            {loading ? (
+            {loading && products.length === 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
                   <div key={i} className="shimmer animate-pulse h-96 rounded-sm" />
@@ -301,16 +287,17 @@ const ProductsPage: React.FC = () => {
               </div>
             ) : error ? (
               <div className="text-center text-brand-burgundy py-20 font-serif text-xl">
-                {error}
+                {error.message}
               </div>
             ) : (
               <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
-                  {filteredProducts.map((product) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 min-h-[600px] content-start">
+                  {products.map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
                 </div>
-                {filteredProducts.length === 0 && (
+
+                {products.length === 0 && (
                   <div className="text-center py-20">
                     <h2 className="font-serif text-2xl text-brand-charcoal">No Pieces Found</h2>
                     <p className="text-brand-warm-gray mt-3">
@@ -321,6 +308,42 @@ const ProductsPage: React.FC = () => {
                       className="mt-6 text-brand-burgundy underline hover:text-brand-burgundy-dark transition-colors"
                     >
                       View all jewelry
+                    </button>
+                  </div>
+                )}
+
+                {/* Pagination Controls */}
+                {totalPages > 1 && (
+                  <div className="mt-16 flex justify-center items-center gap-4">
+                    <button
+                      onClick={() => handlePageChange(filters.page! - 1)}
+                      disabled={filters.page === 1}
+                      className="px-4 py-2 border border-brand-cream text-brand-charcoal disabled:opacity-50 disabled:cursor-not-allowed hover:bg-brand-cream transition-colors"
+                    >
+                      Previous
+                    </button>
+
+                    <div className="flex gap-2">
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                        <button
+                          key={page}
+                          onClick={() => handlePageChange(page)}
+                          className={`w-10 h-10 flex items-center justify-center border ${filters.page === page
+                              ? 'bg-brand-burgundy border-brand-burgundy text-white'
+                              : 'border-brand-cream text-brand-charcoal hover:bg-brand-cream'
+                            } transition-colors font-serif`}
+                        >
+                          {page}
+                        </button>
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={() => handlePageChange(filters.page! + 1)}
+                      disabled={filters.page === totalPages}
+                      className="px-4 py-2 border border-brand-cream text-brand-charcoal disabled:opacity-50 disabled:cursor-not-allowed hover:bg-brand-cream transition-colors"
+                    >
+                      Next
                     </button>
                   </div>
                 )}

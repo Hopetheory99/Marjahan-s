@@ -1,5 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
@@ -63,7 +62,7 @@ describe('ProductCard', () => {
     await waitFor(() => {
       expect(screen.getByText('Gold Ring')).toBeInTheDocument();
       expect(screen.getByText('$299.99')).toBeInTheDocument();
-      expect(screen.getByText('View Details')).toBeInTheDocument();
+      expect(screen.getByText('Discover More →')).toBeInTheDocument();
     });
   });
 
@@ -146,7 +145,7 @@ describe('ProductCard', () => {
 
     await waitFor(() => {
       // The hint should be present but initially hidden
-      const hintContainer = screen.getByText('View Details').parentElement;
+      const hintContainer = screen.getByText('Discover More →').parentElement;
       expect(hintContainer).toHaveClass('opacity-0', 'group-hover:opacity-100');
     });
   });
@@ -203,33 +202,5 @@ describe('ProductCard', () => {
       const image = screen.getByAltText('Gold Ring');
       expect(image).toBeInTheDocument();
     });
-=======
-import { render, screen } from '@testing-library/react';
-import ProductCard from '../ProductCard';
-import { BrowserRouter } from 'react-router-dom';
-import { Product } from '../../types';
-
-const mockProduct: Product = {
-  id: 'p1',
-  name: 'Diamond Ring',
-  description: 'Shiny',
-  price: 1000,
-  images: ['img.jpg'],
-  metal: 'Gold',
-  category: 'Rings',
-  stock: 10
-};
-
-describe('ProductCard', () => {
-  it('renders product name and price', () => {
-    render(
-      <BrowserRouter>
-        <ProductCard product={mockProduct} />
-      </BrowserRouter>
-    );
-
-    expect(screen.getByText('Diamond Ring')).toBeInTheDocument();
-    expect(screen.getByText(/\$1,000/)).toBeInTheDocument();
->>>>>>> 761b4aa0e334fc8c74177e361cd66e69829c60ff
   });
 });

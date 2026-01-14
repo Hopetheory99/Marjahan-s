@@ -68,7 +68,7 @@ const CheckoutPage: React.FC = () => {
       // Only initialize Stripe if Stripe is selected
       if (selectedPaymentMethod === 'stripe') {
         try {
-          const response = await stripeService.createPaymentIntent(cartTotal);
+          const response = await stripeService.createPaymentIntent(cartItems);
           setClientSecret(response.clientSecret);
         } catch (error) {
           console.error('Failed to init payment:', error);
@@ -85,16 +85,12 @@ const CheckoutPage: React.FC = () => {
   };
 
   const handlePaymentSuccess = async () => {
-    try {
-      await orderService.createOrder(user!.id, cartItems, cartTotal);
-      clearCart();
-      addToast('Payment successful! Order placed.', 'success');
-      navigate('/confirmation');
-    } catch (error) {
-      console.error('Order creation error:', error);
-      addToast('Order recorded with payment, but redirecting to support.', 'info');
-      navigate('/confirmation');
-    }
+    // Order was already created server-side in create-payment-intent function
+    // Payment webhook will update status to 'paid'
+    // Just clear cart and redirect
+    clearCart();
+    addToast('Payment successful! Order placed.', 'success');
+    navigate('/confirmation');
   };
 
   if (cartItems.length === 0 && step === 'shipping') {

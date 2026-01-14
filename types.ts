@@ -22,7 +22,15 @@ export interface CartItem {
   size?: string;
 }
 
-export type OrderStatus = 'Pending' | 'Shipped' | 'Delivered';
+export type OrderStatus =
+  | 'pending_payment'
+  | 'pending'
+  | 'processing'
+  | 'paid'
+  | 'shipped'
+  | 'delivered'
+  | 'cancelled'
+  | 'failed';
 
 export interface Order {
   id: string;

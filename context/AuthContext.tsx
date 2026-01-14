@@ -94,16 +94,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     signOut,
   };
 
-  // In test environment, render children immediately to avoid loading state issues
-  const isTestEnvironment =
-    typeof window !== 'undefined' &&
-    window.location?.hostname === 'localhost' &&
-    process.env.NODE_ENV === 'test';
-  const shouldRenderChildren = isTestEnvironment || !loading;
-
-  return (
-    <AuthContext.Provider value={value}>{shouldRenderChildren && children}</AuthContext.Provider>
-  );
+  // Render children when auth state is loaded
+  // Note: Tests should wrap with proper loading handling
+  return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

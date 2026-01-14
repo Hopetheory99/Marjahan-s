@@ -8,9 +8,9 @@ const Footer: React.FC = () => {
       <div className="border-b border-white/10">
         <div className="container-luxury py-16">
           <div className="max-w-2xl mx-auto text-center">
-            <p className="text-brand-gold text-sm tracking-wider uppercase mb-3">Stay Connected</p>
-            <h3 className="font-serif text-3xl mb-6">Join the Marjahan's Family</h3>
-            <p className="text-white/60 mb-8">
+            <p className="text-section-subtitle mb-3">Stay Connected</p>
+            <h2 className="text-section-title mb-6">Join the Marjahan's Family</h2>
+            <p className="text-body mb-8">
               Subscribe to receive exclusive offers, first access to new collections, and curated
               jewelry inspiration.
             </p>
@@ -36,10 +36,10 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div>
-            <h3 className="font-display text-2xl tracking-luxury text-brand-gold mb-4">
+            <h3 className="text-display text-brand-gold mb-4">
               MARJAHAN'S
             </h3>
-            <p className="text-white/50 text-sm leading-relaxed">
+            <p className="text-body text-gray-400">
               Where luxury meets elegance. Discover handcrafted jewelry that celebrates life's
               precious moments.
             </p>
@@ -74,13 +74,13 @@ const Footer: React.FC = () => {
 
           {/* Shop */}
           <div>
-            <h4 className="text-sm tracking-wider uppercase text-white/80 mb-6">Collections</h4>
-            <ul className="space-y-3 text-sm">
+            <h4 className="text-body font-medium text-white mb-6">Collections</h4>
+            <ul className="space-y-3">
               {['All Jewelry', 'Rings', 'Necklaces', 'Bracelets', 'Earrings'].map((item) => (
                 <li key={item}>
                   <Link
                     to={item === 'All Jewelry' ? '/products' : `/products?category=${item}`}
-                    className="text-white/50 hover:text-brand-gold transition-colors duration-300"
+                    className="text-body text-gray-400 hover:text-brand-gold transition-colors duration-300"
                   >
                     {item}
                   </Link>
@@ -91,8 +91,8 @@ const Footer: React.FC = () => {
 
           {/* Information */}
           <div>
-            <h4 className="text-sm tracking-wider uppercase text-white/80 mb-6">Information</h4>
-            <ul className="space-y-3 text-sm">
+            <h4 className="text-body font-medium text-white mb-6">Information</h4>
+            <ul className="space-y-3">
               {[
                 'Our Story',
                 'Contact Us',
@@ -103,7 +103,7 @@ const Footer: React.FC = () => {
                 <li key={item}>
                   <a
                     href="#"
-                    className="text-white/50 hover:text-brand-gold transition-colors duration-300"
+                    className="text-body text-gray-400 hover:text-brand-gold transition-colors duration-300"
                   >
                     {item}
                   </a>
@@ -114,18 +114,18 @@ const Footer: React.FC = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm tracking-wider uppercase text-white/80 mb-6">Contact</h4>
-            <div className="space-y-4 text-sm text-white/50">
+            <h4 className="text-body font-medium text-white mb-6">Contact</h4>
+            <div className="space-y-4 text-body text-gray-400">
               <p>
-                <span className="block text-white/80 mb-1">Email</span>
+                <span className="block text-white mb-1 font-medium">Email</span>
                 hello@marjahans.com
               </p>
               <p>
-                <span className="block text-white/80 mb-1">Phone</span>
+                <span className="block text-white mb-1 font-medium">Phone</span>
                 +880 1700-000000
               </p>
               <p>
-                <span className="block text-white/80 mb-1">Location</span>
+                <span className="block text-white mb-1 font-medium">Location</span>
                 Dhaka, Bangladesh
               </p>
             </div>

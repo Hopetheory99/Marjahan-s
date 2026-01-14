@@ -24,7 +24,8 @@ const WishlistPage: React.FC = () => {
       setLoading(true);
       try {
         // Fetch all products and filter by wishlist IDs
-        const allProducts = await productService.getAll();
+        const response = await productService.getAll();
+        const allProducts = response.data;
         const wishlistProducts = allProducts.filter((p) => wishlistItems.includes(p.id));
         setProducts(wishlistProducts);
       } catch (error) {

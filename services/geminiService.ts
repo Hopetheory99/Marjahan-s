@@ -10,15 +10,28 @@ export interface Recommendation {
   reason?: string;
 }
 
-export const getRecommendations = async (userId?: string, context?: string): Promise<Recommendation[]> => {
+export const getRecommendations = async (
+  userId?: string,
+  context?: string,
+): Promise<Recommendation[]> => {
   // If there is no configured key, return a deterministic mock so UI remains usable.
   const key = import.meta.env.VITE_GEMINI_API_KEY;
   if (!key) {
     // Mock recommendations — replace with server implementation that calls Gemini.
     return [
-      { id: 'r-1', score: 0.98, title: "14k Gold Diamond Studs", reason: 'Popular with similar shoppers' },
-      { id: 'r-2', score: 0.92, title: "Pearl Drop Necklace", reason: 'Customers who viewed this also viewed' },
-      { id: 'r-3', score: 0.89, title: "Sapphire Cocktail Ring", reason: 'Trending in your area' }
+      {
+        id: 'r-1',
+        score: 0.98,
+        title: '14k Gold Diamond Studs',
+        reason: 'Popular with similar shoppers',
+      },
+      {
+        id: 'r-2',
+        score: 0.92,
+        title: 'Pearl Drop Necklace',
+        reason: 'Customers who viewed this also viewed',
+      },
+      { id: 'r-3', score: 0.89, title: 'Sapphire Cocktail Ring', reason: 'Trending in your area' },
     ];
   }
 
@@ -32,8 +45,8 @@ export const getRecommendations = async (userId?: string, context?: string): Pro
 
   // Placeholder fallback until server implementation is available.
   return [
-    { id: 'r-1', score: 0.95, title: "AI-recommended Item A", reason: 'AI suggestion' },
-    { id: 'r-2', score: 0.9, title: "AI-recommended Item B", reason: 'AI suggestion' }
+    { id: 'r-1', score: 0.95, title: 'AI-recommended Item A', reason: 'AI suggestion' },
+    { id: 'r-2', score: 0.9, title: 'AI-recommended Item B', reason: 'AI suggestion' },
   ];
 };
 

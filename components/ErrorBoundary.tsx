@@ -1,65 +1,42 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { logger } from '../services/logger';
 import Button from './Button';
 
 interface Props {
-  children?: ReactNode;
+  children: ReactNode;
 }
 
 interface State {
   hasError: boolean;
-  error: Error | null;
 }
 
 class ErrorBoundary extends Component<Props, State> {
   public state: State = {
     hasError: false,
-    error: null,
   };
 
-  public static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error };
+  public static getDerivedStateFromError(_: Error): State {
+    return { hasError: true };
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo);
+    logger.error('Uncaught error in component tree', error, {
+      componentStack: errorInfo.componentStack,
+    });
   }
 
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-brand-light text-brand-dark p-6 text-center">
-          <div className="max-w-md w-full bg-white p-10 rounded-lg shadow-xl border border-gray-100">
-            <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8 text-red-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                />
-              </svg>
-            </div>
-            <h1 className="text-3xl font-serif font-bold mb-4">Something went wrong.</h1>
-            <p className="text-gray-500 mb-8 font-sans">
-              We apologize for the inconvenience. An unexpected error has occurred within our
-              system.
+        <div className="min-h-screen flex items-center justify-center bg-brand-ivory p-6">
+          <div className="text-center max-w-md">
+            <h1 className="text-3xl font-serif text-brand-burgundy mb-4">Something went wrong</h1>
+            <p className="text-brand-charcoal mb-8">
+              We apologize for the inconvenience. Our team has been notified.
             </p>
-            <div className="space-y-4">
-              <Button onClick={() => window.location.reload()} fullWidth>
-                Reload Page
-              </Button>
-              <button
-                onClick={() => (window.location.href = '/')}
-                className="text-sm text-gray-400 hover:text-brand-dark transition-colors uppercase tracking-widest block w-full text-center"
-              >
-                Return to Home
-              </button>
+            <Button onClick={() => window.location.reload()}>Refresh Page</Button>
+            <div className="mt-4">
+              <Button variant="secondary" onClick={() => window.location.href = '/'}>Go Home</Button>
             </div>
           </div>
         </div>

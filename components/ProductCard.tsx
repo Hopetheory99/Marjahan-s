@@ -59,79 +59,73 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
 
   return (
     <>
-      <div ref={cardRef} className="group card-luxury luxury-glow magnetic-hover h-full gold-dust">
+      <div ref={cardRef} className="group card h-full">
         <Link to={`/products/${product.id}`} className="block h-full">
           {/* Image Container */}
-          <div className="img-zoom-container aspect-square bg-brand-cream relative overflow-hidden">
+          <div className="aspect-square bg-gray-900 relative overflow-hidden">
             <Image
               src={product.images[0]}
               alt={product.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full img-zoom"
+              imgClassName="w-full h-full object-cover"
               priority={false}
             />
 
-            {/* Luxury overlay effects */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            {/* Overlay on hover */}
+            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-            {/* Stock badge with luxury styling */}
+            {/* Stock badges */}
             {product.stock <= 3 && product.stock > 0 && (
-              <span className="absolute bottom-3 left-3 bg-gradient-to-r from-red-600 to-red-700 text-white text-[10px] px-3 py-1.5 tracking-wider uppercase shadow-lg border border-red-500/30">
+              <span className="absolute bottom-3 left-3 bg-red-600 text-white text-xs px-2 py-1 tracking-wide uppercase">
                 Only {product.stock} left
               </span>
             )}
             {product.stock === 0 && (
-              <span className="absolute bottom-3 left-3 bg-brand-charcoal/90 backdrop-blur-sm text-white text-[10px] px-3 py-1.5 tracking-wider uppercase border border-white/20">
+              <span className="absolute bottom-3 left-3 bg-gray-800 text-white text-xs px-2 py-1 tracking-wide uppercase">
                 Sold Out
               </span>
             )}
 
-            {/* Add to Cart Button - appears on hover */}
-            <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+            {/* Add to Cart Button */}
+            <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <button
                 onClick={handleAddToCart}
                 disabled={product.stock === 0}
-                className="btn-liquid text-white text-xs px-4 py-2 rounded-full font-medium tracking-wide shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-brand-burgundy text-white text-xs px-3 py-2 rounded hover:bg-brand-burgundy-light transition-colors disabled:opacity-50"
               >
                 {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
               </button>
             </div>
           </div>
 
-          {/* Product Info with luxury styling */}
-          <div className="p-6 text-center velvet-texture">
-            <h3 className="font-serif text-lg text-white group-hover:text-brand-gold transition-colors duration-500 leading-tight mb-2">
+          {/* Product Info */}
+          <div className="p-4 text-center">
+            <h3 className="font-serif text-lg text-white group-hover:text-brand-gold transition-colors duration-300 leading-tight mb-2">
               {product.name}
             </h3>
 
-            <div className="price-luxury mb-2">${product.price.toLocaleString()}</div>
-
-            {/* Metal type with gold accent */}
-            <div className="flex items-center justify-center space-x-2 mb-3">
-              <div className="gold-accent" />
-              <p className="text-[11px] text-gray-300 tracking-wider uppercase font-medium">
-                {product.metal}
-              </p>
-              <div className="gold-accent" />
+            <div className="text-brand-gold font-serif text-xl mb-2">
+              ${product.price.toLocaleString()}
             </div>
 
-            {/* Luxury view details hint */}
-            <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-              <span className="inline-block text-[11px] text-brand-gold tracking-wider uppercase border-b border-brand-gold/50 pb-0.5 hover:border-brand-gold transition-colors duration-300">
+            {/* Metal type */}
+            <p className="text-xs text-gray-400 tracking-wider uppercase mb-3">{product.metal}</p>
+
+            {/* View details link */}
+            <div className="opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <span className="inline-block text-xs text-brand-gold tracking-wider uppercase border-b border-brand-gold/50 pb-0.5 hover:border-brand-gold">
                 Discover More →
               </span>
             </div>
           </div>
         </Link>
 
-        {/* Enhanced Wishlist button */}
-        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform scale-90 group-hover:scale-100">
-          <div className="bg-white/95 backdrop-blur-md rounded-full p-2 shadow-luxury hover:shadow-gold transition-all duration-300 crystal-effect">
+        {/* Wishlist button */}
+        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
+          <div className="bg-white/90 rounded-full p-2 shadow-md hover:shadow-lg transition-shadow">
             <WishlistButton productId={product.id} productName={product.name} size="sm" />
           </div>
         </div>
-
-        {/* Floating particles effect */}
-        <div className="absolute inset-0 floating-particles opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
       </div>
 
       {/* Flying Cart Animation */}

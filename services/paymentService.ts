@@ -24,22 +24,16 @@ export const paymentService = {
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // Mock success/failure (90% success rate)
-      const isSuccess = Math.random() > 0.1;
+      // Production: This should call the real bKash API
+      // Development: Simulate a successful initiation of a manual payment flow
+      const transactionId = `BKASH-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
-      if (isSuccess) {
-        const transactionId = `BKASH-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-        return {
-          success: true,
-          transactionId,
-          paymentId: transactionId,
-        };
-      } else {
-        return {
-          success: false,
-          error: 'Payment failed. Please try again or contact bKash support.',
-        };
-      }
+      return {
+        success: true,
+        transactionId,
+        paymentId: transactionId,
+        // In a real app, we might redirect to bKash gateway here
+      };
     } catch (error) {
       console.error('bKash payment error:', error);
       return {
@@ -57,22 +51,15 @@ export const paymentService = {
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      // Mock success/failure (95% success rate)
-      const isSuccess = Math.random() > 0.05;
+      // Production: This should call the real Nagad API
+      // Development: Simulate a successful initiation
+      const transactionId = `NAGAD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
-      if (isSuccess) {
-        const transactionId = `NAGAD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-        return {
-          success: true,
-          transactionId,
-          paymentId: transactionId,
-        };
-      } else {
-        return {
-          success: false,
-          error: 'Payment failed. Please check your Nagad balance and try again.',
-        };
-      }
+      return {
+        success: true,
+        transactionId,
+        paymentId: transactionId,
+      };
     } catch (error) {
       console.error('Nagad payment error:', error);
       return {
@@ -82,37 +69,13 @@ export const paymentService = {
     }
   },
 
-  // Process payment with card (mock Stripe-like implementation)
-  async processCardPayment(paymentData: PaymentData): Promise<PaymentResult> {
-    try {
-      console.log('💳 Processing card payment:', paymentData);
-
-      // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-
-      // Mock success/failure (85% success rate)
-      const isSuccess = Math.random() > 0.15;
-
-      if (isSuccess) {
-        const transactionId = `CARD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-        return {
-          success: true,
-          transactionId,
-          paymentId: transactionId,
-        };
-      } else {
-        return {
-          success: false,
-          error: 'Card payment declined. Please try a different card or contact your bank.',
-        };
-      }
-    } catch (error) {
-      console.error('Card payment error:', error);
-      return {
-        success: false,
-        error: 'Payment processing error. Please try again.',
-      };
-    }
+  // Process payment with card (Deprecated - Use stripeService directly)
+  async processCardPayment(_paymentData: PaymentData): Promise<PaymentResult> {
+    console.warn('paymentService.processCardPayment is deprecated. Use stripeService.createPaymentIntent instead.');
+    return {
+      success: false,
+      error: 'Please use the secure Stripe checkout.',
+    };
   },
 
   // Process payment with bank transfer (mock implementation)

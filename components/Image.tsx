@@ -5,6 +5,7 @@ interface ImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'sr
   alt: string;
   placeholderSrc?: string;
   className?: string;
+  imgClassName?: string;
   // Art direction options
   avifSrc?: string;
   webpSrc?: string;
@@ -17,6 +18,7 @@ const Image: React.FC<ImageProps> = ({
   alt,
   placeholderSrc = 'https://placehold.co/400x400?text=No+Image',
   className,
+  imgClassName,
   avifSrc,
   webpSrc,
   priority = false,
@@ -45,7 +47,7 @@ const Image: React.FC<ImageProps> = ({
   const webpSource = webpSrc || getOptimizedSrc(src, 'webp');
 
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`relative overflow-hidden ${className || ''}`}>
       {isLoading && <div className="absolute inset-0 bg-gray-200 animate-pulse" />}
       <picture>
         {/* AVIF format for modern browsers */}
@@ -60,7 +62,7 @@ const Image: React.FC<ImageProps> = ({
           decoding="async"
           onError={handleError}
           onLoad={handleLoad}
-          className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+          className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'} ${imgClassName || ''}`}
           {...props}
         />
       </picture>

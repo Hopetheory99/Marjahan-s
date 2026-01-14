@@ -57,11 +57,11 @@ const AdminPage: React.FC = () => {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const [productsData, ordersData] = await Promise.all([
+      const [productsResponse, ordersData] = await Promise.all([
         productService.getAll(),
         orderService.getAll(),
       ]);
-      setProducts(productsData);
+      setProducts(productsResponse.data);
       setOrders(ordersData);
     } catch (error) {
       addToast('Failed to load data', 'error');

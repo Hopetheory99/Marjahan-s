@@ -156,7 +156,8 @@ const ProductDetailPage: React.FC = () => {
           <Image
             src={selectedImage}
             alt={product.name}
-            className="w-full h-auto object-cover rounded-lg shadow-lg mb-4 transition-all duration-300"
+            className="w-full h-auto rounded-lg shadow-lg mb-4 transition-all duration-300"
+            imgClassName="w-full h-auto object-cover"
             loading="eager"
             width={600}
             height={600}
@@ -167,7 +168,8 @@ const ProductDetailPage: React.FC = () => {
                 key={index}
                 src={img}
                 alt={`${product.name} thumbnail ${index + 1}`}
-                className={`w-24 h-24 object-cover cursor-pointer rounded ${selectedImage === img ? 'border-2 border-brand-gold' : 'opacity-70 hover:opacity-100'}`}
+                className={`w-24 h-24 cursor-pointer rounded ${selectedImage === img ? 'border-2 border-brand-gold' : 'opacity-70 hover:opacity-100'}`}
+                imgClassName="w-full h-full object-cover"
                 onClick={() => setSelectedImage(img)}
               />
             ))}
