@@ -43,4 +43,3 @@ export const useFeaturedProducts = () => {
     error: query.error ? String(query.error) : null,
   };
 };
-};
