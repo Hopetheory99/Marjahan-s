@@ -131,11 +131,15 @@ const BKashPaymentForm: React.FC<BKashPaymentFormProps> = ({ amount, onSuccess, 
       {step === 'phone' && (
         <form onSubmit={handlePhoneSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2">
+            <label
+              htmlFor="bkash-phone"
+              className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2"
+            >
               bKash Account Number
             </label>
             <div className="relative">
               <input
+                id="bkash-phone"
                 type="tel"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 11))}
@@ -170,10 +174,14 @@ const BKashPaymentForm: React.FC<BKashPaymentFormProps> = ({ amount, onSuccess, 
       {step === 'otp' && (
         <form onSubmit={handleOtpSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2">
+            <label
+              htmlFor="bkash-otp"
+              className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2"
+            >
               Enter OTP
             </label>
             <input
+              id="bkash-otp"
               type="text"
               value={otp}
               onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
@@ -212,10 +220,14 @@ const BKashPaymentForm: React.FC<BKashPaymentFormProps> = ({ amount, onSuccess, 
       {step === 'pin' && (
         <form onSubmit={handlePaymentSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2">
+            <label
+              htmlFor="bkash-pin"
+              className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2"
+            >
               Enter bKash PIN
             </label>
             <input
+              id="bkash-pin"
               type="password"
               value={pin}
               onChange={(e) => setPin(e.target.value.replace(/\D/g, '').slice(0, 5))}

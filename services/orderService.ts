@@ -1,69 +1,83 @@
-import { apiClient } from './apiClient';
-import { ORDERS } from '../constants';
+import { supabase } from './supabaseClient';
 import { Order, OrderStatus, CartItem } from '../types';
 import { emailService } from './emailService';
 
-<<<<<<< HEAD
-interface SupabaseOrderItem {
-  quantity: number;
-  price_snapshot: number;
-  product: {
-    id: string;
-    name: string;
-    images: string[];
-  } | null;
-}
-=======
-const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
->>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
-
-let inMemoryOrders: Order[] = [...ORDERS];
-
 export const orderService = {
   getAll: async (): Promise<Order[]> => {
-    if (API_BASE) {
-      try {
-        const res = await apiClient.get('/api/orders');
-        return res.data as Order[];
-      } catch (error) {
-        console.error('Failed to fetch orders:', error);
-        return inMemoryOrders;
-      }
+    const { data, error } = await supabase
+      .from('orders')
+      .select(
+        `
+        *,
+        order_items (
+          quantity,
+          price_snapshot,
+          product:products (
+            id,
+            name,
+            images
+          )
+        )
+      `,
+      )
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Failed to fetch orders:', error);
+      throw error;
     }
-    return inMemoryOrders;
+
+    return (data || []) as unknown as Order[];
   },
 
   updateStatus: async (id: string, status: OrderStatus): Promise<Order> => {
-    if (API_BASE) {
-      try {
-        const res = await apiClient.put(`/api/orders/${id}/status`, { status });
-        return res.data as Order;
-      } catch (error) {
-        console.error(`Failed to update order ${id}:`, error);
-        throw error;
-      }
+    const { data, error } = await supabase
+      .from('orders')
+      .update({ status })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error(`Failed to update order ${id}:`, error);
+      throw error;
     }
-    const index = inMemoryOrders.findIndex((o) => o.id === id);
-    if (index === -1) throw new Error('Order not found');
-    inMemoryOrders[index] = { ...inMemoryOrders[index], status };
-    return inMemoryOrders[index];
+
+    // Attempt to send email if status changed significantly (optional logic)
+    // await orderService.sendStatusUpdateEmail(data, status);
+
+    return data;
   },
 
   getById: async (id: string): Promise<Order | undefined> => {
-    if (API_BASE) {
-      try {
-        const res = await apiClient.get(`/api/orders/${id}`);
-        return res.data as Order;
-      } catch (error) {
-        console.error(`Failed to fetch order ${id}:`, error);
-        return inMemoryOrders.find((o) => o.id === id);
-      }
+    const { data, error } = await supabase
+      .from('orders')
+      .select(
+        `
+        *,
+        order_items (
+          quantity,
+          price_snapshot,
+          product:products (
+            id,
+            name,
+            images
+          )
+        )
+      `,
+      )
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      console.error(`Failed to fetch order ${id}:`, error);
+      return undefined;
     }
-    return inMemoryOrders.find((o) => o.id === id);
+
+    return data as unknown as Order;
   },
 
   createOrder: async (userId: string, items: CartItem[], total: number): Promise<Order> => {
-<<<<<<< HEAD
     // 1. Create Order
     const { data: order, error: orderError } = await supabase
       .from('orders')
@@ -93,44 +107,9 @@ export const orderService = {
   },
 
   sendStatusUpdateEmail: async (orderData: any, newStatus: OrderStatus): Promise<void> => {
-    const customerEmail = orderData.user?.email;
-    const customerName =
-      orderData.user?.full_name || customerEmail?.split('@')[0] || 'Valued Customer';
-
-    if (!customerEmail) {
-      console.warn('No customer email found for order status update');
-      return;
-    }
-
-=======
-    if (API_BASE) {
-      try {
-        const res = await apiClient.post('/api/orders', { items, total });
-        return res.data as Order;
-      } catch (error) {
-        console.error('Failed to create order:', error);
-        throw error;
-      }
-    }
-
-    // Fallback to in-memory
-    const newOrder: Order = {
-      id: Math.random().toString(36).slice(2, 11),
-      customerName: 'Customer',
-      items,
-      total,
-      status: 'Pending',
-      date: new Date().toLocaleDateString(),
-    };
-    inMemoryOrders.push(newOrder);
-    return newOrder;
-  },
-
-  sendStatusUpdateEmail: async (orderData: Order, newStatus: OrderStatus): Promise<void> => {
->>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
     try {
-      const customerEmail = orderData.customerName;
-      const customerName = customerEmail?.split('@')[0] || 'Valued Customer';
+      const customerEmail = orderData.user?.email || orderData.customerEmail;
+      const customerName = orderData.user?.full_name || orderData.customerName || 'Valued Customer';
 
       if (!customerEmail) {
         console.warn('No customer email found for order status update');

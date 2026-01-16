@@ -139,7 +139,6 @@ class SearchService {
         productFilters.categories = [filters.category];
       }
 
-
       if (filters.sortBy) {
         // Map sort strings
         const sortMap: Record<string, string> = {

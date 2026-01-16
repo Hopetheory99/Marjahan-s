@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
->>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
 # Contributing to Marjahan's Jewelry
 
 Thank you for your interest in contributing! This document provides guidelines for maintaining code quality and consistency.
@@ -26,17 +21,20 @@ Thank you for your interest in contributing! This document provides guidelines f
 ## 🏗️ Architecture Guidelines
 
 ### Components
+
 - Place reusable components in `/components`
 - Use `React.memo` for pure components when needed
 - Add proper ARIA labels for accessibility
 - Keep components focused and single-purpose
 
 ### Context & State
+
 - Keep contexts focused and single-purpose
 - Use `useCallback` and `useMemo` to prevent unnecessary re-renders
 - Use React Query for server state
 
 ### Services
+
 - All API calls go through `/services`
 - Handle errors gracefully with proper fallbacks
 - Use TypeScript for type safety
@@ -64,6 +62,7 @@ npm run test:e2e      # E2E tests
 ## 🔒 Security
 
 **Never commit:**
+
 - API keys or secrets
 - `.env` or `.env.local` files
 - Real user data
@@ -73,22 +72,4 @@ Use platform environment variables (Vercel/Netlify/Supabase) for production secr
 
 ---
 
-<<<<<<< HEAD
 Questions? Open an issue or reach out to the maintainers.
-=======
-# Questions? Open an issue or reach out to the maintainers.
-
-# Contributing
-
-Thanks for your interest in contributing to Marjahan's demo app. This is a trimmed contributing guide with basic expectations.
-
-1. Fork and create a feature branch from `main`.
-2. Follow commit message conventions: `feat:`, `fix:`, `chore:`, `docs:`.
-3. Run `npm run lint` and `npm run test` before opening a PR.
-4. Add tests for any new logic and keep changes focused.
-5. Use small PRs and request reviews from maintainers.
-
-Code style is enforced via ESLint and Prettier. Husky runs lint-staged on pre-commit.
-
-> > > > > > > 761b4aa0e334fc8c74177e361cd66e69829c60ff
->>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a

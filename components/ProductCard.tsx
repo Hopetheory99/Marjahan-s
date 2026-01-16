@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Product } from '../types';
 import Image from './Image';
@@ -60,76 +61,86 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
 
   return (
     <>
-      <div ref={cardRef} className="group card h-full">
+      <motion.div
+        ref={cardRef}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        whileHover={{ y: -8 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        className="group h-full relative"
+      >
         <Link to={`/products/${product.id}`} className="block h-full">
-          {/* Image Container */}
-          <div className="aspect-square bg-gray-900 relative overflow-hidden">
-            <Image
-              src={product.images[0]}
-              alt={product.name}
-              className="w-full h-full img-zoom"
-              imgClassName="w-full h-full object-cover"
-              priority={false}
-            />
+          <div className="bg-surface-2 rounded-3xl p-4 h-full border border-transparent group-hover:border-black/5 transition-colors overflow-hidden relative">
+            {/* Image Container with organic shape mask optionally, or just rounded */}
+            <div className="aspect-[4/5] rounded-2xl overflow-hidden relative mb-4 bg-surface-3">
+              <Image
+                src={product.images[0]}
+                alt={product.name}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                priority={false}
+              />
 
-            {/* Overlay on hover */}
-            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Floating Action Button (Add to Cart) */}
+              <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                <button
+                  onClick={handleAddToCart}
+                  disabled={product.stock === 0}
+                  className="bg-white/90 backdrop-blur-md text-brand-charcoal hover:bg-accent hover:text-white rounded-full p-3 shadow-lg transition-all"
+                  aria-label="Add to cart"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                    <path d="M3 6h18" />
+                    <path d="M16 10a4 4 0 0 1-8 0" />
+                  </svg>
+                </button>
+              </div>
 
-            {/* Stock badges */}
-            {product.stock <= 3 && product.stock > 0 && (
-              <span className="absolute bottom-3 left-3 bg-red-600 text-white text-xs px-2 py-1 tracking-wide uppercase">
-                Only {product.stock} left
-              </span>
-            )}
-            {product.stock === 0 && (
-              <span className="absolute bottom-3 left-3 bg-gray-800 text-white text-xs px-2 py-1 tracking-wide uppercase">
-                Sold Out
-              </span>
-            )}
+              {/* Wishlist Button (Top Right) */}
+              <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="bg-white/90 backdrop-blur-md rounded-full p-2 shadow-sm hover:shadow-md transition-shadow">
+                  <WishlistButton productId={product.id} productName={product.name} size="sm" />
+                </div>
+              </div>
 
-            {/* Add to Cart Button */}
-            <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
-              <button
-                onClick={handleAddToCart}
-                disabled={product.stock === 0}
-                className="bg-brand-burgundy text-white text-xs px-3 py-2 rounded hover:bg-brand-burgundy-light transition-colors disabled:opacity-50"
-              >
-                {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
-              </button>
+              {/* Stock Badge (Pill) */}
+              {product.stock <= 3 && product.stock > 0 && (
+                <span className="absolute top-3 left-3 bg-red-100 text-red-800 text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
+                  {product.stock} LEFT
+                </span>
+              )}
             </div>
-          </div>
 
-          {/* Product Info */}
-          <div className="p-4 text-center">
-            <h3 className="font-serif text-lg text-white group-hover:text-brand-gold transition-colors duration-300 leading-tight mb-2">
-              {product.name}
-            </h3>
-
-            <div className="text-brand-gold font-serif text-xl mb-2">
-              ${product.price.toLocaleString()}
-            </div>
-
-            {/* Metal type */}
-            <p className="text-xs text-gray-400 tracking-wider uppercase mb-3">{product.metal}</p>
-
-            {/* View details link */}
-            <div className="opacity-0 group-hover:opacity-100 transition-all duration-300">
-              <span className="inline-block text-xs text-brand-gold tracking-wider uppercase border-b border-brand-gold/50 pb-0.5 hover:border-brand-gold">
-                Discover More →
-              </span>
+            {/* Typography: Google Sans style */}
+            <div className="space-y-1">
+              <h3 className="font-sans font-medium text-lg text-brand-charcoal leading-tight">
+                {product.name}
+              </h3>
+              <div className="flex justify-between items-center mt-2">
+                <p className="text-sm text-brand-warm-gray font-medium uppercase tracking-wider">
+                  {product.metal}
+                </p>
+                <span className="font-serif text-lg text-accent font-bold">
+                  ${product.price.toLocaleString()}
+                </span>
+              </div>
             </div>
           </div>
         </Link>
+      </motion.div>
 
-        {/* Wishlist button */}
-        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <div className="bg-white/90 rounded-full p-2 shadow-md hover:shadow-lg transition-shadow">
-            <WishlistButton productId={product.id} productName={product.name} size="sm" />
-          </div>
-        </div>
-      </div>
-
-      {/* Flying Cart Animation */}
+      {/* Legacy Animation Support */}
       {isAnimating && (
         <FlyingCartAnimation
           productImage={product.images[0]}

@@ -131,11 +131,15 @@ const NagadPaymentForm: React.FC<NagadPaymentFormProps> = ({ amount, onSuccess, 
       {step === 'phone' && (
         <form onSubmit={handlePhoneSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2">
+            <label
+              htmlFor="nagad-phone"
+              className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2"
+            >
               Nagad Account Number
             </label>
             <div className="relative">
               <input
+                id="nagad-phone"
                 type="tel"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 11))}
@@ -170,10 +174,14 @@ const NagadPaymentForm: React.FC<NagadPaymentFormProps> = ({ amount, onSuccess, 
       {step === 'otp' && (
         <form onSubmit={handleOtpSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2">
+            <label
+              htmlFor="nagad-otp"
+              className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2"
+            >
               Enter OTP
             </label>
             <input
+              id="nagad-otp"
               type="text"
               value={otp}
               onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
@@ -212,10 +220,14 @@ const NagadPaymentForm: React.FC<NagadPaymentFormProps> = ({ amount, onSuccess, 
       {step === 'pin' && (
         <form onSubmit={handlePaymentSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2">
+            <label
+              htmlFor="nagad-pin"
+              className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2"
+            >
               Enter Nagad PIN
             </label>
             <input
+              id="nagad-pin"
               type="password"
               value={pin}
               onChange={(e) => setPin(e.target.value.replace(/\D/g, '').slice(0, 4))}

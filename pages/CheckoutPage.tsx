@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Elements } from '@stripe/react-stripe-js';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { orderService } from '../services/orderService';
 import { stripeService, getStripe } from '../services/stripeService';
 import Button from '../components/Button';
 import { useForm } from '../hooks/useForm';
@@ -153,10 +152,14 @@ const CheckoutPage: React.FC = () => {
                 <form onSubmit={handleNextToPayment} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label
+                        htmlFor="firstName"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
                         First Name
                       </label>
                       <input
+                        id="firstName"
                         name="firstName"
                         type="text"
                         placeholder="John"
@@ -166,10 +169,14 @@ const CheckoutPage: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label
+                        htmlFor="lastName"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
                         Last Name
                       </label>
                       <input
+                        id="lastName"
                         name="lastName"
                         type="text"
                         placeholder="Doe"
@@ -181,10 +188,11 @@ const CheckoutPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                       Email Address
                     </label>
                     <input
+                      id="email"
                       name="email"
                       type="email"
                       placeholder="john@example.com"
@@ -195,10 +203,14 @@ const CheckoutPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label
+                      htmlFor="address"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
                       Shipping Address
                     </label>
                     <input
+                      id="address"
                       name="address"
                       type="text"
                       placeholder="123 Luxury Lane"
@@ -210,8 +222,14 @@ const CheckoutPage: React.FC = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                      <label
+                        htmlFor="city"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
+                        City
+                      </label>
                       <input
+                        id="city"
                         name="city"
                         type="text"
                         placeholder="New York"
@@ -221,10 +239,14 @@ const CheckoutPage: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label
+                        htmlFor="country"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
                         Country
                       </label>
                       <input
+                        id="country"
                         name="country"
                         type="text"
                         placeholder="USA"
@@ -234,10 +256,11 @@ const CheckoutPage: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label htmlFor="zip" className="block text-sm font-medium text-gray-700 mb-1">
                         Postal Code
                       </label>
                       <input
+                        id="zip"
                         name="zip"
                         type="text"
                         placeholder="10001"

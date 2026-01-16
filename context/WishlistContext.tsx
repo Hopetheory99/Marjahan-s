@@ -31,17 +31,7 @@ export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }
   // Guest wishlist stored in localStorage
   const [guestWishlist, setGuestWishlist] = useLocalStorage<string[]>('marjahans_wishlist', []);
 
-  // Fetch wishlist from Supabase when user is authenticated
-  useEffect(() => {
-    if (user) {
-      fetchWishlist();
-    } else {
-      // Use guest wishlist from localStorage
-      setWishlistItems(guestWishlist);
-    }
-  }, [user, guestWishlist]);
-
-  const fetchWishlist = async () => {
+  const fetchWishlist = useCallback(async () => {
     if (!user) return;
 
     setLoading(true);
@@ -61,7 +51,17 @@ export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  // Fetch wishlist from Supabase when user is authenticated
+  useEffect(() => {
+    if (user) {
+      fetchWishlist();
+    } else {
+      // Use guest wishlist from localStorage
+      setWishlistItems(guestWishlist);
+    }
+  }, [user, guestWishlist, fetchWishlist]);
 
   const addToWishlist = useCallback(
     async (productId: string) => {

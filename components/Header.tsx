@@ -111,29 +111,21 @@ const Header: React.FC = () => {
       </a>
 
       <header
-<<<<<<< HEAD
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled || !isHome
-            ? 'bg-black/80 backdrop-blur-sm shadow-lg py-3 border-b border-white/10'
-=======
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
-          isScrolled || !isHome
-            ? 'bg-black/80 backdrop-blur-md shadow-luxury py-3 border-b border-white/10'
->>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
+            ? 'bg-surface-1/80 backdrop-blur-md shadow-sm py-3 border-b border-black/5'
             : 'bg-transparent py-5'
         }`}
         role="banner"
       >
-        <div className="container-luxury flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               onKeyDown={handleKeyDown}
-              className={`p-2 transition-colors duration-300 rounded focus:outline-none focus:ring-2 focus:ring-brand-gold ${
-                isScrolled || !isHome
-                  ? 'text-brand-charcoal hover:text-brand-burgundy'
-                  : 'text-white hover:text-brand-gold'
+              className={`p-2 transition-colors duration-300 rounded-full hover:bg-black/5 ${
+                isScrolled || !isHome ? 'text-brand-charcoal' : 'text-white'
               }`}
               aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={isMobileMenuOpen}
@@ -147,26 +139,24 @@ const Header: React.FC = () => {
           <div className="flex items-center space-x-12">
             <Link
               to="/"
-              className={`font-display text-xl md:text-2xl tracking-luxury transition-all duration-300 ${
-                isScrolled || !isHome ? 'text-brand-burgundy' : 'text-white'
+              className={`font-serif text-xl md:text-2xl font-bold tracking-tight transition-all duration-300 ${
+                isScrolled || !isHome ? 'text-brand-charcoal' : 'text-white'
               }`}
             >
               MARJAHAN'S
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-1">
               {['Rings', 'Necklaces', 'Bracelets', 'Earrings'].map((category) => (
                 <Link
                   key={category}
                   to={`/products?category=${category}`}
-<<<<<<< HEAD
-                  className={`nav-link ${isScrolled || !isHome ? 'text-gray-300' : 'text-white/90'}`}
-=======
-                  className={`nav-link-luxury link-underline ${
-                    isScrolled || !isHome ? 'text-brand-charcoal' : 'text-white/90'
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    isScrolled || !isHome
+                      ? 'text-brand-charcoal hover:bg-black/5'
+                      : 'text-white/90 hover:bg-white/10'
                   }`}
->>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
                 >
                   {category}
                 </Link>

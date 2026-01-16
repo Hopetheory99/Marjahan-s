@@ -4,12 +4,26 @@ import Stripe from 'https://esm.sh/stripe@12.0.0';
 
 console.log('💳 Stripe Payment Intent Function Loaded (Secure Order Flow)');
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+// Allowed Origins
+const ALLOWED_ORIGINS = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://marjahans-jewelry.com', // Production Domain
+  // Add other deployment URLs here
+];
+
+const getCorsHeaders = (origin: string | null) => {
+  const allowOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : 'null';
+  return {
+    'Access-Control-Allow-Origin': allowOrigin,
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  };
 };
 
 serve(async (req) => {
+  const origin = req.headers.get('origin');
+  const corsHeaders = getCorsHeaders(origin);
+
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });

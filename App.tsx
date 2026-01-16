@@ -43,16 +43,8 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-<<<<<<< HEAD
-  return (
-    <QueryClientProvider client={queryClient}>
-=======
-  const queryClient = new QueryClient({
-    defaultOptions: { queries: { staleTime: 1000 * 60 * 2 } },
-  });
   return (
     <>
->>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
       <StarryBackground />
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
@@ -162,11 +154,7 @@ function App() {
           </AuthProvider>
         </QueryClientProvider>
       </ErrorBoundary>
-<<<<<<< HEAD
-    </QueryClientProvider>
-=======
     </>
->>>>>>> 64f6aa027e08ffdbcb5834078bd43140d2930f1a
   );
 }
 

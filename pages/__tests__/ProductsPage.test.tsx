@@ -37,7 +37,10 @@ const mockProducts: Product[] = [
 
 describe('ProductsPage Integration', () => {
   beforeEach(() => {
-    vi.mocked(productService.getAll).mockResolvedValue({ data: mockProducts, count: mockProducts.length });
+    vi.mocked(productService.getAll).mockResolvedValue({
+      data: mockProducts,
+      count: mockProducts.length,
+    });
   });
 
   const renderWithProviders = (component: React.ReactElement) => {

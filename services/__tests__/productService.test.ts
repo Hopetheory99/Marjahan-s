@@ -59,9 +59,9 @@ describe('productService', () => {
           range: vi.fn().mockResolvedValue({
             data: mockProducts,
             error: null,
-            count: 10
-          })
-        }))
+            count: 10,
+          }),
+        })),
       }));
       (supabase.from as any) = mockFrom;
 
@@ -76,15 +76,15 @@ describe('productService', () => {
       const rangeMock = vi.fn().mockResolvedValue({
         data: [mockProducts[0]],
         error: null,
-        count: 10
+        count: 10,
       });
 
       const mockFrom = vi.fn(() => ({
         select: vi.fn(() => ({
           lte: vi.fn().mockReturnThis(),
           in: vi.fn().mockReturnThis(),
-          range: rangeMock
-        }))
+          range: rangeMock,
+        })),
       }));
       (supabase.from as any) = mockFrom;
 
@@ -100,7 +100,7 @@ describe('productService', () => {
         select: vi.fn(() => ({
           lte: vi.fn().mockReturnThis(),
           in: vi.fn().mockReturnThis(),
-          range: vi.fn().mockResolvedValue({ data: null, error: mockError })
+          range: vi.fn().mockResolvedValue({ data: null, error: mockError }),
         })),
       }));
       (supabase.from as any) = mockFrom;
@@ -117,7 +117,7 @@ describe('productService', () => {
         select: vi.fn(() => ({
           lte: lteMock,
           in: vi.fn().mockReturnThis(),
-          range: rangeMock
+          range: rangeMock,
         })),
       }));
       (supabase.from as any) = mockFrom;
@@ -136,7 +136,7 @@ describe('productService', () => {
           lte: vi.fn().mockReturnThis(),
           in: vi.fn().mockReturnThis(),
           or: orMock,
-          range: rangeMock
+          range: rangeMock,
         })),
       }));
       (supabase.from as any) = mockFrom;
@@ -144,7 +144,8 @@ describe('productService', () => {
       await productService.getAll({ search: 'silver' });
 
       // Should use .or() with ilike on all fields
-      const expectedQuery = 'name.ilike.%silver%,description.ilike.%silver%,category.ilike.%silver%,metal.ilike.%silver%';
+      const expectedQuery =
+        'name.ilike.%silver%,description.ilike.%silver%,category.ilike.%silver%,metal.ilike.%silver%';
       expect(orMock).toHaveBeenCalledWith(expectedQuery);
     });
   });

@@ -71,7 +71,9 @@ export const paymentService = {
 
   // Process payment with card (Deprecated - Use stripeService directly)
   async processCardPayment(_paymentData: PaymentData): Promise<PaymentResult> {
-    console.warn('paymentService.processCardPayment is deprecated. Use stripeService.createPaymentIntent instead.');
+    console.warn(
+      'paymentService.processCardPayment is deprecated. Use stripeService.createPaymentIntent instead.',
+    );
     return {
       success: false,
       error: 'Please use the secure Stripe checkout.',

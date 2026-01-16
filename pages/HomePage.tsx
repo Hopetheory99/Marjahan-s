@@ -4,6 +4,7 @@ import ProductCard from '../components/ProductCard';
 import { useFeaturedProducts } from '../hooks/useProducts';
 import SEO from '../components/SEO';
 import Image from '../components/Image';
+import { BentoGrid, BentoGridItem } from '../components/ui/BentoGrid';
 
 const Hero: React.FC = () => (
   <div
@@ -75,15 +76,24 @@ const FeaturedProducts: React.FC = () => {
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="skeleton h-96 rounded" />
+              <div key={i} className="skeleton h-96 rounded-3xl" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {products?.map((product) => (
-              <ProductCard key={product.id} product={product} />
+          <BentoGrid className="max-w-6xl mx-auto">
+            {products?.map((product, i) => (
+              <BentoGridItem
+                key={product.id}
+                className={i === 0 || i === 3 ? 'md:col-span-2' : 'md:col-span-1'}
+                header={
+                  <ProductCard
+                    product={product}
+                    className="h-full border-none shadow-none hover:shadow-none translate-y-0 hover:translate-y-0"
+                  />
+                }
+              />
             ))}
-          </div>
+          </BentoGrid>
         )}
 
         <div className="text-center mt-16">

@@ -15,7 +15,7 @@ class ErrorBoundary extends Component<Props, State> {
     hasError: false,
   };
 
-  public static getDerivedStateFromError(_: Error): State {
+  public static getDerivedStateFromError(): State {
     return { hasError: true };
   }
 
@@ -36,7 +36,9 @@ class ErrorBoundary extends Component<Props, State> {
             </p>
             <Button onClick={() => window.location.reload()}>Refresh Page</Button>
             <div className="mt-4">
-              <Button variant="secondary" onClick={() => window.location.href = '/'}>Go Home</Button>
+              <Button variant="secondary" onClick={() => (window.location.href = '/')}>
+                Go Home
+              </Button>
             </div>
           </div>
         </div>

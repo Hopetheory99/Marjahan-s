@@ -1,9 +1,21 @@
 const express = require('express');
+require('dotenv').config(); // Load environment variables first
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const cookieParser = require('cookie-parser');
+const bcrypt = require('bcryptjs'); // Security: Password hashing
+const rateLimit = require('express-rate-limit'); // Security: Brute force protection
+
+// Rate Limiter Configuration
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // Limit each IP to 5 login requests per windowMs
+  message: { message: 'Too many login attempts, please try again after 15 minutes' },
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
 const config = require('./config');
 const logger = require('./logger');
@@ -88,6 +100,7 @@ const asyncHandler = (fn) => (req, res, next) => {
  */
 app.post(
   '/api/auth/login',
+  loginLimiter, // Rate limiting
   validate(loginSchema),
   asyncHandler(async (req, res) => {
     const { password } = req.validatedData;
@@ -99,7 +112,20 @@ app.post(
       return res.status(500).json({ message: 'Authentication not configured' });
     }
 
-    if (password !== adminPassword) {
+    // Secure Password Check (Bcrypt or Plain Text Transition)
+    const isHash = adminPassword.startsWith('$2');
+    let isValid = false;
+
+    if (isHash) {
+      // Compare against bcrypt hash
+      isValid = await bcrypt.compare(password, adminPassword);
+    } else {
+      // Fallback: Plain text comparison (Transition period only)
+      // TODO: Log warning or force upgrade in future
+      isValid = (password === adminPassword);
+    }
+
+    if (!isValid) {
       logger.warn('Failed login attempt', { timestamp: new Date().toISOString() });
       return res.status(401).json({ message: 'Invalid credentials' });
     }

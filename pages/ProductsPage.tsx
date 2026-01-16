@@ -328,10 +328,11 @@ const ProductsPage: React.FC = () => {
                         <button
                           key={page}
                           onClick={() => handlePageChange(page)}
-                          className={`w-10 h-10 flex items-center justify-center border ${filters.page === page
+                          className={`w-10 h-10 flex items-center justify-center border ${
+                            filters.page === page
                               ? 'bg-brand-burgundy border-brand-burgundy text-white'
                               : 'border-brand-cream text-brand-charcoal hover:bg-brand-cream'
-                            } transition-colors font-serif`}
+                          } transition-colors font-serif`}
                         >
                           {page}
                         </button>
