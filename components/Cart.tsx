@@ -42,9 +42,12 @@ const Cart: React.FC = () => {
     >
       {/* Backdrop with Fade In */}
       <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm animate-fade-in transition-opacity"
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm animate-fade-in transition-opacity cursor-pointer"
         onClick={closeCart}
-        aria-hidden="true"
+        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && closeCart()}
+        role="button"
+        tabIndex={0}
+        aria-label="Close cart backdrop"
       />
 
       {/* Cart Drawer with Slide In */}
@@ -86,7 +89,7 @@ const Cart: React.FC = () => {
             </div>
             <p className="text-gray-500 font-sans text-lg">Your cart is empty.</p>
             <p className="text-gray-400 text-sm mt-2 mb-8">
-              Looks like you haven't added anything yet.
+              Looks like you haven&apos;t added anything yet.
             </p>
             <Button variant="secondary" onClick={closeCart}>
               Start Shopping

@@ -1,7 +1,5 @@
 import { Resend } from 'resend';
-import OrderConfirmation from '../emails/templates/OrderConfirmation';
-import OrderStatusUpdate from '../emails/templates/OrderStatusUpdate';
-import WelcomeEmail from '../emails/templates/WelcomeEmail';
+import { logger } from './logger';
 
 export interface EmailData {
   to: string;
@@ -30,9 +28,11 @@ class EmailService {
     if (apiKey) {
       this.resend = new Resend(apiKey);
       this.isInitialized = true;
-      console.log('📧 Email service initialized with Resend');
+      logger.info('Email service initialized with Resend', { service: 'email' });
     } else {
-      console.warn('⚠️ VITE_RESEND_API_KEY not found. Email service running in development mode.');
+      logger.warn('VITE_RESEND_API_KEY not found. Email service running in development mode.', {
+        service: 'email',
+      });
       this.isInitialized = false;
     }
   }
@@ -44,11 +44,12 @@ class EmailService {
       try {
         if (!this.isInitialized || !this.resend) {
           // Development mode - log and simulate success
-          console.log('📧 [DEV MODE] Email would be sent:', {
+          logger.debug('DEV MODE: Email would be sent', {
             attempt,
             to: emailData.to,
             subject: emailData.subject,
             htmlLength: emailData.html.length,
+            service: 'email',
           });
 
           // Simulate network delay
@@ -69,10 +70,11 @@ class EmailService {
           text: emailData.text,
         });
 
-        console.log('📧 Email sent successfully:', {
+        logger.info('Email sent successfully', {
           attempt,
           to: emailData.to,
           messageId: result.data?.id,
+          service: 'email',
         });
 
         return {
@@ -81,13 +83,16 @@ class EmailService {
         };
       } catch (error) {
         lastError = error as Error;
-        console.error(`📧 Email send attempt ${attempt} failed:`, error);
+        logger.error(`Email send attempt ${attempt} failed`, lastError, {
+          attempt,
+          service: 'email',
+        });
 
         // If it's the last attempt, don't wait
         if (attempt < maxRetries) {
           // Exponential backoff: 1s, 2s, 4s
           const delay = Math.pow(2, attempt - 1) * 1000;
-          console.log(`⏳ Retrying in ${delay}ms...`);
+          logger.debug(`Retrying in ${delay}ms...`, { delay, service: 'email' });
           await new Promise((resolve) => setTimeout(resolve, delay));
         }
       }
@@ -95,7 +100,7 @@ class EmailService {
 
     // All retries failed
     const errorMessage = `Failed to send email after ${maxRetries} attempts: ${lastError?.message}`;
-    console.error('📧', errorMessage);
+    logger.error('Email sending failed', lastError, { maxRetries, service: 'email' });
 
     return {
       success: false,
@@ -163,7 +168,10 @@ class EmailService {
         text: `Your order #${orderId} has been confirmed. Total: $${orderDetails.total.toFixed(2)}`,
       });
     } catch (error) {
-      console.error('Failed to send order confirmation email:', error);
+      logger.error('Failed to send order confirmation email', error as Error, {
+        orderId,
+        service: 'email',
+      });
       return false;
     }
   }
@@ -242,7 +250,10 @@ class EmailService {
         text: `Order #${orderId} status update: ${newStatus}`,
       });
     } catch (error) {
-      console.error('Failed to send order status update email:', error);
+      logger.error('Failed to send order status update email', error as Error, {
+        orderId,
+        service: 'email',
+      });
       return false;
     }
   }
@@ -290,7 +301,7 @@ class EmailService {
         text: "Welcome to Marjahan's Jewelry! Discover our luxury collection and enjoy 10% off with WELCOME10.",
       });
     } catch (error) {
-      console.error('Failed to send welcome email:', error);
+      logger.error('Failed to send welcome email', error as Error, { userEmail, service: 'email' });
       return false;
     }
   }

@@ -18,9 +18,10 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:prettier/recommended',
+    'plugin:security/recommended-legacy',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
-  plugins: ['react', 'react-hooks', 'react-refresh', '@typescript-eslint', 'jsx-a11y'],
+  plugins: ['react', 'react-hooks', 'react-refresh', '@typescript-eslint', 'jsx-a11y', 'security'],
   settings: { react: { version: 'detect' } },
   rules: {
     'react/react-in-jsx-scope': 'off',

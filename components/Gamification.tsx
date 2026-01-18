@@ -237,12 +237,13 @@ export const GamificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
         addExperience(25);
         break;
 
-      case 'night_browse':
+      case 'night_browse': {
         const hour = new Date().getHours();
         if (hour >= 0 && hour <= 6) {
           unlockAchievement('night_owl');
         }
         break;
+      }
 
       case 'daily_login':
         // Update streak logic would go here
@@ -517,7 +518,7 @@ export const LevelUpCelebration: React.FC<{
         </div>
 
         <h2 className="text-2xl font-serif text-white mb-4">Congratulations!</h2>
-        <p className="text-white/90 mb-8">You've reached level {newLevel}!</p>
+        <p className="text-white/90 mb-8">You&apos;ve reached level {newLevel}!</p>
 
         {/* Firework effects */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">

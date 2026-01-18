@@ -1,4 +1,10 @@
 import Typesense from 'typesense';
+import { Product, CategoryType } from '../types';
+import { logger } from './logger';
+
+// ============================================
+// TYPE DEFINITIONS
+// ============================================
 
 interface ProductDocument {
   id: string;
@@ -12,51 +18,124 @@ interface ProductDocument {
   created_at: number;
 }
 
+interface TypesenseHit {
+  document: ProductDocument;
+  highlights?: Array<{ field: string; snippet: string; matched_tokens: string[] }>;
+  text_match?: number;
+}
+
+interface TypesenseFacet {
+  field_name: string;
+  counts: Array<{ value: string; count: number }>;
+}
+
+interface TypesenseSearchResponse {
+  hits?: TypesenseHit[];
+  facet_counts?: TypesenseFacet[];
+  found?: number;
+  page?: number;
+  search_time_ms?: number;
+}
+
+interface SearchFilters {
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  inStock?: boolean;
+  sortBy?: string;
+  limit?: number;
+  page?: number;
+}
+
 interface SearchResult {
-  hits: any[];
-  facets: any[];
+  hits: ProductDocument[] | Product[];
+  facets: TypesenseFacet[];
   total: number;
   page: number;
 }
 
+interface TypesenseConfig {
+  nodes: Array<{
+    host: string;
+    port: number;
+    protocol: string;
+  }>;
+  apiKey: string;
+  connectionTimeoutSeconds: number;
+}
+
+interface TypesenseError extends Error {
+  httpStatus?: number;
+}
+
+// Type for the Typesense client
+export interface TypesenseClient {
+  collections: (name?: string) => {
+    documents: () => {
+      search: (params: Record<string, unknown>) => Promise<TypesenseSearchResponse>;
+      upsert: (doc: ProductDocument) => Promise<ProductDocument>;
+      import: (docs: ProductDocument[], options: { action: string }) => Promise<unknown>;
+    };
+    create: (schema: Record<string, unknown>) => Promise<unknown>;
+  };
+}
+
+// ============================================
+// SEARCH SERVICE CLASS
+// ============================================
+
+/**
+ * Typesense client instance exposed for other services
+ */
+export let typesenseClient: TypesenseClient | null = null;
+
 class SearchService {
-  private client: any = null;
+  private client: TypesenseClient | null = null;
   private isInitialized = false;
 
   constructor() {
     this.initializeClient();
   }
 
-  private initializeClient() {
+  private initializeClient(): void {
     try {
-      // Typesense configuration - in production, these would come from environment variables
-      const typesenseConfig = {
+      const typesenseConfig: TypesenseConfig = {
         nodes: [
           {
-            host: (import.meta as any).env?.VITE_TYPESENSE_HOST || 'localhost',
-            port: parseInt((import.meta as any).env?.VITE_TYPESENSE_PORT || '8108'),
-            protocol: (import.meta as any).env?.VITE_TYPESENSE_PROTOCOL || 'http',
+            host:
+              (import.meta as { env?: Record<string, string> }).env?.VITE_TYPESENSE_HOST ||
+              'localhost',
+            port: parseInt(
+              (import.meta as { env?: Record<string, string> }).env?.VITE_TYPESENSE_PORT || '8108',
+            ),
+            protocol:
+              (import.meta as { env?: Record<string, string> }).env?.VITE_TYPESENSE_PROTOCOL ||
+              'http',
           },
         ],
-        apiKey: (import.meta as any).env?.VITE_TYPESENSE_API_KEY || 'xyz',
+        apiKey:
+          (import.meta as { env?: Record<string, string> }).env?.VITE_TYPESENSE_API_KEY || 'xyz',
         connectionTimeoutSeconds: 2,
       };
 
-      this.client = new (Typesense as any).Client(typesenseConfig);
+      this.client = new (
+        Typesense as unknown as { Client: new (config: TypesenseConfig) => TypesenseClient }
+      ).Client(typesenseConfig);
+      typesenseClient = this.client;
       this.isInitialized = true;
-      console.log('🔍 Typesense client initialized');
+      logger.info('Typesense client initialized', { service: 'search' });
     } catch (error) {
-      console.warn('🔍 Typesense not available, falling back to local search:', error);
+      logger.warn('Typesense not available, falling back to local search', {
+        error: String(error),
+        service: 'search',
+      });
       this.isInitialized = false;
     }
   }
 
-  /**
-   * Index a product in Typesense
-   */
-  async indexProduct(product: any): Promise<void> {
+  async indexProduct(product: Product): Promise<void> {
     if (!this.isInitialized || !this.client) {
-      console.warn('🔍 Typesense not available, skipping indexing');
+      logger.warn('Typesense not available, skipping indexing', { service: 'search' });
       return;
     }
 
@@ -64,28 +143,28 @@ class SearchService {
       const document: ProductDocument = {
         id: product.id.toString(),
         name: product.name,
-        description: product.description,
+        description: product.description || '',
         category: product.category,
         price: product.price,
-        image: product.image,
-        tags: product.tags || [],
+        image: product.images?.[0] || '',
+        tags: [],
         inStock: product.stock > 0,
-        created_at: new Date(product.created_at).getTime(),
+        created_at: product.created_at ? new Date(product.created_at).getTime() : Date.now(),
       };
 
       await this.client.collections('products').documents().upsert(document);
-      console.log(`🔍 Indexed product: ${product.name}`);
+      logger.info('Indexed product', { productName: product.name, service: 'search' });
     } catch (error) {
-      console.error('🔍 Error indexing product:', error);
+      logger.error('Error indexing product', error as Error, {
+        productId: product.id,
+        service: 'search',
+      });
     }
   }
 
-  /**
-   * Search products using Typesense
-   */
-  async searchProducts(query: string, filters: any = {}): Promise<SearchResult> {
+  async searchProducts(query: string, filters: SearchFilters = {}): Promise<SearchResult> {
     if (!this.isInitialized || !this.client) {
-      console.warn('🔍 Typesense not available, using fallback search');
+      logger.warn('Typesense not available, using fallback search', { service: 'search' });
       return this.fallbackSearch(query, filters);
     }
 
@@ -101,31 +180,35 @@ class SearchService {
         include_fields: 'id,name,description,category,price,image,inStock',
       };
 
-      const result = await this.client.collections('products').documents().search(searchParameters);
+      const result: TypesenseSearchResponse = await this.client
+        .collections('products')
+        .documents()
+        .search(searchParameters);
 
       return {
-        hits: result.hits?.map((hit) => hit.document) || [],
+        hits: result.hits?.map((hit: TypesenseHit) => hit.document) || [],
         facets: result.facet_counts || [],
         total: result.found || 0,
         page: result.page || 1,
       };
     } catch (error) {
-      console.error('🔍 Typesense search error:', error);
+      logger.error('Typesense search error', error as Error, { query, service: 'search' });
       return this.fallbackSearch(query, filters);
     }
   }
 
-  /**
-   * Fallback search when Typesense is not available
-   */
-  private async fallbackSearch(query: string, filters: any = {}): Promise<SearchResult> {
+  private async fallbackSearch(query: string, filters: SearchFilters = {}): Promise<SearchResult> {
     try {
-      // Fallback: Use productService to query Supabase directly
-      // This ensures we always get live data even if Typesense is down
       const { productService } = await import('./productService');
 
-      // Map Search filters to ProductService filters
-      const productFilters: any = {
+      const productFilters: {
+        search?: string;
+        page?: number;
+        limit?: number;
+        price?: number;
+        categories?: CategoryType[];
+        sort?: string;
+      } = {
         search: query,
         page: filters.page || 1,
         limit: filters.limit || 20,
@@ -136,16 +219,15 @@ class SearchService {
       }
 
       if (filters.category) {
-        productFilters.categories = [filters.category];
+        productFilters.categories = [filters.category as CategoryType];
       }
 
       if (filters.sortBy) {
-        // Map sort strings
         const sortMap: Record<string, string> = {
           'price:asc': 'price-low',
           'price:desc': 'price-high',
           'name:asc': 'name',
-          'created_at:desc': 'newest', // productService might default to name if unknown
+          'created_at:desc': 'newest',
         };
         productFilters.sort = sortMap[filters.sortBy] || filters.sortBy;
       }
@@ -156,17 +238,15 @@ class SearchService {
         hits: results,
         facets: [],
         total: count,
-        page: productFilters.page,
+        page: productFilters.page || 1,
       };
     } catch (error) {
-      console.error('🔍 Fallback search error:', error);
+      logger.error('Fallback search error', error as Error, { query, service: 'search' });
       return { hits: [], facets: [], total: 0, page: 1 };
     }
   }
-  /**
-   * Build filter string for Typesense
-   */
-  private buildFilterString(filters: any): string {
+
+  private buildFilterString(filters: SearchFilters): string {
     const conditions: string[] = [];
 
     if (filters.category) {
@@ -188,17 +268,15 @@ class SearchService {
     return conditions.join(' && ');
   }
 
-  /**
-   * Initialize Typesense collection and schema
-   */
   async initializeCollection(): Promise<void> {
     if (!this.isInitialized || !this.client) {
-      console.warn('🔍 Typesense not available, skipping collection initialization');
+      logger.warn('Typesense not available, skipping collection initialization', {
+        service: 'search',
+      });
       return;
     }
 
     try {
-      // Define the schema
       const schema = {
         name: 'products',
         fields: [
@@ -215,49 +293,50 @@ class SearchService {
         default_sorting_field: 'created_at',
       };
 
-      // Create or update collection
       await this.client.collections().create(schema);
-      console.log('🔍 Typesense collection initialized');
-    } catch (error: any) {
-      // Collection might already exist
-      if (error.httpStatus === 409) {
-        console.log('🔍 Typesense collection already exists');
+      logger.info('Typesense collection initialized', { service: 'search' });
+    } catch (error: unknown) {
+      const typesenseError = error as TypesenseError;
+      if (typesenseError.httpStatus === 409) {
+        logger.info('Typesense collection already exists', { service: 'search' });
       } else {
-        console.error('🔍 Error initializing Typesense collection:', error);
+        logger.error('Error initializing Typesense collection', typesenseError, {
+          service: 'search',
+        });
       }
     }
   }
 
-  /**
-   * Index all products (useful for initial setup)
-   */
-  async indexAllProducts(products: any[]): Promise<void> {
+  async indexAllProducts(products: Product[]): Promise<void> {
     if (!this.isInitialized || !this.client) {
-      console.warn('🔍 Typesense not available, skipping bulk indexing');
+      logger.warn('Typesense not available, skipping bulk indexing', { service: 'search' });
       return;
     }
 
     try {
-      const documents: ProductDocument[] = products.map((product) => ({
+      const documents: ProductDocument[] = products.map((product: Product) => ({
         id: product.id.toString(),
         name: product.name,
-        description: product.description,
+        description: product.description || '',
         category: product.category,
         price: product.price,
-        image: product.image,
-        tags: product.tags || [],
+        image: product.images?.[0] || '',
+        tags: [],
         inStock: product.stock > 0,
-        created_at: new Date(product.created_at).getTime(),
+        created_at: product.created_at ? new Date(product.created_at).getTime() : Date.now(),
       }));
 
       await this.client.collections('products').documents().import(documents, { action: 'upsert' });
-      console.log(`🔍 Indexed ${products.length} products`);
+      logger.info('Indexed products', { count: products.length, service: 'search' });
     } catch (error) {
-      console.error('🔍 Error bulk indexing products:', error);
+      logger.error('Error bulk indexing products', error as Error, {
+        count: products.length,
+        service: 'search',
+      });
     }
   }
 }
 
-// Export singleton instance
 export const searchService = new SearchService();
 export default searchService;
+export type { SearchFilters, SearchResult, ProductDocument };

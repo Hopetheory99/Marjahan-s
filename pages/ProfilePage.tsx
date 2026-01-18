@@ -26,19 +26,19 @@ const ProfilePage: React.FC = () => {
 
         <div className="space-y-4 mb-8">
           <div>
-            <label className="block text-sm font-medium text-gray-500">Email</label>
+            <p className="block text-sm font-medium text-gray-500">Email</p>
             <p className="text-lg text-gray-900">{user.email}</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-500">Member Since</label>
+            <p className="block text-sm font-medium text-gray-500">Member Since</p>
             <p className="text-lg text-gray-900">
               {new Date(user.created_at || '').toLocaleDateString()}
             </p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-500">Role</label>
+            <p className="block text-sm font-medium text-gray-500">Role</p>
             <p className="text-lg text-gray-900 capitalize">{profile?.role || 'Customer'}</p>
           </div>
         </div>

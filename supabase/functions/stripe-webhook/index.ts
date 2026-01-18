@@ -1,5 +1,5 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient, SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'https://esm.sh/stripe@12.0.0';
 
 console.log('💳 Stripe Webhook Function Loaded');
@@ -95,7 +95,7 @@ serve(async (req) => {
 });
 
 async function handlePaymentIntentSucceeded(
-  supabaseClient: any,
+  supabaseClient: SupabaseClient,
   paymentIntent: Stripe.PaymentIntent,
 ) {
   console.log(`💳 Processing successful payment: ${paymentIntent.id}`);
@@ -196,7 +196,10 @@ async function handlePaymentIntentSucceeded(
   }
 }
 
-async function handlePaymentIntentFailed(supabaseClient: any, paymentIntent: Stripe.PaymentIntent) {
+async function handlePaymentIntentFailed(
+  supabaseClient: SupabaseClient,
+  paymentIntent: Stripe.PaymentIntent,
+) {
   console.log(`❌ Processing failed payment: ${paymentIntent.id}`);
 
   try {

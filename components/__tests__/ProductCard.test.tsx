@@ -1,12 +1,10 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import ProductCard from '../ProductCard';
 import { Product } from '../../types';
-import { WishlistProvider } from '../../context/WishlistContext';
-import { AuthProvider } from '../../context/AuthContext';
+import { TestingProvider } from '../../vitest.setup';
 
 // Mock the Image component
 vi.mock('../Image', () => ({
@@ -47,13 +45,7 @@ const mockProductOutOfStock: Product = {
 
 describe('ProductCard', () => {
   const renderWithProviders = (component: React.ReactElement) => {
-    return render(
-      <MemoryRouter>
-        <AuthProvider>
-          <WishlistProvider>{component}</WishlistProvider>
-        </AuthProvider>
-      </MemoryRouter>,
-    );
+    return render(<TestingProvider>{component}</TestingProvider>);
   };
 
   it('renders product information correctly', async () => {
@@ -62,7 +54,6 @@ describe('ProductCard', () => {
     await waitFor(() => {
       expect(screen.getByText('Gold Ring')).toBeInTheDocument();
       expect(screen.getByText('$299.99')).toBeInTheDocument();
-      expect(screen.getByText('Discover More →')).toBeInTheDocument();
     });
   });
 
@@ -70,7 +61,7 @@ describe('ProductCard', () => {
     renderWithProviders(<ProductCard product={mockProductLowStock} />);
 
     await waitFor(() => {
-      expect(screen.getByText('Only 2 left')).toBeInTheDocument();
+      expect(screen.getByText('2 LEFT')).toBeInTheDocument();
     });
   });
 
@@ -78,7 +69,7 @@ describe('ProductCard', () => {
     renderWithProviders(<ProductCard product={mockProductOutOfStock} />);
 
     await waitFor(() => {
-      expect(screen.getByText('Sold Out')).toBeInTheDocument();
+      expect(screen.getByLabelText('Add to cart')).toBeDisabled();
     });
   });
 
@@ -107,7 +98,7 @@ describe('ProductCard', () => {
 
     await waitFor(() => {
       const card = screen.getByText('Gold Ring').closest('.group');
-      expect(card).toHaveClass('group', 'card-luxury', 'h-full');
+      expect(card).toHaveClass('group', 'h-full', 'relative');
     });
   });
 
@@ -144,9 +135,9 @@ describe('ProductCard', () => {
     renderWithProviders(<ProductCard product={mockProduct} />);
 
     await waitFor(() => {
-      // The hint should be present but initially hidden
-      const hintContainer = screen.getByText('Discover More →').parentElement;
-      expect(hintContainer).toHaveClass('opacity-0', 'group-hover:opacity-100');
+      // The add to cart button should be present on hover
+      const cartBtn = screen.getByLabelText('Add to cart').parentElement;
+      expect(cartBtn).toHaveClass('opacity-0', 'group-hover:opacity-100');
     });
   });
 
@@ -161,32 +152,24 @@ describe('ProductCard', () => {
 
     // Test low stock
     rerender(
-      <MemoryRouter>
-        <AuthProvider>
-          <WishlistProvider>
-            <ProductCard product={mockProductLowStock} />
-          </WishlistProvider>
-        </AuthProvider>
-      </MemoryRouter>,
+      <TestingProvider>
+        <ProductCard product={mockProductLowStock} />
+      </TestingProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Only 2 left')).toBeInTheDocument();
+      expect(screen.getByText('2 LEFT')).toBeInTheDocument();
     });
 
     // Test out of stock
     rerender(
-      <MemoryRouter>
-        <AuthProvider>
-          <WishlistProvider>
-            <ProductCard product={mockProductOutOfStock} />
-          </WishlistProvider>
-        </AuthProvider>
-      </MemoryRouter>,
+      <TestingProvider>
+        <ProductCard product={mockProductOutOfStock} />
+      </TestingProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Sold Out')).toBeInTheDocument();
+      expect(screen.getByLabelText('Add to cart')).toBeDisabled();
     });
   });
 

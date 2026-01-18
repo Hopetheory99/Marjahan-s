@@ -22,8 +22,11 @@ const AdminProductForm: React.FC<AdminProductFormProps> = ({
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">Product Name</label>
+        <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1">
+          Product Name
+        </label>
         <input
+          id="name"
           name="name"
           type="text"
           required
@@ -34,8 +37,11 @@ const AdminProductForm: React.FC<AdminProductFormProps> = ({
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">Price ($)</label>
+          <label htmlFor="price" className="block text-sm font-semibold text-gray-700 mb-1">
+            Price ($)
+          </label>
           <input
+            id="price"
             name="price"
             type="number"
             min="0"
@@ -46,8 +52,11 @@ const AdminProductForm: React.FC<AdminProductFormProps> = ({
           />
         </div>
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">Stock Qty</label>
+          <label htmlFor="stock" className="block text-sm font-semibold text-gray-700 mb-1">
+            Stock Qty
+          </label>
           <input
+            id="stock"
             name="stock"
             type="number"
             min="0"
@@ -60,8 +69,11 @@ const AdminProductForm: React.FC<AdminProductFormProps> = ({
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">Category</label>
+          <label htmlFor="category" className="block text-sm font-semibold text-gray-700 mb-1">
+            Category
+          </label>
           <select
+            id="category"
             name="category"
             value={formData.category || 'Rings'}
             onChange={onInputChange}
@@ -74,8 +86,11 @@ const AdminProductForm: React.FC<AdminProductFormProps> = ({
           </select>
         </div>
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">Metal</label>
+          <label htmlFor="metal" className="block text-sm font-semibold text-gray-700 mb-1">
+            Metal
+          </label>
           <select
+            id="metal"
             name="metal"
             value={formData.metal || 'Gold'}
             onChange={onInputChange}
@@ -88,8 +103,11 @@ const AdminProductForm: React.FC<AdminProductFormProps> = ({
         </div>
       </div>
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">Description</label>
+        <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-1">
+          Description
+        </label>
         <textarea
+          id="description"
           name="description"
           required
           rows={3}
@@ -99,8 +117,11 @@ const AdminProductForm: React.FC<AdminProductFormProps> = ({
         />
       </div>
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">Main Image URL</label>
+        <label htmlFor="image" className="block text-sm font-semibold text-gray-700 mb-1">
+          Main Image URL
+        </label>
         <input
+          id="image"
           name="image"
           type="text"
           value={formData.images?.[0] || ''}

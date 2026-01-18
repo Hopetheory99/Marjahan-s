@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Elements } from '@stripe/react-stripe-js';
 import { useCart } from '../context/CartContext';
@@ -23,9 +23,28 @@ interface CheckoutForm extends Record<string, unknown> {
   zip: string;
 }
 
+import ErrorBoundary from '../components/ErrorBoundary';
+
 const CheckoutPage: React.FC = () => {
+  return (
+    <ErrorBoundary>
+      <CheckoutPageContent />
+    </ErrorBoundary>
+  );
+};
+
+const CheckoutPageContent: React.FC = () => {
   useDocumentTitle('Checkout');
-  const { cartItems, cartTotal, clearCart } = useCart();
+  const {
+    cartItems,
+    cartTotal,
+    finalTotal,
+    discountAmount,
+    applyCoupon,
+    removeCoupon,
+    coupon,
+    clearCart,
+  } = useCart();
   const { user } = useAuth();
   const { addToast } = useToast();
   const navigate = useNavigate();
@@ -55,6 +74,26 @@ const CheckoutPage: React.FC = () => {
     },
   );
 
+  useEffect(() => {
+    if (
+      step === 'payment' &&
+      selectedPaymentMethod === 'stripe' &&
+      !clientSecret &&
+      cartItems.length > 0
+    ) {
+      const initStripe = async () => {
+        try {
+          const response = await stripeService.createPaymentIntent(cartItems);
+          setClientSecret(response.clientSecret);
+        } catch (error) {
+          console.error('Failed to init payment:', error);
+          addToast('Could not initialize payment. Please try again.', 'error');
+        }
+      };
+      initStripe();
+    }
+  }, [step, selectedPaymentMethod, clientSecret, cartItems, addToast]);
+
   const handleNextToPayment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isValid()) {
@@ -62,18 +101,6 @@ const CheckoutPage: React.FC = () => {
         addToast('Please login to continue', 'error');
         navigate('/login');
         return;
-      }
-
-      // Only initialize Stripe if Stripe is selected
-      if (selectedPaymentMethod === 'stripe') {
-        try {
-          const response = await stripeService.createPaymentIntent(cartItems);
-          setClientSecret(response.clientSecret);
-        } catch (error) {
-          console.error('Failed to init payment:', error);
-          addToast('Could not initialize payment. Please try again.', 'error');
-          return;
-        }
       }
 
       setStep('payment');
@@ -375,18 +402,77 @@ const CheckoutPage: React.FC = () => {
                 <p>Subtotal</p>
                 <p>${cartTotal.toLocaleString()}</p>
               </div>
+
+              {/* Coupon Section */}
+              <div className="py-4 border-y border-dashed border-gray-200">
+                {!coupon ? (
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Promo Code"
+                      className="flex-1 p-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-brand-gold uppercase"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          applyCoupon(e.currentTarget.value);
+                          e.currentTarget.value = '';
+                        }
+                      }}
+                    />
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={(e) => {
+                        const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                        applyCoupon(input.value);
+                        input.value = '';
+                      }}
+                    >
+                      Apply
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex justify-between items-center bg-green-50 p-2 rounded border border-green-100">
+                    <div className="text-sm">
+                      <p className="text-green-800 font-semibold flex items-center gap-1">
+                        <span className="text-xs">🏷️</span> {coupon.code}
+                      </p>
+                      <p className="text-green-600 text-xs">
+                        {coupon.discount_type === 'percent'
+                          ? `${coupon.discount_value}% Off`
+                          : `$${coupon.discount_value} Off`}
+                      </p>
+                    </div>
+                    <button
+                      onClick={removeCoupon}
+                      className="text-gray-400 hover:text-red-500 transition-colors"
+                      aria-label="Remove coupon"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {discountAmount > 0 && (
+                <div className="flex justify-between text-green-600">
+                  <p>Discount</p>
+                  <p>-${discountAmount.toLocaleString()}</p>
+                </div>
+              )}
+
               <div className="flex justify-between text-gray-600">
                 <p>Luxury Shipping</p>
                 <p className="text-green-600 font-medium">Complimentary</p>
               </div>
               <div className="flex justify-between font-bold text-xl pt-4 border-t mt-4 text-gray-900">
                 <p>Total</p>
-                <p>${cartTotal.toLocaleString()}</p>
+                <p>${finalTotal.toLocaleString()}</p>
               </div>
             </div>
 
             <p className="mt-6 text-[11px] text-gray-400 text-center leading-relaxed italic">
-              "Excellence is not an act, but a habit."
+              &quot;Excellence is not an act, but a habit.&quot;
             </p>
           </div>
         </div>

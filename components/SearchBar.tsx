@@ -1,23 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { logger } from '../services/logger';
 import { searchService } from '../services/searchService';
 import Image from './Image';
-
-interface SearchResult {
-  id: string;
-  name: string;
-  description: string;
-  category: string;
-  price: number;
-  image: string;
-  inStock: boolean;
-}
+import { Product } from '../types';
 
 interface SearchBarProps {
   placeholder?: string;
   className?: string;
   showSuggestions?: boolean;
-  onSearch?: (query: string, results: SearchResult[]) => void;
+  onSearch?: (query: string, results: Product[]) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
@@ -27,7 +19,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,
 }) => {
   const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState<SearchResult[]>([]);
+  const [suggestions, setSuggestions] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
@@ -45,14 +37,16 @@ const SearchBar: React.FC<SearchBarProps> = ({
         setIsLoading(true);
         try {
           const results = await searchService.searchProducts(query, { limit: 5 });
-          setSuggestions(results.hits || []);
+          // Map Hits to Products if necessary, but searchService usually returns Products or similar
+          const hits = (results.hits || []) as unknown as Product[];
+          setSuggestions(hits);
           setShowDropdown(true);
 
           if (onSearch) {
-            onSearch(query, results.hits || []);
+            onSearch(query, hits);
           }
         } catch (error) {
-          console.error('Search error:', error);
+          logger.error('Search error', error as Error, { query, service: 'filters' });
           setSuggestions([]);
         } finally {
           setIsLoading(false);
@@ -90,7 +84,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     }
   };
 
-  const handleSuggestionClick = (product: SearchResult) => {
+  const handleSuggestionClick = (product: Product) => {
     navigate(`/products/${product.id}`);
     setShowDropdown(false);
     setQuery('');
@@ -189,7 +183,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
           )}
 
           {!isLoading && suggestions.length === 0 && query.trim() && (
-            <div className="px-4 py-3 text-sm text-gray-500">No products found for "{query}"</div>
+            <div className="px-4 py-3 text-sm text-gray-500">
+              No products found for &quot;{query}&quot;
+            </div>
           )}
 
           {!isLoading &&
@@ -198,10 +194,15 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 key={product.id}
                 onClick={() => handleSuggestionClick(product)}
                 className="flex items-center px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  (e.key === 'Enter' || e.key === ' ') && handleSuggestionClick(product)
+                }
               >
                 <div className="flex-shrink-0 mr-3">
                   <Image
-                    src={product.image}
+                    src={product.images?.[0] || 'https://placehold.co/48x48?text=No+Image'}
                     alt={product.name}
                     className="w-12 h-12 rounded object-cover"
                     placeholderSrc="https://placehold.co/48x48?text=No+Image"
@@ -214,7 +215,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                     {formatPrice(product.price)}
                   </div>
                 </div>
-                {!product.inStock && (
+                {product.stock === 0 && (
                   <span className="text-xs text-red-500 font-medium ml-2">Out of Stock</span>
                 )}
               </div>
@@ -226,7 +227,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 onClick={handleSubmit}
                 className="w-full text-sm text-blue-600 hover:text-blue-800 font-medium"
               >
-                View all results for "{query}"
+                View all results for &quot;{query}&quot;
               </button>
             </div>
           )}

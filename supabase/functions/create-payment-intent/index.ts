@@ -1,16 +1,15 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'https://esm.sh/stripe@12.0.0';
+import { z } from 'https://esm.sh/zod@3.22.4';
 
 console.log('💳 Stripe Payment Intent Function Loaded (Secure Order Flow)');
 
-// Allowed Origins
-const ALLOWED_ORIGINS = [
-  'http://localhost:5173',
-  'http://localhost:3000',
-  'https://marjahans-jewelry.com', // Production Domain
-  // Add other deployment URLs here
-];
+// Allowed Origins from env var or defaults
+const ALLOWED_ORIGINS = (
+  Deno.env.get('ALLOWED_ORIGINS') ??
+  'http://localhost:5173,http://localhost:3000,https://marjahans-jewelry.com'
+).split(',');
 
 const getCorsHeaders = (origin: string | null) => {
   const allowOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : 'null';
@@ -19,6 +18,18 @@ const getCorsHeaders = (origin: string | null) => {
     'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
   };
 };
+
+// Zod schema for request validation
+const CartItemSchema = z.object({
+  id: z.string().uuid().or(z.string()), // Support both UUID and custom IDs
+  quantity: z.number().int().positive(),
+});
+
+const CreatePaymentIntentSchema = z.object({
+  items: z.array(CartItemSchema).min(1),
+  currency: z.string().optional().default('usd'),
+  metadata: z.record(z.string()).optional().default({}),
+});
 
 serve(async (req) => {
   const origin = req.headers.get('origin');
@@ -58,21 +69,27 @@ serve(async (req) => {
       apiVersion: '2023-10-16',
     });
 
-    // Parse request body
-    const { items, currency = 'usd', metadata = {} } = await req.json();
+    // Parse and validate request body using Zod
+    const body = await req.json();
+    const result = CreatePaymentIntentSchema.safeParse(body);
 
-    if (!items || !Array.isArray(items) || items.length === 0) {
-      return new Response(JSON.stringify({ error: 'Invalid items' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    if (!result.success) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid request data', details: result.error.format() }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        },
+      );
     }
+
+    const { items, currency, metadata } = result.data;
 
     // === CRITICAL FIX: CREATE ORDER FIRST ===
     // This prevents data loss if payment succeeds but order creation fails
 
     // 1. Fetch products from DB to validate price and stock
-    const itemIds = items.map((i: any) => i.id);
+    const itemIds = items.map((i) => i.id);
     const { data: products, error: productsError } = await supabaseClient
       .from('products')
       .select('*')
@@ -86,7 +103,7 @@ serve(async (req) => {
 
     // 2. Validate stock and calculate server-side total
     for (const item of items) {
-      const product = products.find((p: any) => p.id === item.id);
+      const product = products.find((p) => p.id === item.id);
 
       if (!product) {
         throw new Error(`Product not found: ${item.id}`);
@@ -123,11 +140,11 @@ serve(async (req) => {
     console.log(`📦 Created Order: ${order.id}`);
 
     // 4. Create order items (triggers will decrement stock atomically)
-    const orderItems = items.map((item: any) => ({
+    const orderItems = items.map((item) => ({
       order_id: order.id,
       product_id: item.id,
       quantity: item.quantity,
-      price_snapshot: products.find((p: any) => p.id === item.id)!.price,
+      price_snapshot: (products as Product[]).find((p) => p.id === item.id)!.price,
     }));
 
     const { error: itemsError } = await supabaseClient.from('order_items').insert(orderItems);

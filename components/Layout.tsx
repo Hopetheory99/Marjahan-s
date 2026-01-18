@@ -26,7 +26,7 @@ export const AdminLayout: React.FC<LayoutProps> = ({ children }) => {
       {/* Simplified Admin Header */}
       <header className="bg-black/80 text-white p-4 shadow-md border-b border-white/10">
         <div className="container mx-auto flex justify-between items-center">
-          <span className="font-serif text-xl tracking-wider">MARJAHAN'S ADMIN</span>
+          <span className="font-serif text-xl tracking-wider">MARJAHAN&apos;S ADMIN</span>
           <a href="/" className="text-xs uppercase hover:text-brand-gold transition-colors">
             Back to Store
           </a>

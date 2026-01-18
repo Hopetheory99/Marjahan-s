@@ -1,6 +1,7 @@
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { supabase } from './supabaseClient';
 import { CartItem } from '../types';
+import { logger } from './logger';
 
 // Get Stripe publishable key from environment
 const STRIPE_PUBLIC_KEY =
@@ -34,9 +35,12 @@ export const stripeService = {
     // Calculate total amount from items for logging/fallback (server validates true price)
     const amount = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    console.log(
-      `💳 Creating PaymentIntent for ${items.length} items (Total: ${amount} ${currency})`,
-    );
+    logger.info(`Creating PaymentIntent`, {
+      itemCount: items.length,
+      total: amount,
+      currency,
+      service: 'stripe',
+    });
 
     try {
       const { data, error } = await supabase.functions.invoke('create-payment-intent', {
@@ -44,7 +48,7 @@ export const stripeService = {
       });
 
       if (error) {
-        console.error('💳 Payment Intent Error:', error);
+        logger.error('Payment Intent Error', error, { service: 'stripe' });
         return {
           clientSecret: '',
           error: error.message || 'Failed to create payment intent',
@@ -56,7 +60,7 @@ export const stripeService = {
         paymentIntentId: data.paymentIntentId,
       };
     } catch (err) {
-      console.error('💳 Unexpected error creating payment intent:', err);
+      logger.error('Unexpected error creating payment intent', err as Error, { service: 'stripe' });
       return {
         clientSecret: '',
         error: 'Unexpected error occurred',

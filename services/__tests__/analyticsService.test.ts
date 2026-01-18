@@ -46,7 +46,7 @@ describe('AnalyticsService', () => {
       analytics.initialize('GA-TEST-ID');
       analytics.trackPageView('/test', 'Test Page');
 
-      expect(window.gtag).toHaveBeenCalledWith('config', 'GA_MEASUREMENT_ID', {
+      expect(window.gtag).toHaveBeenCalledWith('config', 'GA-TEST-ID', {
         page_path: '/test',
         page_title: 'Test Page',
       });
@@ -280,7 +280,7 @@ describe('AnalyticsService', () => {
       analytics.initialize('GA-TEST-ID');
       analytics.setUserProperties('guest');
 
-      expect(window.gtag).toHaveBeenCalledWith('config', 'GA_MEASUREMENT_ID', {
+      expect(window.gtag).toHaveBeenCalledWith('config', 'GA-TEST-ID', {
         custom_map: {
           dimension1: 'guest',
         },
@@ -291,12 +291,12 @@ describe('AnalyticsService', () => {
       analytics.initialize('GA-TEST-ID');
       analytics.setUserProperties('customer', 'user-123');
 
-      expect(window.gtag).toHaveBeenCalledWith('config', 'GA_MEASUREMENT_ID', {
+      expect(window.gtag).toHaveBeenCalledWith('config', 'GA-TEST-ID', {
         custom_map: {
           dimension1: 'customer',
         },
       });
-      expect(window.gtag).toHaveBeenCalledWith('config', 'GA_MEASUREMENT_ID', {
+      expect(window.gtag).toHaveBeenCalledWith('config', 'GA-TEST-ID', {
         user_id: 'user-123',
       });
     });

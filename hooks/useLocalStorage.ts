@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { logger } from '../services/logger';
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
   // Get from local storage then parse stored json or return initialValue
@@ -11,7 +12,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       const item = window.localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      console.warn(`Error reading localStorage key "${key}":`, error);
+      logger.warn(`Error reading localStorage key "${key}"`, { error, service: 'hooks' });
       return initialValue;
     }
   };
@@ -31,7 +32,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
         window.localStorage.setItem(key, JSON.stringify(valueToStore));
       }
     } catch (error) {
-      console.warn(`Error setting localStorage key "${key}":`, error);
+      logger.warn(`Error setting localStorage key "${key}"`, { error, service: 'hooks' });
     }
   };
 

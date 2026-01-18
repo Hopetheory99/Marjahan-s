@@ -5,15 +5,14 @@ export interface SortConfig {
   direction: SortDirection;
 }
 
-export const sortData = <T extends Record<string, unknown>>(
-  data: T[],
-  config: SortConfig | null,
-): T[] => {
+export const sortData = <T>(data: T[], config: SortConfig | null): T[] => {
   if (!config) return data;
 
+  const { key } = config;
+
   return [...data].sort((a, b) => {
-    const aValue = a[config.key];
-    const bValue = b[config.key];
+    const aValue = (a as any)[key];
+    const bValue = (b as any)[key];
 
     if (aValue === undefined || bValue === undefined || aValue === null || bValue === null)
       return 0;

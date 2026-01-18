@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../Button';
 import { useToast } from '../../context/ToastContext';
+import { logger } from '../../services/logger';
 
 interface NagadPaymentFormProps {
   amount: number;
@@ -61,7 +62,7 @@ const NagadPaymentForm: React.FC<NagadPaymentFormProps> = ({ amount, onSuccess, 
         throw new Error('Payment failed. Insufficient balance or network error.');
       }
     } catch (error) {
-      console.error('Nagad payment error:', error);
+      logger.error('Nagad payment error', error as Error, { service: 'checkout' });
       setErrorMessage(error instanceof Error ? error.message : 'Payment failed. Please try again.');
       addToast('Payment failed', 'error');
       setIsProcessing(false);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../Button';
 import { useToast } from '../../context/ToastContext';
+import { logger } from '../../services/logger';
 
 interface BKashPaymentFormProps {
   amount: number;
@@ -61,7 +62,7 @@ const BKashPaymentForm: React.FC<BKashPaymentFormProps> = ({ amount, onSuccess, 
         throw new Error('Payment failed. Please try again.');
       }
     } catch (error) {
-      console.error('bKash payment error:', error);
+      logger.error('bKash payment error', error as Error, { service: 'checkout' });
       setErrorMessage(error instanceof Error ? error.message : 'Payment failed. Please try again.');
       addToast('Payment failed', 'error');
       setIsProcessing(false);

@@ -10,10 +10,11 @@ import { useToast } from '../context/ToastContext';
 
 interface ProductCardProps {
   product: Product;
+  className?: string;
 }
 
 /* eslint-disable react/prop-types */
-const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = React.memo(({ product, className = '' }) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [animationStartPos, setAnimationStartPos] = useState({ x: 0, y: 0 });
   const [animationEndPos, setAnimationEndPos] = useState({ x: 0, y: 0 });
@@ -68,7 +69,7 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
         viewport={{ once: true }}
         whileHover={{ y: -8 }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="group h-full relative"
+        className={`group h-full relative ${className}`}
       >
         <Link to={`/products/${product.id}`} className="block h-full">
           <div className="bg-surface-2 rounded-3xl p-4 h-full border border-transparent group-hover:border-black/5 transition-colors overflow-hidden relative">

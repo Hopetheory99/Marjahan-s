@@ -43,7 +43,7 @@
 
   /* Bento Card Base */
   .bento-card {
-    @apply bg-surface-2 rounded-3xl p-6 transition-all duration-300 hover:shadow-xl border border-transparent hover:border-black/5;
+    @apply rounded-3xl p-6 transition-all duration-300 hover:shadow-xl border border-transparent hover:border-black/5;
   }
 }
 

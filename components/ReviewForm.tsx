@@ -63,7 +63,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId, onReviewAdded }) => 
     <form onSubmit={handleSubmit} className="bg-gray-50 p-6 rounded-lg space-y-4">
       <h4 className="font-semibold text-lg">Write a Review</h4>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Your Rating</label>
+        <span className="block text-sm font-medium text-gray-700 mb-1">Your Rating</span>
         <StarRating rating={rating} size="lg" interactive onRatingChange={setRating} />
       </div>
       <div>

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { CartProvider, useCart } from '../CartContext';
 import { Product } from '../../types';
@@ -127,7 +127,7 @@ describe('CartContext', () => {
     expect(screen.getByTestId('cart-count')).toHaveTextContent('0');
   });
 
-  it('persists to localStorage', () => {
+  it('persists to localStorage', async () => {
     const { unmount } = render(
       <CartProvider>
         <TestComponent />
@@ -137,10 +137,12 @@ describe('CartContext', () => {
     fireEvent.click(screen.getByText('Add Ring Size 7'));
 
     // Verify it's in localStorage
-    // The key is 'marjahans_cart' from CartContext.tsx
-    const stored = JSON.parse(localStorage.getItem('marjahans_cart') || '[]');
-    expect(stored).toHaveLength(1);
-    expect(stored[0].id).toBe('p1-7');
+    // The key is 'marjahans_cart_v2' from CartContext.tsx
+    const stored = JSON.parse(localStorage.getItem('marjahans_cart_v2') || '{}');
+    expect(stored.items).toHaveLength(1);
+    expect(stored.items[0].id).toBe('p1-7'); // Product ID with size
+    expect(stored.items[0].size).toBe('7'); // Size
+    expect(stored.items[0].quantity).toBe(1); // Quantity
 
     unmount();
 
@@ -151,7 +153,9 @@ describe('CartContext', () => {
       </CartProvider>,
     );
 
-    expect(screen.getByTestId('cart-count')).toHaveTextContent('1');
+    await waitFor(() => {
+      expect(screen.getByTestId('cart-count')).toHaveTextContent('1');
+    });
     expect(screen.getByTestId('cart-item-p1-7')).toBeInTheDocument();
   });
 });

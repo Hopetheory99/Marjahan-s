@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { MetalType, CategoryType } from '../types';
 import ProductCard from '../components/ProductCard';
 import SearchBar from '../components/SearchBar';
 import { useProducts } from '../hooks/useProducts';
 import { ProductFilters } from '../services/productService';
-import { searchService } from '../services/searchService';
 import SEO from '../components/SEO';
 
 // Strict typing for filter state actions
@@ -124,11 +123,10 @@ const ProductsPage: React.FC = () => {
     limit: 12,
   });
 
-  const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
   // Hook now passes filters directly to server
-  const { data: paginatedData, loading, error, refetch } = useProducts(filters);
+  const { data: paginatedData, isLoading: loading, error, refetch } = useProducts(filters);
 
   const products = paginatedData?.data || [];
   const totalCount = paginatedData?.count || 0;
@@ -181,14 +179,8 @@ const ProductsPage: React.FC = () => {
     }
   };
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    handleFilterChange({ type: 'setSearch', value: searchQuery });
-  };
-
   const clearFilters = () => {
     handleFilterChange({ type: 'clearFilters' });
-    setSearchQuery('');
   };
 
   const hasActiveFilters =
@@ -222,7 +214,6 @@ const ProductsPage: React.FC = () => {
               <SearchBar
                 placeholder="Search for jewelry..."
                 onSearch={(query) => {
-                  setSearchQuery(query);
                   handleFilterChange({ type: 'setSearch', value: query });
                 }}
                 className="w-full"

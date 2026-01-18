@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { productService } from '../../services/productService';
-import { Product, MetalType, CategoryType } from '../../types';
+import { MetalType, CategoryType } from '../../types';
 import Button from '../Button';
 import { useToast } from '../../context/ToastContext';
 import Image from '../Image';
@@ -94,7 +94,8 @@ const AdminFacebookSync: React.FC<{ onSyncComplete: () => void }> = ({ onSyncCom
 
   const handleImport = async (item: FBProduct) => {
     try {
-      const { id, status, ...productData } = item;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id: _id, status: _status, ...productData } = item;
       await productService.addProduct(productData);
 
       setItems((prev) => prev.map((i) => (i.id === item.id ? { ...i, status: 'imported' } : i)));

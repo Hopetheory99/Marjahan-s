@@ -4,6 +4,7 @@ import { Product } from '../types';
 export class AnalyticsService {
   private static instance: AnalyticsService;
   private isInitialized = false;
+  private measurementId: string | null = null;
 
   private constructor() {}
 
@@ -26,14 +27,15 @@ export class AnalyticsService {
       document.head.appendChild(script);
 
       window.dataLayer = window.dataLayer || [];
-      window.gtag = function () {
-        window.dataLayer.push(arguments);
+      window.gtag = (...args: any[]) => {
+        window.dataLayer.push(args);
       };
 
       window.gtag('js', new Date());
     }
 
     // Configure GA4
+    this.measurementId = measurementId;
     window.gtag('config', measurementId, {
       custom_map: {
         dimension1: 'user_type',
@@ -47,9 +49,9 @@ export class AnalyticsService {
 
   // Track page views
   trackPageView(pagePath: string, pageTitle: string): void {
-    if (!this.isInitialized) return;
+    if (!this.isInitialized || !this.measurementId) return;
 
-    window.gtag('config', 'GA_MEASUREMENT_ID', {
+    window.gtag('config', this.measurementId, {
       page_path: pagePath,
       page_title: pageTitle,
     });
@@ -299,16 +301,16 @@ export class AnalyticsService {
 
   // Set user properties
   setUserProperties(userType: 'guest' | 'customer' | 'admin', userId?: string): void {
-    if (!this.isInitialized) return;
+    if (!this.isInitialized || !this.measurementId) return;
 
-    window.gtag('config', 'GA_MEASUREMENT_ID', {
+    window.gtag('config', this.measurementId, {
       custom_map: {
         dimension1: userType,
       },
     });
 
     if (userId) {
-      window.gtag('config', 'GA_MEASUREMENT_ID', {
+      window.gtag('config', this.measurementId, {
         user_id: userId,
       });
     }

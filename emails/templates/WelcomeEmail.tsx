@@ -27,7 +27,7 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
   return (
     <Html>
       <Head>
-        <title>Welcome to Marjahan's Jewelry</title>
+        <title>Welcome to Marjahan&apos;s Jewelry</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <Body style={main}>
@@ -41,7 +41,7 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
               alt="Marjahan's Jewelry"
               style={logo}
             />
-            <Heading style={h1}>Welcome to Marjahan's Jewelry! ✨</Heading>
+            <Heading style={h1}>Welcome to Marjahan&apos;s Jewelry! ✨</Heading>
             <Text style={subtitle}>Where Luxury Meets Affordability</Text>
           </Section>
 
@@ -51,13 +51,13 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
           <Section style={welcomeSection}>
             <Heading style={h2}>Dear {customerName},</Heading>
             <Text style={welcomeText}>
-              Thank you for joining the Marjahan's Jewelry family! We're absolutely delighted to
-              have you as part of our community of discerning jewelry lovers.
+              Thank you for joining the Marjahan&apos;s Jewelry family! We&apos;re absolutely
+              delighted to have you as part of our community of discerning jewelry lovers.
             </Text>
             <Text style={welcomeText}>
-              For over two decades, we've been crafting exquisite jewelry that combines timeless
-              elegance with exceptional value. Each piece in our collection tells a story of
-              craftsmanship, beauty, and sophistication.
+              For over two decades, we&apos;ve been crafting exquisite jewelry that combines
+              timeless elegance with exceptional value. Each piece in our collection tells a story
+              of craftsmanship, beauty, and sophistication.
             </Text>
           </Section>
 
@@ -141,7 +141,7 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
 
           {/* Why Choose Us */}
           <Section style={whyChooseSection}>
-            <Heading style={h3}>Why Choose Marjahan's?</Heading>
+            <Heading style={h3}>Why Choose Marjahan&apos;s?</Heading>
 
             <Row style={featureRow}>
               <Column style={featureCol}>
@@ -200,18 +200,18 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
           <Section style={socialSection}>
             <Heading style={h4}>Join Thousands of Satisfied Customers</Heading>
             <Text style={socialText}>
-              ⭐⭐⭐⭐⭐ "Absolutely stunning pieces! The quality exceeded my expectations." - Sarah
-              M.
+              ⭐⭐⭐⭐⭐ &quot;Absolutely stunning pieces! The quality exceeded my
+              expectations.&quot; - Sarah M.
               <br />
-              ⭐⭐⭐⭐⭐ "Fast shipping and beautiful packaging. Will definitely order again!" -
-              Michael R.
+              ⭐⭐⭐⭐⭐ &quot;Fast shipping and beautiful packaging. Will definitely order
+              again!&quot; - Michael R.
             </Text>
           </Section>
 
           {/* Footer */}
           <Section style={footer}>
             <Text style={footerText}>
-              Questions? We're here to help! Contact our customer service at{' '}
+              Questions? We&apos;re here to help! Contact our customer service at{' '}
               <Link href="mailto:support@marjahans.com" style={link}>
                 support@marjahans.com
               </Link>
@@ -255,11 +255,11 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
             <Text style={footerSignature}>
               With love and sparkle,
               <br />
-              The Marjahan's Jewelry Team 💎
+              The Marjahan&apos;s Jewelry Team 💎
             </Text>
 
             <Text style={unsubscribe}>
-              You're receiving this email because you signed up at marjahans.com.
+              You&apos;re receiving this email because you signed up at marjahans.com.
               <Link
                 href={`${process.env.VITE_APP_URL || 'https://marjahans.com'}/unsubscribe?email=${encodeURIComponent(customerEmail)}`}
                 style={unsubscribeLink}

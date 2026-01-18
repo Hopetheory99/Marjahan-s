@@ -72,7 +72,14 @@ serve(async (req) => {
   }
 });
 
-function generateOrderConfirmationHtml(data: any) {
+interface OrderConfirmationData {
+  orderId: string;
+  customerName: string;
+  total: number;
+  status: string;
+}
+
+function generateOrderConfirmationHtml(data: OrderConfirmationData) {
   const { orderId, customerName, total, status } = data;
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f6f6f6; padding: 20px;">
@@ -102,7 +109,14 @@ function generateOrderConfirmationHtml(data: any) {
   `;
 }
 
-function generateStatusUpdateHtml(data: any) {
+interface StatusUpdateData {
+  orderId: string;
+  customerName: string;
+  newStatus: string;
+  trackingNumber?: string;
+}
+
+function generateStatusUpdateHtml(data: StatusUpdateData) {
   const { orderId, customerName, newStatus, trackingNumber } = data;
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f6f6f6; padding: 20px;">

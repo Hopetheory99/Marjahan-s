@@ -23,10 +23,7 @@ async function main() {
 
   // 1. Verify connection by querying profiles (should fail if table doesn't exist, or return empty)
   // Since RLS is public read, we can try to select.
-  const { data: profiles, error: profileError } = await supabase
-    .from('profiles')
-    .select('id')
-    .limit(1);
+  const { error: profileError } = await supabase.from('profiles').select('id').limit(1);
 
   if (profileError) {
     console.error('❌ Connection failed or table missing:', profileError.message);
@@ -57,7 +54,7 @@ async function main() {
       email,
       password,
     });
-    authData = signUpResult.data;
+    authData = signUpResult.data as any;
     authError = signUpResult.error;
   }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useToast } from '../context/ToastContext';
+import { logger } from '../services/logger';
 
 // Type declarations for Speech Recognition API
 declare global {
@@ -51,7 +51,7 @@ interface SpeechRecognitionAlternative {
   readonly confidence: number;
 }
 
-declare var SpeechRecognition: {
+declare const SpeechRecognition: {
   prototype: SpeechRecognition;
   new (): SpeechRecognition;
 };
@@ -98,75 +98,77 @@ const VoiceSearch: React.FC<VoiceSearchProps> = ({
       recognitionRef.current = new SpeechRecognition();
       const recognition = recognitionRef.current;
 
-      recognition.continuous = continuous;
-      recognition.interimResults = true;
-      recognition.lang = language;
-      recognition.maxAlternatives = 1;
+      if (recognition) {
+        recognition.continuous = continuous;
+        recognition.interimResults = true;
+        recognition.lang = language;
+        recognition.maxAlternatives = 1;
 
-      recognition.onstart = () => {
-        setIsListening(true);
-        onStart?.();
-        startAudioVisualization();
-      };
+        recognition.onstart = () => {
+          setIsListening(true);
+          onStart?.();
+          startAudioVisualization();
+        };
 
-      recognition.onresult = (event) => {
-        let finalTranscript = '';
-        let interimTranscript = '';
-        let confidence = 0;
+        recognition.onresult = (event) => {
+          let finalTranscript = '';
+          let interimTranscript = '';
+          let confidence = 0;
 
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          const result = event.results[i];
-          if (result.isFinal) {
-            finalTranscript += result[0].transcript;
-            confidence = result[0].confidence;
-          } else {
-            interimTranscript += result[0].transcript;
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const result = event.results[i];
+            if (result.isFinal) {
+              finalTranscript += result[0].transcript;
+              confidence = result[0].confidence;
+            } else {
+              interimTranscript += result[0].transcript;
+            }
           }
-        }
 
-        const currentTranscript = finalTranscript || interimTranscript;
-        setTranscript(currentTranscript);
+          const currentTranscript = finalTranscript || interimTranscript;
+          setTranscript(currentTranscript);
 
-        if (finalTranscript) {
-          onResult(finalTranscript, confidence);
-          if (!continuous) {
-            stopListening();
+          if (finalTranscript) {
+            onResult(finalTranscript, confidence);
+            if (!continuous) {
+              stopListening();
+            }
           }
-        }
-      };
+        };
 
-      recognition.onerror = (event) => {
-        console.error('Speech recognition error:', event.error);
-        let errorMessage = 'Speech recognition error occurred';
+        recognition.onerror = (event) => {
+          logger.error('Speech recognition error', new Error(event.error), { service: 'voice' });
+          let errorMessage = 'Speech recognition error occurred';
 
-        switch (event.error) {
-          case 'no-speech':
-            errorMessage = 'No speech detected. Please try again.';
-            break;
-          case 'audio-capture':
-            errorMessage = 'Audio capture failed. Check your microphone.';
-            break;
-          case 'not-allowed':
-            errorMessage = 'Microphone permission denied.';
-            setPermissionGranted(false);
-            break;
-          case 'network':
-            errorMessage = 'Network error. Check your connection.';
-            break;
-          case 'service-not-allowed':
-            errorMessage = 'Speech recognition service not allowed.';
-            break;
-        }
+          switch (event.error) {
+            case 'no-speech':
+              errorMessage = 'No speech detected. Please try again.';
+              break;
+            case 'audio-capture':
+              errorMessage = 'Audio capture failed. Check your microphone.';
+              break;
+            case 'not-allowed':
+              errorMessage = 'Microphone permission denied.';
+              setPermissionGranted(false);
+              break;
+            case 'network':
+              errorMessage = 'Network error. Check your connection.';
+              break;
+            case 'service-not-allowed':
+              errorMessage = 'Speech recognition service not allowed.';
+              break;
+          }
 
-        onError?.(errorMessage);
-        stopListening();
-      };
+          onError?.(errorMessage);
+          stopListening();
+        };
 
-      recognition.onend = () => {
-        setIsListening(false);
-        onStop?.();
-        stopAudioVisualization();
-      };
+        recognition.onend = () => {
+          setIsListening(false);
+          onStop?.();
+          stopAudioVisualization();
+        };
+      }
     } else {
       setIsSupported(false);
       onError?.('Speech recognition is not supported in this browser');
@@ -216,7 +218,7 @@ const VoiceSearch: React.FC<VoiceSearchProps> = ({
 
       updateAudioLevel();
     } catch (error) {
-      console.warn('Audio visualization not available:', error);
+      logger.warn('Audio visualization not available', { error, service: 'voice' });
     }
   }, []);
 
@@ -446,8 +448,8 @@ const VoiceSearch: React.FC<VoiceSearchProps> = ({
           <div>
             <p className="text-sm font-medium text-blue-800 dark:text-blue-200">Voice Commands</p>
             <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">
-              Try: "Show me diamond rings" • "Find gold necklaces" • "Search for earrings under
-              $500"
+              Try: &quot;Show me diamond rings&quot; &bull; &quot;Find gold necklaces&quot; &bull;
+              &quot;Search for earrings under $500&quot;
             </p>
           </div>
         </div>

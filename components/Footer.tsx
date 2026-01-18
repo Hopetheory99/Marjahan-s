@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
         <div className="container-luxury py-16">
           <div className="max-w-2xl mx-auto text-center">
             <p className="text-section-subtitle mb-3">Stay Connected</p>
-            <h2 className="text-section-title mb-6">Join the Marjahan's Family</h2>
+            <h2 className="text-section-title mb-6">Join the Marjahan&apos;s Family</h2>
             <p className="text-body mb-8">
               Subscribe to receive exclusive offers, first access to new collections, and curated
               jewelry inspiration.
@@ -36,9 +36,9 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div>
-            <h3 className="text-display text-brand-gold mb-4">MARJAHAN'S</h3>
+            <h3 className="text-display text-brand-gold mb-4">MARJAHAN&apos;S</h3>
             <p className="text-body text-gray-400">
-              Where luxury meets elegance. Discover handcrafted jewelry that celebrates life's
+              Where luxury meets elegance. Discover handcrafted jewelry that celebrates life&apos;s
               precious moments.
             </p>
             {/* Social Icons */}
@@ -46,7 +46,15 @@ const Footer: React.FC = () => {
               {['instagram', 'facebook', 'pinterest'].map((social) => (
                 <a
                   key={social}
-                  href={`#${social}`}
+                  href={
+                    social === 'instagram'
+                      ? 'https://instagram.com'
+                      : social === 'facebook'
+                        ? 'https://facebook.com'
+                        : 'https://pinterest.com'
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center text-white/60 hover:text-brand-gold hover:border-brand-gold transition-all duration-300"
                 >
                   <span className="sr-only">{social}</span>
@@ -99,12 +107,12 @@ const Footer: React.FC = () => {
                 'Care Instructions',
               ].map((item) => (
                 <li key={item}>
-                  <a
-                    href="#"
+                  <Link
+                    to={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
                     className="text-body text-gray-400 hover:text-brand-gold transition-colors duration-300"
                   >
                     {item}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -134,14 +142,14 @@ const Footer: React.FC = () => {
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
         <div className="container-luxury py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/40">
-          <p>&copy; {new Date().getFullYear()} Marjahan's. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Marjahan&apos;s. All Rights Reserved.</p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-brand-gold transition-colors">
+            <Link to="/privacy" className="hover:text-brand-gold transition-colors">
               Privacy Policy
-            </a>
-            <a href="#" className="hover:text-brand-gold transition-colors">
+            </Link>
+            <Link to="/terms" className="hover:text-brand-gold transition-colors">
               Terms of Service
-            </a>
+            </Link>
           </div>
         </div>
       </div>

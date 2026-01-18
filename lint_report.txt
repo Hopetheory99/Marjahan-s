@@ -1,0 +1,383 @@
+﻿
+> copy-of-marjahan's-jewelry-store@0.0.0 lint
+> eslint . --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0
+
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\AdvancedSearch.tsx
+  138:79  warning  Insert `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                                                                                                                                       prettier/prettier
+  139:1   warning  Delete `┬╖┬╖`                                                                                                                                                                                                                                                                                     prettier/prettier
+  152:79  warning  Insert `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                                                                                                                                           prettier/prettier
+  153:1   warning  Delete `┬╖┬╖`                                                                                                                                                                                                                                                                                     prettier/prettier
+  160:21  warning  Replace `┬╖htmlFor="category-select"┬╖className="block┬╖text-sm┬╖font-medium┬╖text-brand-charcoal┬╖dark:text-dark-text┬╖mb-2"` with `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖htmlFor="category-select"ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖className="block┬╖text-sm┬╖font-medium┬╖text-brand-charcoal┬╖dark:text-dark-text┬╖mb-2"ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`  prettier/prettier
+  180:21  warning  Replace `┬╖htmlFor="metal-select"┬╖className="block┬╖text-sm┬╖font-medium┬╖text-brand-charcoal┬╖dark:text-dark-text┬╖mb-2"` with `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖htmlFor="metal-select"ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖className="block┬╖text-sm┬╖font-medium┬╖text-brand-charcoal┬╖dark:text-dark-text┬╖mb-2"ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`        prettier/prettier
+  200:21  warning  Replace `┬╖htmlFor="sort-select"┬╖className="block┬╖text-sm┬╖font-medium┬╖text-brand-charcoal┬╖dark:text-dark-text┬╖mb-2"` with `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖htmlFor="sort-select"ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖className="block┬╖text-sm┬╖font-medium┬╖text-brand-charcoal┬╖dark:text-dark-text┬╖mb-2"ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`          prettier/prettier
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\AnalyticsDashboard.tsx
+    3:1   warning  Delete `ΓÉìΓÅÄ`                                                               prettier/prettier
+   67:3   warning  Delete `ΓÉìΓÅÄ`                                                               prettier/prettier
+  119:1   warning  Delete `ΓÉìΓÅÄ`                                                               prettier/prettier
+  150:10  warning  Delete `ΓÉìΓÅÄΓÉìΓÅÄ`                                                             prettier/prettier
+  357:70  warning  Insert `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`                                     prettier/prettier
+  358:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`  prettier/prettier
+  359:27  warning  Insert `┬╖┬╖`                                                               prettier/prettier
+  360:1   warning  Insert `┬╖┬╖`                                                               prettier/prettier
+  361:29  warning  Insert `┬╖┬╖`                                                               prettier/prettier
+  362:1   warning  Delete `┬╖┬╖`                                                               prettier/prettier
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\Cart.tsx
+  51:7  warning  Visible, non-interactive elements with click handlers must have at least one keyboard listener                                                                                                     jsx-a11y/click-events-have-key-events
+  51:7  warning  Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element  jsx-a11y/no-static-element-interactions
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\Footer.tsx
+   12:70  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                                                                                                    react/no-unescaped-entities
+   39:71  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                                                                                                    react/no-unescaped-entities
+   41:93  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                                                                                                    react/no-unescaped-entities
+  102:19  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  137:56  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                                                                                                    react/no-unescaped-entities
+  139:13  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  142:13  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\Gamification.tsx
+   33:44  warning  Unexpected any. Specify a different type                                                                                        @typescript-eslint/no-explicit-any
+   36:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  209:51  warning  Unexpected any. Specify a different type                                                                                        @typescript-eslint/no-explicit-any
+  241:9   error    Unexpected lexical declaration in case block                                                                                    no-case-declarations
+  520:46  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                 react/no-unescaped-entities
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\Header.tsx
+  114:83   warning  Insert `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`              prettier/prettier
+  117:1    warning  Delete `┬╖┬╖`                        prettier/prettier
+  126:94   warning  Insert `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`        prettier/prettier
+  127:1    warning  Delete `┬╖┬╖`                        prettier/prettier
+  140:113  warning  Insert `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`        prettier/prettier
+  141:1    warning  Delete `┬╖┬╖`                        prettier/prettier
+  152:94   warning  Insert `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`    prettier/prettier
+  155:1    warning  Delete `┬╖┬╖`                        prettier/prettier
+  170:115  warning  Insert `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`  prettier/prettier
+  173:1    warning  Delete `┬╖┬╖`                        prettier/prettier
+  180:113  warning  Insert `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`    prettier/prettier
+  183:1    warning  Delete `┬╖┬╖`                        prettier/prettier
+  191:111  warning  Insert `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`      prettier/prettier
+  194:1    warning  Delete `┬╖┬╖`                        prettier/prettier
+  208:89   warning  Insert `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`        prettier/prettier
+  211:1    warning  Delete `┬╖┬╖`                        prettier/prettier
+  226:73   warning  Insert `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`        prettier/prettier
+  229:1    warning  Delete `┬╖┬╖`                        prettier/prettier
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\Layout.tsx
+  29:71  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\ReviewForm.tsx
+  66:9  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\SearchBar.tsx
+  192:84  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                    react/no-unescaped-entities
+  192:92  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                    react/no-unescaped-entities
+  197:15  warning  Visible, non-interactive elements with click handlers must have at least one keyboard listener                                                                                                     jsx-a11y/click-events-have-key-events
+  197:15  warning  Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element  jsx-a11y/no-static-element-interactions
+  229:38  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                    react/no-unescaped-entities
+  229:46  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                    react/no-unescaped-entities
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\VoiceSearch.tsx
+    2:10  error    'useToast' is defined but never used                                                                                                                                         @typescript-eslint/no-unused-vars
+   20:53  warning  Unexpected any. Specify a different type                                                                                                                                     @typescript-eslint/no-explicit-any
+   21:71  warning  Unexpected any. Specify a different type                                                                                                                                     @typescript-eslint/no-explicit-any
+   22:75  warning  Unexpected any. Specify a different type                                                                                                                                     @typescript-eslint/no-explicit-any
+   23:51  warning  Unexpected any. Specify a different type                                                                                                                                     @typescript-eslint/no-explicit-any
+   54:1   error    Unexpected var, use let or const instead                                                                                                                                     no-var
+   94:18  warning  Unexpected any. Specify a different type                                                                                                                                     @typescript-eslint/no-explicit-any
+   94:55  warning  Unexpected any. Specify a different type                                                                                                                                     @typescript-eslint/no-explicit-any
+  179:6   warning  React Hook useEffect has missing dependencies: 'startAudioVisualization', 'stopAudioVisualization', and 'stopListening'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  449:20  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                              react/no-unescaped-entities
+  449:42  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                              react/no-unescaped-entities
+  449:46  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                              react/no-unescaped-entities
+  449:66  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                              react/no-unescaped-entities
+  449:70  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                              react/no-unescaped-entities
+  450:19  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                              react/no-unescaped-entities
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\__tests__\ProductCard.test.tsx
+   2:26  error    'fireEvent' is defined but never used     @typescript-eslint/no-unused-vars
+  13:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  18:41  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\admin\AdminFacebookSync.tsx
+   3:10  error  'Product' is defined but never used          @typescript-eslint/no-unused-vars
+  97:15  error  'id' is assigned a value but never used      @typescript-eslint/no-unused-vars
+  97:19  error  'status' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\admin\AdminOrdersTable.tsx
+  62:5  warning  Visible, non-interactive elements with click handlers must have at least one keyboard listener                                                                                                     jsx-a11y/click-events-have-key-events
+  62:5  warning  Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element  jsx-a11y/no-static-element-interactions
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\components\admin\AdminProductForm.tsx
+   25:9   error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+   37:11  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+   49:11  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+   63:11  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+   77:11  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+   91:9   error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+  102:9   error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\context\AuthContext.tsx
+  102:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\context\CartContext.tsx
+  104:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\context\ToastContext.tsx
+  48:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\context\WishlistContext.tsx
+  169:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\context\__tests__\AuthContext.test.tsx
+  28:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  49:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  50:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  77:31  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  78:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\context\__tests__\CartContext.test.tsx
+  1:37  error  'act' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\emails\templates\OrderConfirmation.tsx
+  171:37  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  173:52  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  176:45  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  210:27  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\emails\templates\OrderStatusUpdate.tsx
+   29:3   error    'customerName' is assigned a value but never used                @typescript-eslint/no-unused-vars
+   94:76  warning  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  139:37  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  149:49  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  157:62  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  160:61  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  180:84  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  213:27  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  301:7   error    'statusMessage' is assigned a value but never used               @typescript-eslint/no-unused-vars
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\emails\templates\WelcomeEmail.tsx
+   30:35  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+   44:52  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+   54:49  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+   54:70  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+   58:39  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  144:52  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  203:21  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  203:87  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  206:21  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  206:89  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  214:28  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  258:27  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  262:18  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\hooks\useScrollAnimation.ts
+  149:6  warning  React Hook useEffect has a missing dependency: 'handleMouseMove'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\pages\CheckoutPage.tsx
+   59:9   warning  Replace `step┬╖===┬╖'payment'┬╖&&┬╖selectedPaymentMethod┬╖===┬╖'stripe'┬╖&&┬╖!clientSecret┬╖&&┬╖cartItems.length┬╖>┬╖0` with `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖step┬╖===┬╖'payment'┬╖&&ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖selectedPaymentMethod┬╖===┬╖'stripe'┬╖&&ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖!clientSecret┬╖&&ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖cartItems.length┬╖>┬╖0ΓÉìΓÅÄ┬╖┬╖┬╖┬╖`  prettier/prettier
+  113:94  warning  Insert `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                                                                                                        prettier/prettier
+  114:1   warning  Insert `┬╖┬╖`                                                                                                                                                                                                                                              prettier/prettier
+  115:1   warning  Insert `┬╖┬╖`                                                                                                                                                                                                                                              prettier/prettier
+  391:15  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                          react/no-unescaped-entities
+  391:54  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                          react/no-unescaped-entities
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\pages\HomePage.tsx
+   22:17  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  141:24  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  142:53  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\pages\ProductsPage.tsx
+    1:38  error  'useMemo' is defined but never used                      @typescript-eslint/no-unused-vars
+    8:10  error  'searchService' is defined but never used                @typescript-eslint/no-unused-vars
+  184:9   error  'handleSearchSubmit' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\pages\ProfilePage.tsx
+  29:13  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+  34:13  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+  41:13  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\pages\__tests__\CheckoutPage.test.tsx
+   21:28  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   50:17  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   56:17  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   62:17  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  106:43  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  143:17  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\pages\__tests__\ProductsPage.test.tsx
+  6:44  error  'afterEach' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\scripts\indexTypesense.ts
+   7:3   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+   8:1   warning  Delete `┬╖┬╖┬╖┬╖`                                                                                                                                                                                prettier/prettier
+   9:1   warning  Delete `┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                                              prettier/prettier
+  10:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                         prettier/prettier
+  11:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                         prettier/prettier
+  12:1   warning  Delete `┬╖┬╖┬╖┬╖`                                                                                                                                                                                prettier/prettier
+  13:3   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  14:1   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  15:1   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  19:1   warning  Replace `┬╖┬╖┬╖┬╖` with `┬╖┬╖`                                                                                                                                                                     prettier/prettier
+  20:1   warning  Replace `┬╖┬╖┬╖┬╖process.env.SUPABASE_SERVICE_ROLE_KEY┬╖||┬╖process.env.VITE_SUPABASE_ANON_KEY┬╖||┬╖''` with `┬╖┬╖process.env.SUPABASE_SERVICE_ROLE_KEY┬╖||┬╖process.env.VITE_SUPABASE_ANON_KEY┬╖||┬╖'',`  prettier/prettier
+  24:3   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  25:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖`                                                                                                                                                               prettier/prettier
+  26:1   warning  Delete `┬╖┬╖┬╖┬╖`                                                                                                                                                                                prettier/prettier
+  27:3   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  29:1   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  30:1   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  31:1   warning  Replace `┬╖┬╖┬╖┬╖` with `┬╖┬╖`                                                                                                                                                                     prettier/prettier
+  32:1   warning  Delete `┬╖┬╖┬╖┬╖`                                                                                                                                                                                prettier/prettier
+  33:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖`                                                                                                                                                               prettier/prettier
+  34:3   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  36:1   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  38:1   warning  Replace `┬╖┬╖┬╖┬╖` with `┬╖┬╖`                                                                                                                                                                     prettier/prettier
+  39:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖`                                                                                                                                                               prettier/prettier
+  40:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖`                                                                                                                                                               prettier/prettier
+  41:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                         prettier/prettier
+  42:1   warning  Delete `┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                                              prettier/prettier
+  43:7   warning  Delete `┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                                              prettier/prettier
+  44:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                         prettier/prettier
+  45:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                         prettier/prettier
+  46:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                         prettier/prettier
+  47:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                         prettier/prettier
+  48:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                         prettier/prettier
+  49:5   warning  Delete `┬╖┬╖┬╖┬╖`                                                                                                                                                                                prettier/prettier
+  50:1   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  52:3   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  53:1   warning  Delete `┬╖┬╖┬╖┬╖`                                                                                                                                                                                prettier/prettier
+  54:3   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  55:1   warning  Delete `┬╖┬╖┬╖┬╖`                                                                                                                                                                                prettier/prettier
+  56:1   warning  Replace `┬╖┬╖┬╖┬╖` with `┬╖┬╖`                                                                                                                                                                     prettier/prettier
+  58:1   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  58:52  warning  Unexpected any. Specify a different type                                                                                                                                                     @typescript-eslint/no-explicit-any
+  60:3   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  61:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖`                                                                                                                                                               prettier/prettier
+  62:5   warning  Delete `┬╖┬╖┬╖┬╖`                                                                                                                                                                                prettier/prettier
+  63:1   warning  Replace `┬╖┬╖┬╖┬╖` with `┬╖┬╖`                                                                                                                                                                     prettier/prettier
+  65:1   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  66:3   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  67:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖`                                                                                                                                                               prettier/prettier
+  68:1   warning  Delete `┬╖┬╖┬╖┬╖`                                                                                                                                                                                prettier/prettier
+  69:5   warning  Delete `┬╖┬╖┬╖┬╖`                                                                                                                                                                                prettier/prettier
+  70:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖`                                                                                                                                                               prettier/prettier
+  71:5   warning  Delete `┬╖┬╖┬╖┬╖`                                                                                                                                                                                prettier/prettier
+  72:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖`                                                                                                                                                               prettier/prettier
+  73:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖`                                                                                                                                                               prettier/prettier
+  74:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖`                                                                                                                                                               prettier/prettier
+  75:3   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+  77:1   warning  Replace `┬╖┬╖┬╖┬╖const┬╖results┬╖=┬╖await┬╖typesense.collections('products').documents()` with `┬╖┬╖const┬╖results┬╖=┬╖await┬╖typesenseΓÉìΓÅÄ┬╖┬╖┬╖┬╖.collections('products')ΓÉìΓÅÄ┬╖┬╖┬╖┬╖.documents()ΓÉìΓÅÄ┬╖┬╖┬╖┬╖`             prettier/prettier
+  78:1   warning  Delete `┬╖┬╖`                                                                                                                                                                                  prettier/prettier
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\scripts\test_connection.ts
+  42:12  warning  Replace `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖error:┬╖authError,ΓÉìΓÅÄ┬╖┬╖┬╖` with `┬╖error:┬╖authError`  prettier/prettier
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\scripts\verify_and_setup.ts
+  26:49  warning  Replace `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖.from('profiles')ΓÉìΓÅÄ┬╖┬╖┬╖┬╖.select('id')ΓÉìΓÅÄ┬╖┬╖┬╖┬╖` with `.from('profiles').select('id')`  prettier/prettier
+  60:37  warning  Unexpected any. Specify a different type                                                          @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\services\__tests__\analyticsService.test.ts
+  16:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\services\__tests__\emailService.test.ts
+  124:76  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\services\__tests__\productService.test.ts
+   71:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   96:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  115:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  134:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  154:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  175:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  192:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  206:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  236:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\services\__tests__\stripeService.test.ts
+  48:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  72:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  83:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\services\analyticsService.ts
+   30:31  error    Use the rest parameters instead of 'arguments'  prefer-rest-params
+  332:21  warning  Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+  333:16  warning  Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\services\emailService.ts
+    3:1   warning  Delete `ΓÅÄ`                                prettier/prettier
+   26:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  146:42  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  216:15  warning  Insert `ΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`                  prettier/prettier
+  217:1   warning  Insert `┬╖┬╖┬╖┬╖┬╖┬╖`                           prettier/prettier
+  225:11  warning  Insert `┬╖┬╖┬╖┬╖┬╖┬╖`                           prettier/prettier
+  226:1   warning  Insert `┬╖┬╖┬╖┬╖`                             prettier/prettier
+  264:42  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\services\logger.ts
+  20:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  20:66  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  29:52  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  39:52  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\services\orderService.ts
+  109:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\services\productService.ts
+  43:56  warning  Replace `.collections<Product>('products').documents()` with `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖.collections<Product>('products')ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖.documents()ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                                         prettier/prettier
+  44:15  warning  Insert `┬╖┬╖`                                                                                                                                                                                                                                                                                                                          prettier/prettier
+  45:1   warning  Insert `┬╖┬╖`                                                                                                                                                                                                                                                                                                                          prettier/prettier
+  46:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                                                                                                                                                     prettier/prettier
+  47:1   warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖filters.categories┬╖&&┬╖filters.categories.length┬╖>┬╖0┬╖&&` with `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖filters.categories┬╖&&ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖filters.categories.length┬╖>┬╖0┬╖&&ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                           prettier/prettier
+  48:17  warning  Replace `filters.metals┬╖&&┬╖filters.metals.length┬╖>┬╖0┬╖&&` with `┬╖┬╖filters.metals┬╖&&ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖filters.metals.length┬╖>┬╖0┬╖&&ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                                           prettier/prettier
+  49:1   warning  Insert `┬╖┬╖`                                                                                                                                                                                                                                                                                                                          prettier/prettier
+  50:15  warning  Replace `].filter(Boolean)` with `┬╖┬╖]ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖.filter(Boolean)ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`                                                                                                                                                                                                                                       prettier/prettier
+  51:15  warning  Replace `sort_by:┬╖filters.sort┬╖===┬╖'price-low'┬╖?┬╖'price:asc'┬╖:┬╖filters.sort┬╖===┬╖'price-high'┬╖?┬╖'price:desc'` with `┬╖┬╖sort_by:ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖filters.sort┬╖===┬╖'price-low'ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖?┬╖'price:asc'ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖:┬╖filters.sort┬╖===┬╖'price-high'ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖?┬╖'price:desc'ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖`  prettier/prettier
+  52:1   warning  Insert `┬╖┬╖`                                                                                                                                                                                                                                                                                                                          prettier/prettier
+  53:1   warning  Insert `┬╖┬╖`                                                                                                                                                                                                                                                                                                                          prettier/prettier
+  54:13  warning  Insert `┬╖┬╖`                                                                                                                                                                                                                                                                                                                          prettier/prettier
+  57:45  warning  Replace `hit` with `(hit)`                                                                                                                                                                                                                                                                                                           prettier/prettier
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\services\searchService.ts
+   16:9   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   17:11  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   23:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   36:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   37:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   38:39  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   41:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   45:39  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   57:31  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   86:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  121:56  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  128:29  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  169:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  221:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  234:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\services\stripeService.ts
+  32:31  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\services\typesenseClient.ts
+   4:3  warning  Delete `┬╖┬╖`                           prettier/prettier
+   5:1  warning  Delete `┬╖┬╖┬╖┬╖`                         prettier/prettier
+   6:1  warning  Delete `┬╖┬╖┬╖┬╖┬╖┬╖`                       prettier/prettier
+   7:1  warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖┬╖┬╖`  prettier/prettier
+   8:1  warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖┬╖┬╖`  prettier/prettier
+   9:1  warning  Replace `┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖` with `┬╖┬╖┬╖┬╖`        prettier/prettier
+  10:1  warning  Replace `┬╖┬╖┬╖┬╖` with `┬╖┬╖`              prettier/prettier
+  11:1  warning  Delete `┬╖┬╖`                           prettier/prettier
+  12:1  warning  Delete `┬╖┬╖`                           prettier/prettier
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\supabase\functions\create-payment-intent\index.ts
+  74:12  warning  Replace `┬╖items,┬╖currency┬╖=┬╖'usd',┬╖metadata┬╖=┬╖{}` with `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖items,ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖currency┬╖=┬╖'usd',ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖metadata┬╖=┬╖{},ΓÉìΓÅÄ┬╖┬╖┬╖`  prettier/prettier
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\supabase\functions\stripe-webhook\index.ts
+  201:38  warning  Insert `,`  prettier/prettier
+
+C:\Users\fhdib\.gemini\antigravity\scratch\Marjahan-s\vitest.setup.tsx
+  66:33  warning  Replace `┬╖Promise.resolve({┬╖data:┬╖{┬╖session:┬╖null,┬╖user:┬╖null┬╖},┬╖error:┬╖null┬╖})` with `ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖Promise.resolve({┬╖data:┬╖{┬╖session:┬╖null,┬╖user:┬╖null┬╖},┬╖error:┬╖null┬╖}),ΓÉìΓÅÄ┬╖┬╖┬╖┬╖┬╖┬╖`  prettier/prettier
+
+Γ£û 279 problems (70 errors, 209 warnings)
+  0 errors and 129 warnings potentially fixable with the `--fix` option.
+

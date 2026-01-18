@@ -16,7 +16,7 @@ async function main() {
   console.log(`Creating user: ${email}`);
 
   // 1. Sign Up
-  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+  const { error: signUpError } = await supabase.auth.signUp({
     email,
     password,
   });

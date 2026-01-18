@@ -6,6 +6,8 @@ import { HashRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { initLogger } from './services/logger';
 
+import { logger } from './services/logger';
+
 // Initialize Sentry/Logging
 initLogger();
 
@@ -31,7 +33,7 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker
       .register('/sw.js')
       .then((registration) => {
-        console.log('SW registered: ', registration);
+        logger.info('SW registered', { service: 'pwa' });
 
         // Check for updates
         registration.addEventListener('updatefound', () => {
@@ -49,7 +51,7 @@ if ('serviceWorker' in navigator) {
         });
       })
       .catch((registrationError) => {
-        console.log('SW registration failed: ', registrationError);
+        logger.error('SW registration failed', registrationError as Error, { service: 'pwa' });
       });
   });
 }
@@ -58,7 +60,7 @@ if ('serviceWorker' in navigator) {
 if ('Notification' in window && 'serviceWorker' in navigator) {
   Notification.requestPermission().then((permission) => {
     if (permission === 'granted') {
-      console.log('Notification permission granted');
+      logger.info('Notification permission granted', { service: 'pwa' });
     }
   });
 }

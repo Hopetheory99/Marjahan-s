@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import Button from '../Button';
+import { logger } from '../../services/logger';
 import { useToast } from '../../context/ToastContext';
+import { useState } from 'react'; // Added missing import for useState
 
 interface StripePaymentFormProps {
   amount: number;
@@ -9,6 +10,7 @@ interface StripePaymentFormProps {
   onCancel: () => void;
 }
 
+/* eslint-disable react/prop-types */
 const StripePaymentForm: React.FC<StripePaymentFormProps> = ({ amount, onSuccess, onCancel }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -42,11 +44,11 @@ const StripePaymentForm: React.FC<StripePaymentFormProps> = ({ amount, onSuccess
         // The customer will be redirected to your `return_url`. For some payment
         // methods like iDEAL, your customer will be redirected to an intermediate
         // site first to authorize the payment, then redirected to the `return_url`.
-        console.log('✅ Payment confirmed successfully via Stripe');
+        logger.info('Payment confirmed successfully via Stripe', { service: 'checkout' });
         onSuccess();
       }
     } catch (err) {
-      console.error('💳 Payment confirmation error:', err);
+      logger.error('Payment confirmation error', err as Error, { service: 'checkout' });
       setErrorMessage('An unexpected error occurred during payment processing.');
       addToast('Payment processing failed', 'error');
       setIsProcessing(false);

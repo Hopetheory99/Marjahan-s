@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { logger } from '../services/logger';
 
 const StarryBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -95,7 +96,7 @@ const StarryBackground: React.FC = () => {
     };
 
     // Initialize
-    console.log('StarryBackground: Initializing...');
+    logger.debug('StarryBackground: Initializing...', { service: 'ui' });
     resize();
     animate();
     window.addEventListener('resize', resize);

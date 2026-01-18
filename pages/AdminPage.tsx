@@ -13,6 +13,9 @@ import AdminProductsTable from '../components/admin/AdminProductsTable';
 import AdminOrdersTable from '../components/admin/AdminOrdersTable';
 import AdminProductForm from '../components/admin/AdminProductForm';
 import AdminFacebookSync from '../components/admin/AdminFacebookSync';
+import AdminCoupons from '../components/admin/AdminCoupons';
+import AdminDashboard from '../components/admin/AdminDashboard';
+import DashboardSkeleton from '../components/admin/DashboardSkeleton';
 import { sortData, SortConfig } from '../utils/sortUtils';
 
 const productSchema = z.object({
@@ -25,12 +28,22 @@ const productSchema = z.object({
   images: z.array(z.string().url('Invalid image URL')).min(1, 'At least one image is required'),
 });
 
-type AdminTab = 'products' | 'orders' | 'sync';
+type AdminTab = 'dashboard' | 'products' | 'orders' | 'coupons' | 'sync';
+
+import ErrorBoundary from '../components/ErrorBoundary';
 
 const AdminPage: React.FC = () => {
+  return (
+    <ErrorBoundary>
+      <AdminPageContent />
+    </ErrorBoundary>
+  );
+};
+
+const AdminPageContent: React.FC = () => {
   useDocumentTitle('Admin Dashboard');
   const { addToast } = useToast();
-  const [activeTab, setActiveTab] = useState<AdminTab>('products');
+  const [activeTab, setActiveTab] = useState<AdminTab>('dashboard');
 
   // Data State
   const [products, setProducts] = useState<Product[]>([]);
@@ -153,7 +166,7 @@ const AdminPage: React.FC = () => {
 
     const result = productSchema.safeParse(formData);
     if (!result.success) {
-      const errorMsg = result.error.errors.map((err) => err.message).join('. ');
+      const errorMsg = result.error.issues.map((err) => err.message).join('. ');
       addToast(errorMsg, 'error');
       return;
     }
@@ -206,22 +219,34 @@ const AdminPage: React.FC = () => {
         )}
       </div>
 
-      <div className="flex border-b mb-8">
+      <div className="flex border-b mb-8 overflow-x-auto">
+        <button
+          onClick={() => setActiveTab('dashboard')}
+          className={`py-3 px-6 text-sm font-semibold tracking-wide uppercase transition-colors whitespace-nowrap ${activeTab === 'dashboard' ? 'border-b-2 border-brand-dark text-brand-dark' : 'text-gray-400 hover:text-brand-gold'}`}
+        >
+          Dashboard
+        </button>
         <button
           onClick={() => setActiveTab('products')}
-          className={`py-3 px-6 text-sm font-semibold tracking-wide uppercase transition-colors ${activeTab === 'products' ? 'border-b-2 border-brand-dark text-brand-dark' : 'text-gray-400 hover:text-brand-gold'}`}
+          className={`py-3 px-6 text-sm font-semibold tracking-wide uppercase transition-colors whitespace-nowrap ${activeTab === 'products' ? 'border-b-2 border-brand-dark text-brand-dark' : 'text-gray-400 hover:text-brand-gold'}`}
         >
           Products ({products.length})
         </button>
         <button
           onClick={() => setActiveTab('orders')}
-          className={`py-3 px-6 text-sm font-semibold tracking-wide uppercase transition-colors ${activeTab === 'orders' ? 'border-b-2 border-brand-dark text-brand-dark' : 'text-gray-400 hover:text-brand-gold'}`}
+          className={`py-3 px-6 text-sm font-semibold tracking-wide uppercase transition-colors whitespace-nowrap ${activeTab === 'orders' ? 'border-b-2 border-brand-dark text-brand-dark' : 'text-gray-400 hover:text-brand-gold'}`}
         >
           Orders ({orders.length})
         </button>
         <button
+          onClick={() => setActiveTab('coupons')}
+          className={`py-3 px-6 text-sm font-semibold tracking-wide uppercase transition-colors whitespace-nowrap ${activeTab === 'coupons' ? 'border-b-2 border-brand-dark text-brand-dark' : 'text-gray-400 hover:text-brand-gold'}`}
+        >
+          Coupons
+        </button>
+        <button
           onClick={() => setActiveTab('sync')}
-          className={`py-3 px-6 text-sm font-semibold tracking-wide uppercase transition-colors ${activeTab === 'sync' ? 'border-b-2 border-brand-dark text-brand-dark' : 'text-gray-400 hover:text-brand-gold'}`}
+          className={`py-3 px-6 text-sm font-semibold tracking-wide uppercase transition-colors whitespace-nowrap ${activeTab === 'sync' ? 'border-b-2 border-brand-dark text-brand-dark' : 'text-gray-400 hover:text-brand-gold'}`}
         >
           Social Sync
         </button>
@@ -229,12 +254,17 @@ const AdminPage: React.FC = () => {
 
       <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden min-h-[400px]">
         {loading ? (
-          <div className="flex items-center justify-center h-64">
-            <div className="w-8 h-8 border-4 border-gray-200 border-t-brand-gold rounded-full animate-spin"></div>
-          </div>
+          <DashboardSkeleton />
         ) : (
           <>
-            {activeTab === 'products' ? (
+            {activeTab === 'dashboard' ? (
+              <AdminDashboard
+                products={products}
+                orders={orders}
+                onTabChange={setActiveTab}
+                onEditProduct={handleEditClick}
+              />
+            ) : activeTab === 'products' ? (
               <AdminProductsTable
                 products={sortedProducts}
                 sortConfig={productSort}
@@ -249,6 +279,10 @@ const AdminPage: React.FC = () => {
                 onSort={handleOrderSort}
                 onStatusChange={handleStatusChange}
               />
+            ) : activeTab === 'coupons' ? (
+              <div className="p-6">
+                <AdminCoupons />
+              </div>
             ) : (
               <AdminFacebookSync onSyncComplete={fetchData} />
             )}

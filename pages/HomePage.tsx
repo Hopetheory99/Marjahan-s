@@ -19,7 +19,7 @@ const Hero: React.FC = () => (
       <div className="gold-accent mb-8" />
 
       <h1 className="text-hero md:text-hero-lg lg:text-hero-xl font-display text-shadow-luxury">
-        MARJAHAN'S
+        MARJAHAN&apos;S
       </h1>
 
       <p className="mt-6 text-xl md:text-2xl font-light tracking-widest uppercase text-white/90">
@@ -138,8 +138,8 @@ const AboutSection: React.FC = () => (
             into every creation.
           </p>
           <p className="text-body">
-            At Marjahan's, we believe luxury should be accessible. Our commitment is to bring you
-            extraordinary pieces that celebrate life's precious moments.
+            At Marjahan&apos;s, we believe luxury should be accessible. Our commitment is to bring
+            you extraordinary pieces that celebrate life&apos;s precious moments.
           </p>
           <Link to="/products" className="inline-block mt-8">
             <button className="btn-primary">Explore Collection</button>

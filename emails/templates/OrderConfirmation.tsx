@@ -168,13 +168,13 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
 
           {/* Next Steps */}
           <Section style={nextSteps}>
-            <Heading style={h3}>What's Next?</Heading>
+            <Heading style={h3}>What&apos;s Next?</Heading>
             <Text style={text}>
-              <strong>Order Processing:</strong> We'll begin preparing your jewelry within 1-2
+              <strong>Order Processing:</strong> We&apos;ll begin preparing your jewelry within 1-2
               business days.
               <br />
-              <strong>Shipping:</strong> You'll receive a tracking number via email once your order
-              ships.
+              <strong>Shipping:</strong> You&apos;ll receive a tracking number via email once your
+              order ships.
               <br />
               <strong>Delivery:</strong> Standard delivery takes 3-5 business days.
             </Text>
@@ -207,7 +207,7 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
             <Text style={footerSignature}>
               Best regards,
               <br />
-              The Marjahan's Jewelry Team
+              The Marjahan&apos;s Jewelry Team
             </Text>
           </Section>
         </Container>

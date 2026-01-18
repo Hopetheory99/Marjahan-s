@@ -12,6 +12,9 @@ vi.mock('../supabaseClient', () => ({
       eq: vi.fn().mockReturnThis(),
       lte: vi.fn().mockReturnThis(),
       in: vi.fn().mockReturnThis(),
+      or: vi.fn().mockReturnThis(),
+      order: vi.fn().mockReturnThis(),
+      range: vi.fn().mockReturnThis(),
       limit: vi.fn().mockReturnThis(),
       single: vi.fn(),
     })),
@@ -55,6 +58,8 @@ describe('productService', () => {
         select: vi.fn(() => ({
           lte: vi.fn().mockReturnThis(),
           in: vi.fn().mockReturnThis(),
+          or: vi.fn().mockReturnThis(),
+          order: vi.fn().mockReturnThis(),
           // return range mock which resolves
           range: vi.fn().mockResolvedValue({
             data: mockProducts,
@@ -83,6 +88,8 @@ describe('productService', () => {
         select: vi.fn(() => ({
           lte: vi.fn().mockReturnThis(),
           in: vi.fn().mockReturnThis(),
+          or: vi.fn().mockReturnThis(),
+          order: vi.fn().mockReturnThis(),
           range: rangeMock,
         })),
       }));
@@ -100,6 +107,8 @@ describe('productService', () => {
         select: vi.fn(() => ({
           lte: vi.fn().mockReturnThis(),
           in: vi.fn().mockReturnThis(),
+          or: vi.fn().mockReturnThis(),
+          order: vi.fn().mockReturnThis(),
           range: vi.fn().mockResolvedValue({ data: null, error: mockError }),
         })),
       }));
@@ -117,6 +126,8 @@ describe('productService', () => {
         select: vi.fn(() => ({
           lte: lteMock,
           in: vi.fn().mockReturnThis(),
+          or: vi.fn().mockReturnThis(),
+          order: vi.fn().mockReturnThis(),
           range: rangeMock,
         })),
       }));
@@ -136,6 +147,7 @@ describe('productService', () => {
           lte: vi.fn().mockReturnThis(),
           in: vi.fn().mockReturnThis(),
           or: orMock,
+          order: vi.fn().mockReturnThis(),
           range: rangeMock,
         })),
       }));

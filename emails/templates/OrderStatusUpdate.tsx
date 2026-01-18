@@ -16,7 +16,6 @@ import {
 } from '@react-email/components';
 
 interface OrderStatusUpdateProps {
-  customerName?: string;
   orderId: string;
   newStatus: string;
   statusMessage: string;
@@ -26,7 +25,6 @@ interface OrderStatusUpdateProps {
 }
 
 export const OrderStatusUpdate: React.FC<OrderStatusUpdateProps> = ({
-  customerName = 'Valued Customer',
   orderId,
   newStatus,
   statusMessage,
@@ -94,7 +92,7 @@ export const OrderStatusUpdate: React.FC<OrderStatusUpdateProps> = ({
               <Heading style={{ ...h2, color: getStatusColor(newStatus) as any }}>
                 Order {newStatus.charAt(0).toUpperCase() + newStatus.slice(1)}
               </Heading>
-              <Text style={statusMessage}>{statusMessage}</Text>
+              <Text style={statusMessageStyle}>{statusMessage}</Text>
             </div>
           </Section>
 
@@ -136,7 +134,7 @@ export const OrderStatusUpdate: React.FC<OrderStatusUpdateProps> = ({
 
           {/* Next Steps */}
           <Section style={nextSteps}>
-            <Heading style={h3}>What's Next?</Heading>
+            <Heading style={h3}>What&apos;s Next?</Heading>
             <Text style={text}>
               {newStatus.toLowerCase() === 'processing' && (
                 <>
@@ -146,7 +144,8 @@ export const OrderStatusUpdate: React.FC<OrderStatusUpdateProps> = ({
                   <strong>Packaging:</strong> Your items will be securely packaged in our luxury
                   presentation boxes.
                   <br />
-                  <strong>Shipping:</strong> You'll receive another email with tracking information.
+                  <strong>Shipping:</strong> You&apos;ll receive another email with tracking
+                  information.
                 </>
               )}
               {newStatus.toLowerCase() === 'shipped' && (
@@ -154,10 +153,10 @@ export const OrderStatusUpdate: React.FC<OrderStatusUpdateProps> = ({
                   <strong>Track Your Package:</strong> Use the tracking number above to monitor
                   delivery.
                   <br />
-                  <strong>Delivery Notification:</strong> You'll receive a final email when your
-                  package arrives.
+                  <strong>Delivery Notification:</strong> You&apos;ll receive a final email when
+                  your package arrives.
                   <br />
-                  <strong>Contact Us:</strong> Questions? We're here to help.
+                  <strong>Contact Us:</strong> Questions? We&apos;re here to help.
                 </>
               )}
               {newStatus.toLowerCase() === 'delivered' && (
@@ -177,7 +176,8 @@ export const OrderStatusUpdate: React.FC<OrderStatusUpdateProps> = ({
                   <strong>Account Credit:</strong> Refunds are applied to your original payment
                   method.
                   <br />
-                  <strong>Contact Support:</strong> Questions about your refund? We're here to help.
+                  <strong>Contact Support:</strong> Questions about your refund? We&apos;re here to
+                  help.
                 </>
               )}
             </Text>
@@ -210,7 +210,7 @@ export const OrderStatusUpdate: React.FC<OrderStatusUpdateProps> = ({
             <Text style={footerSignature}>
               Best regards,
               <br />
-              The Marjahan's Jewelry Team
+              The Marjahan&apos;s Jewelry Team
             </Text>
           </Section>
         </Container>
@@ -298,7 +298,7 @@ const statusIcon = {
   marginBottom: '20px',
 };
 
-const statusMessage = {
+const statusMessageStyle = {
   color: '#333333',
   fontSize: '18px',
   lineHeight: '26px',

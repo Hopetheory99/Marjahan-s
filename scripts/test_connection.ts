@@ -25,7 +25,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 async function test() {
   try {
     console.log('Querying public.profiles...');
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('profiles')
       .select('count', { count: 'exact', head: true });
 
@@ -39,10 +39,7 @@ async function test() {
 
     // Also check auth
     console.log('Checking auth...');
-    const {
-      data: { session },
-      error: authError,
-    } = await supabase.auth.getSession();
+    const { error: authError } = await supabase.auth.getSession();
     if (authError) {
       console.error('❌ Auth check failed:', authError.message);
     } else {

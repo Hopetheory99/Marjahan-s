@@ -15,11 +15,17 @@ export interface PaymentResult {
   redirectUrl?: string;
 }
 
+import { logger } from './logger';
+
 export const paymentService = {
   // Process payment with bKash (mock implementation)
   async processBkashPayment(paymentData: PaymentData): Promise<PaymentResult> {
     try {
-      console.log('💳 Processing bKash payment:', paymentData);
+      logger.info('Processing bKash payment', {
+        orderId: paymentData.orderId,
+        amount: paymentData.amount,
+        service: 'payment',
+      });
 
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -35,7 +41,10 @@ export const paymentService = {
         // In a real app, we might redirect to bKash gateway here
       };
     } catch (error) {
-      console.error('bKash payment error:', error);
+      logger.error('bKash payment error', error as Error, {
+        orderId: paymentData.orderId,
+        service: 'payment',
+      });
       return {
         success: false,
         error: 'Payment service temporarily unavailable.',
@@ -46,7 +55,11 @@ export const paymentService = {
   // Process payment with Nagad (mock implementation)
   async processNagadPayment(paymentData: PaymentData): Promise<PaymentResult> {
     try {
-      console.log('💳 Processing Nagad payment:', paymentData);
+      logger.info('Processing Nagad payment', {
+        orderId: paymentData.orderId,
+        amount: paymentData.amount,
+        service: 'payment',
+      });
 
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -61,7 +74,10 @@ export const paymentService = {
         paymentId: transactionId,
       };
     } catch (error) {
-      console.error('Nagad payment error:', error);
+      logger.error('Nagad payment error', error as Error, {
+        orderId: paymentData.orderId,
+        service: 'payment',
+      });
       return {
         success: false,
         error: 'Payment service temporarily unavailable.',
@@ -70,9 +86,10 @@ export const paymentService = {
   },
 
   // Process payment with card (Deprecated - Use stripeService directly)
-  async processCardPayment(_paymentData: PaymentData): Promise<PaymentResult> {
-    console.warn(
+  async processCardPayment(): Promise<PaymentResult> {
+    logger.warn(
       'paymentService.processCardPayment is deprecated. Use stripeService.createPaymentIntent instead.',
+      { service: 'payment' },
     );
     return {
       success: false,
@@ -83,7 +100,11 @@ export const paymentService = {
   // Process payment with bank transfer (mock implementation)
   async processBankPayment(paymentData: PaymentData): Promise<PaymentResult> {
     try {
-      console.log('💳 Processing bank payment:', paymentData);
+      logger.info('Processing bank payment', {
+        orderId: paymentData.orderId,
+        amount: paymentData.amount,
+        service: 'payment',
+      });
 
       // Bank transfers are usually manual, so we create a pending payment
       const transactionId = `BANK-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -95,7 +116,10 @@ export const paymentService = {
         redirectUrl: `/payment/bank-instructions?orderId=${paymentData.orderId}`,
       };
     } catch (error) {
-      console.error('Bank payment error:', error);
+      logger.error('Bank payment error', error as Error, {
+        orderId: paymentData.orderId,
+        service: 'payment',
+      });
       return {
         success: false,
         error: 'Unable to initiate bank transfer. Please try again.',
@@ -111,7 +135,7 @@ export const paymentService = {
       case 'nagad':
         return this.processNagadPayment(paymentData);
       case 'card':
-        return this.processCardPayment(paymentData);
+        return this.processCardPayment();
       case 'bank':
         return this.processBankPayment(paymentData);
       default:

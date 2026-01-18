@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 // Analytics data types
 interface AnalyticsData {
@@ -114,7 +113,6 @@ const mockAnalyticsData: AnalyticsData = {
 export const AnalyticsDashboard: React.FC = () => {
   const [data, setData] = useState<AnalyticsData>(mockAnalyticsData);
   const [timeRange, setTimeRange] = useState<'24h' | '7d' | '30d' | '90d'>('7d');
-  const [selectedMetric, setSelectedMetric] = useState<string>('overview');
 
   // Simulate real-time updates
   useEffect(() => {
@@ -147,29 +145,6 @@ export const AnalyticsDashboard: React.FC = () => {
 
     return () => clearInterval(interval);
   }, []);
-
-  const formatNumber = (num: number) => {
-    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-    return num.toString();
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(amount);
-  };
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const formatPercentage = (value: number) => {
-    return `${value.toFixed(1)}%`;
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-dark-bg p-6">

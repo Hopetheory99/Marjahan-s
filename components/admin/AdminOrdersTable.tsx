@@ -40,6 +40,9 @@ const TableHeader: React.FC<TableHeaderProps> = ({ label, sortKey, currentSort, 
   <th
     className="text-left py-4 px-4 uppercase font-semibold text-sm cursor-pointer hover:bg-gray-200 transition-colors select-none group"
     onClick={() => onSort(sortKey)}
+    tabIndex={0}
+    onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onSort(sortKey)}
+    role="button"
   >
     <div className="flex items-center">
       {label}
@@ -52,10 +55,15 @@ const StatusSelect: React.FC<{ status: OrderStatus; onChange: (s: OrderStatus) =
   status,
   onChange,
 }) => {
-  const colors = {
-    Pending: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-    Shipped: 'bg-blue-100 text-blue-800 border-blue-200',
-    Delivered: 'bg-green-100 text-green-800 border-green-200',
+  const colors: Record<OrderStatus, string> = {
+    pending_payment: 'bg-yellow-50 text-yellow-700 border-yellow-200',
+    pending: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+    processing: 'bg-blue-50 text-blue-700 border-blue-200',
+    paid: 'bg-green-50 text-green-700 border-green-200',
+    shipped: 'bg-blue-100 text-blue-800 border-blue-200',
+    delivered: 'bg-green-100 text-green-800 border-green-200',
+    cancelled: 'bg-red-100 text-red-800 border-red-200',
+    failed: 'bg-red-50 text-red-700 border-red-200',
   };
 
   return (
@@ -63,11 +71,17 @@ const StatusSelect: React.FC<{ status: OrderStatus; onChange: (s: OrderStatus) =
       <select
         value={status}
         onChange={(e) => onChange(e.target.value as OrderStatus)}
-        className={`appearance-none cursor-pointer pl-3 pr-8 py-1 rounded-full text-xs font-semibold tracking-wide border focus:outline-none focus:ring-2 focus:ring-brand-gold transition-shadow ${colors[status]}`}
+        className={`appearance-none cursor-pointer pl-3 pr-8 py-1 rounded-full text-xs font-semibold tracking-wide border focus:outline-none focus:ring-2 focus:ring-brand-gold transition-shadow ${colors[status] || colors.pending}`}
+        aria-label="Change order status"
       >
-        <option value="Pending">Pending</option>
-        <option value="Shipped">Shipped</option>
-        <option value="Delivered">Delivered</option>
+        <option value="pending_payment">Pending Payment</option>
+        <option value="pending">Pending</option>
+        <option value="processing">Processing</option>
+        <option value="paid">Paid</option>
+        <option value="shipped">Shipped</option>
+        <option value="delivered">Delivered</option>
+        <option value="cancelled">Cancelled</option>
+        <option value="failed">Failed</option>
       </select>
       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
         <svg
@@ -124,6 +138,11 @@ const AdminOrdersTable: React.FC<AdminOrdersTableProps> = ({
               <tr
                 onClick={() => toggleOrderDetails(order.id)}
                 className={`hover:bg-gray-50 transition-colors duration-150 cursor-pointer ${expandedOrderId === order.id ? 'bg-gray-50' : ''}`}
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  (e.key === 'Enter' || e.key === ' ') && toggleOrderDetails(order.id)
+                }
+                role="button"
               >
                 <td className="py-4 px-4 font-mono text-xs text-gray-500 flex items-center">
                   <span

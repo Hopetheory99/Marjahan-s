@@ -1,6 +1,7 @@
 import { supabase } from './supabaseClient';
 import { Order, OrderStatus, CartItem } from '../types';
 import { emailService } from './emailService';
+import { logger } from './logger';
 
 export const orderService = {
   getAll: async (): Promise<Order[]> => {
@@ -23,7 +24,7 @@ export const orderService = {
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('Failed to fetch orders:', error);
+      logger.error('Failed to fetch orders', error, { service: 'order' });
       throw error;
     }
 
@@ -39,7 +40,11 @@ export const orderService = {
       .single();
 
     if (error) {
-      console.error(`Failed to update order ${id}:`, error);
+      logger.error('Failed to update order status', error, {
+        orderId: id,
+        status,
+        service: 'order',
+      });
       throw error;
     }
 
@@ -70,7 +75,7 @@ export const orderService = {
       .single();
 
     if (error) {
-      console.error(`Failed to fetch order ${id}:`, error);
+      logger.error('Failed to fetch order by ID', error, { orderId: id, service: 'order' });
       return undefined;
     }
 
@@ -106,13 +111,24 @@ export const orderService = {
     return order;
   },
 
-  sendStatusUpdateEmail: async (orderData: any, newStatus: OrderStatus): Promise<void> => {
+  sendStatusUpdateEmail: async (
+    orderData: {
+      id: string;
+      user?: { email?: string; full_name?: string };
+      customerEmail?: string;
+      customerName?: string;
+    },
+    newStatus: OrderStatus,
+  ): Promise<void> => {
     try {
       const customerEmail = orderData.user?.email || orderData.customerEmail;
       const customerName = orderData.user?.full_name || orderData.customerName || 'Valued Customer';
 
       if (!customerEmail) {
-        console.warn('No customer email found for order status update');
+        logger.warn('No customer email found for order status update', {
+          orderId: orderData.id,
+          service: 'order',
+        });
         return;
       }
 
@@ -120,9 +136,16 @@ export const orderService = {
         customerName,
       });
 
-      console.log(`📧 Status update email sent to ${customerEmail} for order ${orderData.id}`);
+      logger.info('Status update email sent', {
+        orderId: orderData.id,
+        customerEmail,
+        service: 'order',
+      });
     } catch (error) {
-      console.error('Failed to send status update email:', error);
+      logger.error('Failed to send status update email', error as Error, {
+        orderId: orderData.id,
+        service: 'order',
+      });
       throw error;
     }
   },

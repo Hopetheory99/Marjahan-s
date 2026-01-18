@@ -157,11 +157,16 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({ onFiltersChange, catego
         <div className="bg-white dark:bg-dark-surface border border-brand-cream dark:border-dark-border rounded-xl p-6 shadow-glass">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Category Filter */}
+            {/* Category Filter */}
             <div>
-              <label className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2">
+              <label
+                htmlFor="category-select"
+                className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2"
+              >
                 Category
               </label>
               <select
+                id="category-select"
                 value={filters.category}
                 onChange={(e) => setFilters((prev) => ({ ...prev, category: e.target.value }))}
                 className="input-modern w-full"
@@ -177,10 +182,14 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({ onFiltersChange, catego
 
             {/* Metal Filter */}
             <div>
-              <label className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2">
+              <label
+                htmlFor="metal-select"
+                className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2"
+              >
                 Metal
               </label>
               <select
+                id="metal-select"
                 value={filters.metal}
                 onChange={(e) => setFilters((prev) => ({ ...prev, metal: e.target.value }))}
                 className="input-modern w-full"
@@ -196,10 +205,14 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({ onFiltersChange, catego
 
             {/* Sort By */}
             <div>
-              <label className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2">
+              <label
+                htmlFor="sort-select"
+                className="block text-sm font-medium text-brand-charcoal dark:text-dark-text mb-2"
+              >
                 Sort By
               </label>
               <select
+                id="sort-select"
                 value={filters.sortBy}
                 onChange={(e) => setFilters((prev) => ({ ...prev, sortBy: e.target.value }))}
                 className="input-modern w-full"

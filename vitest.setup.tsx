@@ -2,7 +2,12 @@ import '@testing-library/jest-dom';
 import { afterEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
+import { MemoryRouter } from 'react-router-dom';
+import { ToastProvider } from './context/ToastContext';
+import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
+import { WishlistProvider } from './context/WishlistContext';
 
 // Test wrapper for components that use React Query
 export const createTestQueryClient = () =>
@@ -15,10 +20,26 @@ export const createTestQueryClient = () =>
     },
   });
 
-export const createWrapper = () => {
+export const TestingProvider = ({ children }: { children: ReactNode }) => {
   const testQueryClient = createTestQueryClient();
+  return (
+    <MemoryRouter>
+      <QueryClientProvider client={testQueryClient}>
+        <AuthProvider>
+          <ToastProvider>
+            <WishlistProvider>
+              <CartProvider>{children}</CartProvider>
+            </WishlistProvider>
+          </ToastProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </MemoryRouter>
+  );
+};
+
+export const createWrapper = () => {
   const TestWrapper = ({ children }: { children: ReactElement }) => (
-    <QueryClientProvider client={testQueryClient}> {children} </QueryClientProvider>
+    <TestingProvider>{children}</TestingProvider>
   );
   TestWrapper.displayName = 'TestWrapper';
   return TestWrapper;
@@ -63,6 +84,25 @@ vi.mock('@supabase/supabase-js', () => ({
         Promise.resolve({ data: { session: null, user: null }, error: null }),
       ),
       signOut: vi.fn(() => Promise.resolve({})),
+      signInWithOtp: vi.fn(() =>
+        Promise.resolve({ data: { session: null, user: null }, error: null }),
+      ),
+      signUp: vi.fn(() => Promise.resolve({ data: { session: null, user: null }, error: null })),
     },
   })),
 }));
+// Mock IntersectionObserver
+class IntersectionObserverMock {
+  root = null;
+  rootMargin = '';
+  thresholds = [];
+  disconnect = vi.fn();
+  observe = vi.fn();
+  takeRecords = vi.fn();
+  unobserve = vi.fn();
+}
+
+vi.stubGlobal('IntersectionObserver', IntersectionObserverMock);
+
+// Mock window.scrollTo
+vi.stubGlobal('scrollTo', vi.fn());

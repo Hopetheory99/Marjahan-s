@@ -143,7 +143,7 @@ const Header: React.FC = () => {
                 isScrolled || !isHome ? 'text-brand-charcoal' : 'text-white'
               }`}
             >
-              MARJAHAN'S
+              MARJAHAN&apos;S
             </Link>
 
             {/* Desktop Nav */}

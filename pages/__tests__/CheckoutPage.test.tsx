@@ -1,16 +1,29 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 import CheckoutPage from '../CheckoutPage';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import { stripeService } from '../../services/stripeService';
-import { BrowserRouter } from 'react-router-dom';
 
 // Mock dependencies
-vi.mock('../../context/CartContext');
-vi.mock('../../context/AuthContext');
+vi.mock('../../context/CartContext', async () => {
+  const actual = await vi.importActual<any>('../../context/CartContext');
+  return {
+    ...actual,
+    useCart: vi.fn(),
+  };
+});
+vi.mock('../../context/AuthContext', async () => {
+  const actual = await vi.importActual<any>('../../context/AuthContext');
+  return {
+    ...actual,
+    useAuth: vi.fn(),
+  };
+});
 vi.mock('../../context/ToastContext', () => ({
   useToast: () => ({ addToast: vi.fn() }),
+  ToastProvider: ({ children }: any) => children,
 }));
 vi.mock('../../services/stripeService');
 vi.mock('../../hooks/useDocumentTitle', () => ({
@@ -26,73 +39,80 @@ vi.mock('../../components/checkout/StripePaymentForm', () => ({
   default: () => <div data-testid="stripe-payment-form">Stripe Form</div>,
 }));
 
-describe('CheckoutPage', () => {
-  const mockNavigate = vi.fn();
+const mocks = vi.hoisted(() => ({
+  navigate: vi.fn(),
+}));
 
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mocks.navigate,
+  };
+});
+
+describe('CheckoutPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-
-    // Mock useNavigate
-    vi.mock('react-router-dom', async () => {
-      const actual = await vi.importActual('react-router-dom');
-      return {
-        ...actual,
-        useNavigate: () => mockNavigate,
-      };
-    });
 
     // Default mock values
     (useCart as any).mockReturnValue({
       cartItems: [{ id: '1', name: 'Ring', price: 1000, quantity: 1, image: 'img.jpg' }],
       cartTotal: 1000,
+      finalTotal: 1000,
+      discountAmount: 0,
+      coupon: null,
+      applyCoupon: vi.fn(),
+      removeCoupon: vi.fn(),
       clearCart: vi.fn(),
+      cartCount: 1,
+      isCartOpen: false,
+      openCart: vi.fn(),
+      closeCart: vi.fn(),
+      addToCart: vi.fn(),
+      removeFromCart: vi.fn(),
+      updateQuantity: vi.fn(),
     });
 
     (useAuth as any).mockReturnValue({
       user: { email: 'test@example.com' },
+      loading: false,
+      signInWithEmail: vi.fn(),
+      signOut: vi.fn(),
     });
   });
+
+  const renderWithRouter = (ui: React.ReactElement) => {
+    return render(<MemoryRouter>{ui}</MemoryRouter>);
+  };
 
   it('redirects if cart is empty', () => {
     (useCart as any).mockReturnValue({
       cartItems: [],
       cartTotal: 0,
+      finalTotal: 0,
+      discountAmount: 0,
+      coupon: null,
     });
 
-    render(
-      <BrowserRouter>
-        <CheckoutPage />
-      </BrowserRouter>,
-    );
+    renderWithRouter(<CheckoutPage />);
 
     expect(screen.getByText('Your Cart is Empty')).toBeInTheDocument();
   });
 
   it('renders shipping form with user email', () => {
-    render(
-      <BrowserRouter>
-        <CheckoutPage />
-      </BrowserRouter>,
-    );
+    renderWithRouter(<CheckoutPage />);
 
     expect(screen.getByDisplayValue('test@example.com')).toBeInTheDocument();
     expect(screen.getByText('Delivery Information')).toBeInTheDocument();
   });
 
   it('validates form before proceeding', async () => {
-    render(
-      <BrowserRouter>
-        <CheckoutPage />
-      </BrowserRouter>,
-    );
+    renderWithRouter(<CheckoutPage />);
 
     const continueBtn = screen.getByText('Continue to Payment');
     fireEvent.click(continueBtn);
 
-    // Should show validation error (browser validation or custom)
-    // Since we mock addToast, we can check if navigate was NOT called
-    // or check for error styles if strictly tested.
-    // simpler check: ensure we didn't call createPaymentIntent
     expect(stripeService.createPaymentIntent).not.toHaveBeenCalled();
   });
 
@@ -100,11 +120,7 @@ describe('CheckoutPage', () => {
     const mockCreatePaymentIntent = vi.fn().mockResolvedValue({ clientSecret: 'secret_123' });
     (stripeService.createPaymentIntent as any) = mockCreatePaymentIntent;
 
-    render(
-      <BrowserRouter>
-        <CheckoutPage />
-      </BrowserRouter>,
-    );
+    renderWithRouter(<CheckoutPage />);
 
     // Fill form
     fireEvent.change(screen.getByPlaceholderText('John'), { target: { value: 'John' } });
@@ -119,29 +135,37 @@ describe('CheckoutPage', () => {
     const continueBtn = screen.getByText('Continue to Payment');
     fireEvent.click(continueBtn);
 
+    // Switch to Stripe (default is usually bkash)
+    const stripeOption = screen.getByText('Credit/Debit Card');
+    fireEvent.click(stripeOption);
+
     await waitFor(() => {
       expect(mockCreatePaymentIntent).toHaveBeenCalled();
     });
 
-    // Should now be on payment step
     expect(screen.getByText('Complete Payment')).toBeInTheDocument();
   });
 
   it('redirects to login if user not logged in', async () => {
     (useAuth as any).mockReturnValue({ user: null });
+    (useCart as any).mockReturnValue({
+      cartItems: [{ id: '1', name: 'Ring', price: 1000, quantity: 1, image: 'img.jpg' }],
+      cartTotal: 1000,
+      finalTotal: 1000,
+      discountAmount: 0,
+      coupon: null,
+      applyCoupon: vi.fn(),
+      removeCoupon: vi.fn(),
+    });
 
-    render(
-      <BrowserRouter>
-        <CheckoutPage />
-      </BrowserRouter>,
-    );
+    renderWithRouter(<CheckoutPage />);
 
     // Fill form
     fireEvent.change(screen.getByPlaceholderText('John'), { target: { value: 'John' } });
     fireEvent.change(screen.getByPlaceholderText('Doe'), { target: { value: 'Doe' } });
     fireEvent.change(screen.getByPlaceholderText('john@example.com'), {
       target: { value: 'test@test.com' },
-    }); // Manually enter email
+    });
     fireEvent.change(screen.getByPlaceholderText('123 Luxury Lane'), {
       target: { value: '123 St' },
     });
@@ -153,7 +177,7 @@ describe('CheckoutPage', () => {
     fireEvent.click(continueBtn);
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/login');
+      expect(mocks.navigate).toHaveBeenCalledWith('/login');
     });
   });
 });
